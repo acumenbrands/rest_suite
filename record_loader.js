@@ -15,25 +15,6 @@ this.RecordLoader = (function() {
     this.idList     = idList;
     this.resultList = [];
     this.replyList  = [];
-
-    this.uniqueIdList = function() {
-      var uniquedArray = [];
-      var length       = this.idList.length;
-
-      for(var i=0; i<length; i++) {
-        for(var j=i+1; j<length; j++) {
-          if(this.idList[i] === this.idList[j]) {
-            j = ++i;
-          }
-          uniquedArray.push(this.idList[j]);
-        }
-      }
-
-      this.idList = uniquedArray;
-      return(uniquedArray);
-    };
-
-    this.uniqueIdList();
   };
 
   RecordLoader.prototype.loadRecords = function() {
@@ -44,12 +25,13 @@ this.RecordLoader = (function() {
 
       try {
         record = nlapiLoadRecord(recordType, recordId);
+        this.addFormattedReply(recordId, record);
       } catch(exception) {
         record = formatException(exception);
+        this.addFormattedReply(recordId, null, record);
       }
 
       this.resultList.push(record);
-      this.addFormattedReply(recordId, record);
     }
   }
 
@@ -73,10 +55,9 @@ var postHandler = function(request) {
    *
    * Return:      JSON response
    */
-  var recordLoader = new RecordLoader(request.record_type, request.id_list);
+  var recordLoader = new RecordLoader(request['record_type'], request['id_list']);
 
   recordLoader.loadRecords();
-  recordLoader.formatReply();
   
   return recordLoader.reply();
 }
@@ -90,10 +71,11 @@ var formatReply = function(params, result, exception) {
   reply['result']  = result;
 
   if(exception) {
-    reply['exception'] = exception;
+    reply['exception'] = exception
     reply['success']   = false
   } else {
-    reply['success'] = true;
+    reply['exception'] = null
+    reply['success']   = true;
   }
 
   return reply; 

@@ -1,32 +1,40 @@
-var formatReply = function(params, result, exception) {
-  exception = exception || false;
+var CommonObject;
 
-  var reply = {};
+this.CommonObject = (function() {
+  function CommonObject() {};
 
-  reply['params']  = params;
-  reply['result']  = result;
+  CommonObject.prototype.formatReply = function(params, result, exception) {
+    exception = exception || false;
 
-  if(exception) {
-    reply['exception'] = exception;
-    reply['success']   = false;
-  } else {
-    reply['success'] = true;
+    var reply = {};
+
+    reply['params']  = params;
+    reply['result']  = result;
+
+    if(exception) {
+      reply['exception'] = exception;
+      reply['success']   = false;
+    } else {
+      reply['success'] = true;
+    }
+
+    return reply;
+}                                                           
+                                                            
+  CommonObject.prototype.formatException = function(exception) {                 
+    var formattedException = {};
+
+    formattedException['message'] = exception.message;
+
+    try {
+      formattedException['trace'] = exception.getStackTrace();
+    } catch(stack_fetch_error) {
+      formattedException['trace'] = stack_fetch_error.message;
+    }
+
+    return formattedException;
   }
 
-  return reply;
-}
-
-var formatException = function(exception) {
-  var formattedException = {};
-
-  formattedException['message'] = exception.message;
-
-  try {
-    formattedException['trace'] = exception.getStackTrace();
-  } catch(stack_fetch_error) {
-    formattedException['trace'] = stack_fetch_error.message;
-  }
-
-  return formattedException;
-}
+  return CommonObject;
+})();
 

@@ -26,11 +26,6 @@ describe("RecordLoader", function() {
     it("has an empty list of results", function() {
       expect(recordLoader.resultList).toEqual([]);
     });
-
-    it("should reduce the list to unique values", function() {
-      expect(recordLoader.idList).toEqual(uniqueList);
-    });
-
   });
 
   describe("#loadRecords", function() {
