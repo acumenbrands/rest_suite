@@ -9,6 +9,8 @@ describe("RecordLoader", function() {
 
   beforeEach(function() {
     recordLoader = new RecordLoader(recordType, idList);
+    global.nlapiLoadRecord = function() {};        
+    spyOn(global, 'nlapiLoadRecord').andReturn({});
   });
 
   describe("#init", function() {
@@ -33,12 +35,6 @@ describe("RecordLoader", function() {
 
   describe("#loadRecords", function() {
 
-
-    beforeEach(function() {
-      global.nlapiLoadRecord = function() {};
-      spyOn(global, 'nlapiLoadRecord').andReturn({});
-    });
-
     it("calls nlapiLoadRecord on each id", function() {
       recordLoader.loadRecords();
       expect(global.nlapiLoadRecord).toHaveBeenCalled();
@@ -50,4 +46,52 @@ describe("RecordLoader", function() {
     });
   });
 
+  describe("#addFormattedReply", function() {
+
+    beforeEach(function() {
+      recordLoader.loadRecords();
+      this.missing = false;
+    });
+
+    it("should have an equal element count between idList and replyList", function() {
+      expect(recordLoader.idList.length).toEqual(recordLoader.replyList.length);
+    });
+
+    it("should have a params key for each reply element", function() {
+      for(index in recordLoader.replyList) {
+        if(!recordLoader.replyList[index].hasOwnProperty('params') && !this.missing) {
+          this.missing = true;
+        }
+      }
+      expect(this.missing).toEqual(false);
+    });
+
+    it("should have a result key for each reply element", function() {
+      for(index in recordLoader.replyList) {
+        if(!recordLoader.replyList[index].hasOwnProperty('result') && !this.missing) {
+          this.missing = true;
+        }
+      }
+      expect(this.missing).toEqual(false);
+    });
+
+    it("should have a success key for each reply element", function() {
+      for(index in recordLoader.replyList) {
+        if(!recordLoader.replyList[index].hasOwnProperty('success') && !this.missing) {
+          this.missing = true;
+        }
+      }
+      expect(this.missing).toEqual(false);
+    });
+  });
+
+  describe("#reply", function() {
+    beforeEach(function() {
+      recordLoader.loadRecords();
+    });
+
+    it("should return the replyList", function() {
+      expect(recordLoader.reply()).toEqual(recordLoader.replyList);
+    });
+  });
 });

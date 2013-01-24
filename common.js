@@ -1,20 +1,32 @@
-var formatException;
+var formatReply = function(params, result, exception) {
+  exception = exception || false;
 
-this.formatException = function(exception) {
-  /*
-   * Description: Format an exception to send to the client
-   * Params:
-   *              exception: An exception object
-   *
-   * Return:      A serialized exception object
-   */
-  var serializedException = [exception.name.toString(), exception.message];
+  var reply = {};
+
+  reply['params']  = params;
+  reply['result']  = result;
+
+  if(exception) {
+    reply['exception'] = exception;
+    reply['success']   = false;
+  } else {
+    reply['success'] = true;
+  }
+
+  return reply;
+}
+
+var formatException = function(exception) {
+  var formattedException = {};
+
+  formattedException['message'] = exception.message;
 
   try {
-    return(serializedException.concat(exception.getStackTrace()));
+    formattedException['trace'] = exception.getStackTrace();
+  } catch(stack_fetch_error) {
+    formattedException['trace'] = stack_fetch_error.message;
   }
-  catch(stack_fetch_error) {
-    return(serializedException.concat([stack_fetch_error.message]));
-  }
+
+  return formattedException;
 }
 

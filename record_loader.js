@@ -14,6 +14,7 @@ this.RecordLoader = (function() {
     this.recordType = recordType;
     this.idList     = idList;
     this.resultList = [];
+    this.replyList  = [];
 
     this.uniqueIdList = function() {
       var uniquedArray = [];
@@ -37,18 +38,34 @@ this.RecordLoader = (function() {
 
   RecordLoader.prototype.loadRecords = function() {
     for(index=0; index<this.idList.length; index++) {
-      recordType = this.recordType;
-      recordId   = this.idList[index];
+      var recordType = this.recordType;
+      var recordId   = this.idList[index];
+      var record     = null;
 
-      record = nlapiLoadRecord(recordType, recordId);
+      try {
+        record = nlapiLoadRecord(recordType, recordId);
+      } catch(exception) {
+        record = formatException(exception);
+      }
+
       this.resultList.push(record);
+      this.addFormattedReply(recordId, record);
     }
+  }
+
+  RecordLoader.prototype.addFormattedReply = function (params, result, exception) {
+    var reply = formatReply(params, result, exception);
+    this.replyList.push(reply);
+  }
+
+  RecordLoader.prototype.reply = function() {
+    return this.replyList;
   }
 
   return RecordLoader;
 })();
 
-function postHandler(request) {
+var postHandler = function(request) {
   /*
    * Description: Method to handle requests over POST
    * Params:
@@ -56,11 +73,42 @@ function postHandler(request) {
    *
    * Return:      JSON response
    */
-  try {
-    return([true].concat([evalOperation('POST', request['operation'], request)]));
-  }
-  catch(exception) {
-    return([false].concat([formatException(exception)]));
-  }
+  var recordLoader = new RecordLoader(request.record_type, request.id_list);
+
+  recordLoader.loadRecords();
+  recordLoader.formatReply();
+  
+  return recordLoader.reply();
 }
 
+var formatReply = function(params, result, exception) {
+  exception = exception || false;
+
+  var reply = {};
+
+  reply['params']  = params;
+  reply['result']  = result;
+
+  if(exception) {
+    reply['exception'] = exception;
+    reply['success']   = false
+  } else {
+    reply['success'] = true;
+  }
+
+  return reply; 
+}
+
+var formatException = function(exception) {
+  var formattedException = {};
+
+  formattedException['message'] = exception.message;
+
+  try {
+    formattedException['trace'] = exception.getStackTrace();
+  } catch(stack_fetch_error) {
+    formattedException['trace'] = stack_fetch_error.message;
+  }
+
+  return formattedException;
+}
