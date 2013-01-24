@@ -15,6 +15,8 @@ this.RecordLoader = (function() {
     this.idList     = idList;
     this.resultList = [];
     this.replyList  = [];
+
+    this.common = new CommonObject;
   };
 
   RecordLoader.prototype.loadRecords = function() {
@@ -27,7 +29,7 @@ this.RecordLoader = (function() {
         record = nlapiLoadRecord(recordType, recordId);
         this.addFormattedReply(recordId, record);
       } catch(exception) {
-        record = formatException(exception);
+        record = this.common.formatException(exception);
         this.addFormattedReply(recordId, null, record);
       }
 
@@ -36,7 +38,7 @@ this.RecordLoader = (function() {
   }
 
   RecordLoader.prototype.addFormattedReply = function (params, result, exception) {
-    var reply = formatReply(params, result, exception);
+    var reply = this.common.formatReply(params, result, exception);
     this.replyList.push(reply);
   }
 
@@ -60,37 +62,4 @@ var postHandler = function(request) {
   recordLoader.loadRecords();
   
   return recordLoader.reply();
-}
-
-var formatReply = function(params, result, exception) {
-  exception = exception || false;
-
-  var reply = {};
-
-  reply['params']  = params;
-  reply['result']  = result;
-
-  if(exception) {
-    reply['exception'] = exception
-    reply['success']   = false
-  } else {
-    reply['exception'] = null
-    reply['success']   = true;
-  }
-
-  return reply; 
-}
-
-var formatException = function(exception) {
-  var formattedException = {};
-
-  formattedException['message'] = exception.message;
-
-  try {
-    formattedException['trace'] = exception.getStackTrace();
-  } catch(stack_fetch_error) {
-    formattedException['trace'] = stack_fetch_error.message;
-  }
-
-  return formattedException;
 }
