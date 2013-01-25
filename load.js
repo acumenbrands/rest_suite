@@ -1,15 +1,6 @@
 var Loader;
 
 this.Loader = (function() {
-  /**************************************************************
-   * Description: Retrieves a single record based on query fields
-   * Params:
-   *              recordType: String matching a record type
-   *              idList:     Array of Strings matching the internal
-   *                          ids of multiple records
-   *
-   * Return:      
-   **************************************************************/
   function Loader(recordType, idList) {
     this.recordType = recordType;
     this.idList     = idList;
@@ -50,16 +41,7 @@ this.Loader = (function() {
 })();
 
 var postHandler = function(request) {
-  /*
-   * Description: Method to handle requests over POST
-   * Params:
-   *              request: Request object from the REST client
-   *
-   * Return:      JSON response
-   */
   var loader = new Loader(request['record_type'], request['id_list']);
-
   loader.loadRecords();
-  
   return recordLoader.reply();
 }

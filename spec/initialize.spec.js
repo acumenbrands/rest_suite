@@ -25,9 +25,12 @@ describe('Initializer', function() {
   });
 
   describe('#reply', function() {
-    it("should return the blank record", function() {
+    it("should return the blank record in a formatted reply", function() {
       initializer.initializeRecord();
-      expect(initializer.reply()).toEqual(blankRecord);
+      var formattedReply = initializer.common.formatReply(initializer.recordType,
+                                                          initializer.initializedRecord,
+                                                          initializer.exception)
+      expect(initializer.reply()).toEqual(formattedReply);
     });
   });
 });
