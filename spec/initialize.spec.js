@@ -18,9 +18,16 @@ describe('Initializer', function() {
   });
 
   describe('#initializeRecord', function() {
-    it("should call initialize record from the Netsuite API", function() {
+    beforeEach(function() {
       initializer.initializeRecord();
+    });
+
+    it("should call initialize record from the Netsuite API", function() {
       expect(global.nlapiInitializeRecord).toHaveBeenCalled();
+    });
+
+    it("should update the initializedRecord field with the new record", function() {
+      expect(initializer.initializedRecord).toEqual(blankRecord);
     });
   });
 
