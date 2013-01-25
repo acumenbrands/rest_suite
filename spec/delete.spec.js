@@ -18,6 +18,10 @@ describe('Delete', function() {
   });
 
   describe('#deleteRecords', function() {
+    beforeEach(function() {
+      deleter.deleteRecords();
+    });
+
     it("should call the Netsuite deletion function", function() {
       expect(global.nlapiDeleteRecord).toHaveBeenCalled();
     });
