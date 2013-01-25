@@ -1,6 +1,6 @@
-var RecordLoader;
+var Loader;
 
-this.RecordLoader = (function() {
+this.Loader = (function() {
   /**************************************************************
    * Description: Retrieves a single record based on query fields
    * Params:
@@ -10,7 +10,7 @@ this.RecordLoader = (function() {
    *
    * Return:      
    **************************************************************/
-  function RecordLoader(recordType, idList) {
+  function Loader(recordType, idList) {
     this.recordType = recordType;
     this.idList     = idList;
     this.resultList = [];
@@ -19,7 +19,7 @@ this.RecordLoader = (function() {
     this.common = new CommonObject;
   };
 
-  RecordLoader.prototype.loadRecords = function() {
+  Loader.prototype.loadRecords = function() {
     for(index=0; index<this.idList.length; index++) {
       var recordType = this.recordType;
       var recordId   = this.idList[index];
@@ -37,16 +37,16 @@ this.RecordLoader = (function() {
     }
   }
 
-  RecordLoader.prototype.addFormattedReply = function (params, result, exception) {
+  Loader.prototype.addFormattedReply = function (params, result, exception) {
     var reply = this.common.formatReply(params, result, exception);
     this.replyList.push(reply);
   }
 
-  RecordLoader.prototype.reply = function() {
+  Loader.prototype.reply = function() {
     return this.replyList;
   }
 
-  return RecordLoader;
+  return Loader;
 })();
 
 var postHandler = function(request) {
@@ -57,9 +57,9 @@ var postHandler = function(request) {
    *
    * Return:      JSON response
    */
-  var recordLoader = new RecordLoader(request['record_type'], request['id_list']);
+  var loader = new Loader(request['record_type'], request['id_list']);
 
-  recordLoader.loadRecords();
+  loader.loadRecords();
   
   return recordLoader.reply();
 }
