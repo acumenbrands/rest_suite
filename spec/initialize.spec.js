@@ -4,7 +4,7 @@ describe('Initializer', function() {
   var initializer;
   var recordType  = 'salesorder';
   var blankRecord = { 'recordtype': recordType };
-  var global.nlapiInitializeRecord = function () {};
+  global.nlapiInitializeRecord = function () {};
 
   beforeEach(function() {
     initializer = new Initializer(recordType);
@@ -26,7 +26,7 @@ describe('Initializer', function() {
 
   describe('#reply', function() {
     it("should return the blank record", function() {
-      initialize.initializeRecord();
+      initializer.initializeRecord();
       expect(initializer.reply()).toEqual(blankRecord);
     });
   });
