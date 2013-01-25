@@ -19,7 +19,7 @@ this.CommonObject = (function() {
     }
 
     return reply;
-}                                                           
+  }                                                           
                                                             
   CommonObject.prototype.formatException = function(exception) {                 
     var formattedException = {};
