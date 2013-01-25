@@ -50,11 +50,20 @@ describe('Upserter', function() {
   });
 
   describe('#performUpsert', function() {
+    it("should call the Netsuite write method", function() {
+    });
   });
 
   describe('#addFormattedReply', function() {
+    it("should have an equal element count between recordData and replyList", function() {
+    });
+
+    it("should call formatReply on CommonObject", function() {
+    });
   });
 
   describe('#reply', function() {
+    it("should return replyList", function() {
+    });
   });
 });

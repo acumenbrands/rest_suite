@@ -41,32 +41,7 @@ describe('Deleter', function() {
       expect(deleter.idList.length).toEqual(deleter.replyList.length);
     });
 
-    it("should have a params key for each reply element", function() {
-      for(index in deleter.replyList) {
-        if(!deleter.replyList[index].hasOwnProperty('params') && !this.missing) {
-          this.missing = true;
-        }
-      }
-
-      expect(this.missing).toEqual(false);
-    });
-
-    it("should have a result key for each reply element", function() {
-      for(index in deleter.replyList) {
-        if(!deleter.replyList[index].hasOwnProperty('result') && !this.missing) {
-          this.missing = true;
-        }
-      }
-      expect(this.missing).toEqual(false);
-    });
-
-    it("should have a success key for each reply element", function() {
-      for(index in deleter.replyList) {
-        if(!deleter.replyList[index].hasOwnProperty('success') && !this.missing) {
-          this.missing = true;
-        }
-      }
-      expect(this.missing).toEqual(false);
+    it("should call formatReply() on CommonObject", function() {
     });
   });
 
