@@ -1,6 +1,6 @@
 require('./spec_helper.js');
 
-describe('Delete', function() {
+describe('Deleter', function() {
   var deleter;
   var recordType = 'inventoryitem';
   var idList     = ['123', '456', '789'];
