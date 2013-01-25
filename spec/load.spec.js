@@ -40,7 +40,6 @@ describe("Loader", function() {
   });
 
   describe("#addFormattedReply", function() {
-
     beforeEach(function() {
       loader.loadRecords();
       this.missing = false;
