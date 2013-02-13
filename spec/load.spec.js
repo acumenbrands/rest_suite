@@ -9,7 +9,7 @@ describe("Loader", function() {
 
   beforeEach(function() {
     loader = new Loader(recordType, idList);
-    global.nlapiLoadRecord = function() {};        
+    global.nlapiLoadRecord = function() {};
     spyOn(global, 'nlapiLoadRecord').andReturn({});
   });
 
