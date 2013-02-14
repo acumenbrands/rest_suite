@@ -219,6 +219,16 @@ describe('Upserter', function() {
     });
 
     describe('an error occurs in setting any attribute of the record', function() {
+
+      it("should call formatException on CommonObject", function() {
+      });
+
+      it("should set the result field on the element", function() {
+      });
+
+      it("should set the exception field on the element", function() {
+      });
+
     });
 
   });
@@ -319,12 +329,18 @@ describe('Upserter', function() {
     beforeEach(function() {
       spyOn(upserter, 'addResultToRecord');
       spyOn(upserter.common, 'formatException');
-      upserter.recordList = [{}, {}, {}];
     });
 
     describe('in all cases', function() {
 
+      beforeEach(function() {
+        upserter.recordList = [new UpsertRecordListElement({}, {}, true)]
+        spyOn(upserter, 'submitRecord');
+        upserter.submitRecordList();
+      });
+
       it("should not call submitRecord if the element is an exception", function() {
+        expect(upserter.submitRecord.callCount).toEqual(0);
       });
 
     });
@@ -332,6 +348,10 @@ describe('Upserter', function() {
     describe('no exception is raised', function() {
 
       beforeEach(function() {
+        upserter.recordList = [
+          new UpsertRecordListElement({}, {}, false),
+          new UpsertRecordListElement({}, {}, false)
+        ];
         spyOn(upserter, 'submitRecord');
         upserter.submitRecordList();
       });
@@ -350,6 +370,10 @@ describe('Upserter', function() {
     describe('an exception is raised', function() {
 
       beforeEach(function() {
+        upserter.recordList = [
+          new UpsertRecordListElement({}, {}, false),
+          new UpsertRecordListElement({}, {}, false)
+        ];
         spyOn(upserter, 'submitRecord').andCallFake(function() {
           throw errorMessage;
         });
@@ -529,6 +553,26 @@ describe('UpsertRecordListElement', function() {
         expect(this.element.isException()).toEqual(false);
       });
 
+    });
+
+  });
+
+  describe('#makeException(formattedException)', function() {
+
+    beforeEach(function() {
+      this.exception = new Error(errorMessage);
+      this.common = new CommonObject();
+      this.formattedException = this.common.formatException(this.exception);
+      this.element = new UpsertRecordListElement(recordData, record);
+      this.element.makeException(this.formattedException);
+    });
+
+    it("should set result equal to the formatted exception", function() {
+      expect(this.element.result).toEqual(this.formattedException);
+    });
+
+    it("should respond with true to isException", function() {
+      expect(this.element.isException()).toEqual(true);
     });
 
   });

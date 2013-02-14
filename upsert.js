@@ -84,7 +84,10 @@ this.Upserter = (function() {
 
   Upserter.prototype.submitRecordList = function() {
     for(index in this.recordList) {
-      record = this.recordList[index].record;
+      recordListElement = this.recordList[index];
+      if(recordListElement.isException()) { continue; }
+
+      record = recordListElement.record;
 
       try {
         result = this.submitRecord(record);
@@ -140,6 +143,11 @@ this.UpsertRecordListElement = (function() {
 
     this.isException = function() {
       return this.exception == true;
+    }
+
+    this.makeException = function(formattedException) {
+      this.exception = true;
+      this.result    = formattedException;
     }
 
     if(this.isException()) {
