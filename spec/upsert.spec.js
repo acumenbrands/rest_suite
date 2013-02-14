@@ -25,12 +25,6 @@ describe('Upserter', function() {
         'id':         '12345',
         'custitem22': '75'
       },
-      'sublist_data': {
-        'item': {
-          'item':     '12345',
-          'quantity': '7'
-        }
-      },
       'do_sourcing':      false,
       'ignore_mandatory': false
     }
@@ -207,26 +201,44 @@ describe('Upserter', function() {
     });
   });
 
-  describe('#populateRecordFields(record, recordData', function() {
+  describe('#populateRecordFields(record, recordData)', function() {
 
-    it("should call updateSublists if sublist data is present", function() {
-    });
+    describe('no error occurs in setting field', function() {
 
-    it("should not call updateSublists if sublist data is not present", function() {
-    });
+      beforeEach(function() {
+        spyOn(upserter, 'setRecordField');
+        spyOn(upserter, 'updateSublists');
+        upserter.populateRecordFields({}, recordData[0]);
+      });
 
-    it("should call setRecordField for each record field given", function() {
+      it("should call updateSublists if sublist data is present", function() {
+        expect(upserter.updateSublists.callCount).toEqual(1);
+      });
+
+      it("should call setRecordField for each record field given that is not 'id'", function() {
+        expect(upserter.setRecordField.callCount).toEqual(3);
+      });
+
     });
 
     describe('an error occurs in setting any attribute of the record', function() {
 
+      beforeEach(function() {
+        this.exception          = new Error(errorMessage);
+        this.formattedException = upserter.common.formatException(this.exception);
+
+        spyOn(upserter.common, 'formatException');
+        spyOn(upserter, 'setRecordField').andCallFake(function() {
+          throw errorMessage;
+        });
+        spyOn(upserter, 'updateSublists').andCallFake(function() {
+          throw errorMessage;
+        });
+        upserter.populateRecordFields({}, recordData[0]);
+      });
+
       it("should call formatException on CommonObject", function() {
-      });
-
-      it("should set the result field on the element", function() {
-      });
-
-      it("should set the exception field on the element", function() {
+        expect(upserter.common.formatException).toHaveBeenCalledWith(errorMessage);
       });
 
     });
@@ -372,7 +384,6 @@ describe('Upserter', function() {
       beforeEach(function() {
         upserter.recordList = [
           new UpsertRecordListElement({}, {}, false),
-          new UpsertRecordListElement({}, {}, false)
         ];
         spyOn(upserter, 'submitRecord').andCallFake(function() {
           throw errorMessage;
@@ -380,7 +391,7 @@ describe('Upserter', function() {
         upserter.submitRecordList();
       });
 
-      it ("should call formatException on CommonObject", function() {
+      it("should call formatException on CommonObject", function() {
         expect(upserter.common.formatException).toHaveBeenCalled();
       });
 
@@ -405,13 +416,20 @@ describe('Upserter', function() {
   describe('#addResultToRecord(recordListElement, result)', function() {
 
     beforeEach(function() {
-      this.recordListElement = new UpsertRecordListElement({});
-      this.result            = '12345';
-      upserter.addResultToRecord(this.recordListElement, this.result);
+      this.recordListElement      = new UpsertRecordListElement({}, {});
+      this.result                 = '12345';
+      this.fakeFormattedException = {};
+      spyOn(this.recordListElement, 'makeException');
     });
 
     it("should add the given result to the given UpsertRecordListElement", function() {
+      upserter.addResultToRecord(this.recordListElement, this.result);
       expect(this.recordListElement.result).toEqual(this.result);
+    });
+
+    it("should call makeException onthe element if exception is true", function() {
+      upserter.addResultToRecord(this.recordListElement, this.fakeFormattedException, true);
+      expect(this.recordListElement.makeException).toHaveBeenCalledWith(this.fakeFormattedException);
     });
 
   });

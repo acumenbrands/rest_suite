@@ -60,6 +60,22 @@ this.Upserter = (function() {
   }
 
   Upserter.prototype.populateRecordFields = function(record, recordData) {
+    try {
+      fieldData = recordData[this.RECORD_DATA_KEY];
+
+      for(fieldName in fieldData) {
+        if(fieldName == 'id') { continue; }
+        value = fieldData[fieldName];
+        this.setRecordField(record, fieldName, value);
+      }
+
+      if(recordData.hasOwnProperty(this.SUBLIST_KEY)) {
+        sublistData = recordData[this.SUBLIST_KEY];
+        this.updateSublists(sublistData);
+      }
+    } catch(exception) {
+      record = this.common.formatException(exception);
+    }
   }
 
   Upserter.prototype.setRecordField = function(record, fieldName, value) {
@@ -91,10 +107,10 @@ this.Upserter = (function() {
 
       try {
         result = this.submitRecord(record);
-        this.addResultToRecord(record, result);
+        this.addResultToRecord(recordListElement, result);
       } catch(exception) {
         result = this.common.formatException(exception);
-        this.addResultToRecord(record, result, true);
+        this.addResultToRecord(recordListElement, result, true);
       }
     }
   }
@@ -106,8 +122,11 @@ this.Upserter = (function() {
   Upserter.prototype.addResultToRecord = function(recordListElement, result, exception) {
     eception = exception || false;
 
-    recordListElement.result    = result;
-    recordListElement.exception = exception;
+    if(exception) {
+      recordListElement.makeException(result);
+    } else {
+      recordListElement.result = result;
+    }
   }
 
   Upserter.prototype.buildReplyList = function() {
