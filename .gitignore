@@ -7,6 +7,7 @@
 *~
 .*sp?
 .*un~
+*.swo
 .DS_Store
 .bundle
 .bundle
@@ -18,4 +19,3 @@ db/*.sqlite3
 log/*.log
 tags
 tmp
-.swo

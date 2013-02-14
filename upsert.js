@@ -67,9 +67,16 @@ this.Upserter = (function() {
 
   Upserter.prototype.submitRecordList = function() {
     for(index in this.recordList) {
-      record = this.recordList[index][this.RECORD_LIST_RECORD_KEY];
-      result = this.submitRecord(record);
-      this.addResultToRecord(record, result);
+      record    = this.recordList[index][this.RECORD_LIST_RECORD_KEY];
+
+      try {
+        result = this.submitRecord(record);
+        this.addResultToRecord(record, result);
+      } catch(exception) {
+        result    = this.common.formatException(exception);
+        exception = true;
+        this.addResultToRecord(record, result, exception);
+      }
     }
   }
 
@@ -77,8 +84,11 @@ this.Upserter = (function() {
     return nlapiSubmitRecord(record);
   }
 
-  Upserter.prototype.addResultToRecord = function(recordListElement, result) {
-    recordListElement.result = result;
+  Upserter.prototype.addResultToRecord = function(recordListElement, result, exception) {
+    eception = exception || false;
+
+    recordListElement.result    = result;
+    recordListElement.exception = exception;
   }
 
   Upserter.prototype.buildReplyList = function() {
@@ -89,10 +99,11 @@ this.Upserter = (function() {
   }
 
   Upserter.prototype.addFormattedReply = function(recordListElement) {
-    data   = recordListElement.recordData;
-    result = recordListElement.result;
+    data      = recordListElement.recordData;
+    result    = recordListElement.result;
+    exception = recordListElement.exception;
 
-    formattedReply = this.common.formatReply(data, result);
+    formattedReply = this.common.formatReply(data, result, exception);
     this.replyList.push(formattedReply);
   }
 
@@ -111,6 +122,7 @@ this.UpsertRecordListElement = (function() {
     this.recordData = recordData;
     this.record     = record;
     this.result     = null;
+    this.exception  = false;
   }
 
   return UpsertRecordListElement;

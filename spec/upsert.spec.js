@@ -203,19 +203,42 @@ describe('Upserter', function() {
   describe('#submitRecordList', function() {
 
     beforeEach(function() {
-      spyOn(upserter, 'submitRecord');
       spyOn(upserter, 'addResultToRecord');
+      spyOn(upserter.common, 'formatException');
       upserter.recordList = [{}, {}, {}];
-      upserter.submitRecordList();
     });
 
-    it("should call submitRecord for each element of recordList", function() {
-      expect(upserter.submitRecord.callCount).toEqual(upserter.recordList.length);
+    describe('no exception is raised', function() {
+
+      beforeEach(function() {
+        spyOn(upserter, 'submitRecord');
+        upserter.submitRecordList();
+      });
+
+      it("should call submitRecord for each element of recordList", function() {
+        expect(upserter.submitRecord.callCount).toEqual(upserter.recordList.length);
+      });
+
+
+      it("should call addResultToRecord for each element of recordList", function() {
+        expect(upserter.addResultToRecord.callCount).toEqual(upserter.recordList.length);
+      });
+
     });
 
+    describe('an exception is raised', function() {
 
-    it("should call addResultToRecord for each element of recordList", function() {
-      expect(upserter.addResultToRecord.callCount).toEqual(upserter.recordList.length);
+      beforeEach(function() {
+        spyOn(upserter, 'submitRecord').andCallFake(function() {
+          throw "ZOMG AN ERROR HAPPENED";
+        });
+        upserter.submitRecordList();
+      });
+
+      it ("should call formatException on CommonObject", function() {
+        expect(upserter.common.formatException).toHaveBeenCalled();
+      });
+
     });
 
   });
@@ -230,13 +253,6 @@ describe('Upserter', function() {
 
     it("should call the napiSubmitRecord method", function() {
       expect(global.nlapiSubmitRecord).toHaveBeenCalledWith({});
-    });
-
-    describe('an exception is raised', function() {
-
-      it ("should call formatException on CommonObject", function() {
-      });
-
     });
 
   });
@@ -288,9 +304,10 @@ describe('Upserter', function() {
     });
 
     it("should call formatReply on CommonObject", function() {
-      data   = this.recordListElement.recordData;
-      result = this.recordListElement.result;
-      expect(upserter.common.formatReply).toHaveBeenCalledWith(data, result);
+      data      = this.recordListElement.recordData;
+      result    = this.recordListElement.result;
+      exception = this.recordListElement.exception;
+      expect(upserter.common.formatReply).toHaveBeenCalledWith(data, result, exception);
     });
 
     it("should add a new formatted reply to the replyList", function() {
@@ -331,6 +348,10 @@ describe('UpsertRecordListElement', function() {
 
     it("should set the result field to null", function() {
       expect(upsertRecordListElement.result).toEqual(null);
+    });
+
+    it("should set the exception field to false", function() {
+      expect(upsertRecordListElement.exception).toEqual(false);
     });
 
   });
