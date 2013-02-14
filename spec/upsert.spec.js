@@ -11,6 +11,12 @@ describe('Upserter', function() {
         'displayname': 'SCHWA-FOO',
         'custitem22':  '17'
       },
+      'sublist_data': {
+        'item': {
+          'item':     '12345',
+          'quantity': '7'
+        }
+      },
       'do_sourcing':      true,
       'ignore_mandatory': true
     },
@@ -18,6 +24,12 @@ describe('Upserter', function() {
       'record_data': {
         'id':         '12345',
         'custitem22': '75'
+      },
+      'sublist_data': {
+        'item': {
+          'item':     '12345',
+          'quantity': '7'
+        }
       },
       'do_sourcing':      false,
       'ignore_mandatory': false
@@ -35,6 +47,10 @@ describe('Upserter', function() {
 
       it("should define RECORD_DATA_KEY", function() {
         expect(upserter.RECORD_DATA_KEY).toBeDefined();
+      });
+
+      it("shuld define SUBLIST_KEY", function() { 
+        expect(upserter.SUBLIST_KEY).toBeDefined();
       });
 
       it("should define DO_SOURCING_KEY", function() {
@@ -191,22 +207,55 @@ describe('Upserter', function() {
     });
   });
 
-  describe('#populateRecordFields(recordFieldData)', function() {
+  describe('#populateRecordFields(record, recordData', function() {
+
+    it("should call updateSublists if sublist data is present", function() {
+    });
+
+    it("should not call updateSublists if sublist data is not present", function() {
+    });
+
+    it("should call setRecordField for each record field given", function() {
+    });
+
+    describe('an error occurs in setting any attribute of the record', function() {
+    });
+
+  });
+
+  describe('#setRecordField(record, fieldName, value)', function() {
+
+    it("should call setFieldValue on the record object", function() {
+    });
+
   });
 
   describe('#updateSublists(sublistsData)', function() {
-    it("should call populateSublist for each sublist", function() {
+
+    it("should call populateSublist for each sublist given", function() {
     });
+
   });
 
   describe('#populateSublist(sublistData)', function() {
-    it("should call buildSublistItem for each sublist item", function() {
+
+    it("should call populateSublistItemFields for each sublist item given", function() {
     });
+
   });
 
-  describe('#buildSublistItem(sublistItemData)', function() {
-    it("should call setLineItemValue for each line item field", function() {
+  describe('#populateSublistItemFields(sublistItemData)', function() {
+
+    it("should call setSublistItemField for each sublist item field given", function() {
     });
+
+  });
+
+  describe('#setSublistItemField(sublistItem, sublistItemFieldName, value)', function() {
+
+    it("should setSublistItemField with the given params", function() {
+    });
+
   });
 
   describe('#pushRecordToRecordList(recordData, record)', function() {
@@ -271,6 +320,13 @@ describe('Upserter', function() {
       spyOn(upserter, 'addResultToRecord');
       spyOn(upserter.common, 'formatException');
       upserter.recordList = [{}, {}, {}];
+    });
+
+    describe('in all cases', function() {
+
+      it("should not call submitRecord if the element is an exception", function() {
+      });
+
     });
 
     describe('no exception is raised', function() {
@@ -427,6 +483,10 @@ describe('UpsertRecordListElement', function() {
 
       it("should set the exception field", function() {
         expect(this.element.exception).toEqual(true);
+      });
+
+      it("should set the result field equal to record", function() {
+        expect(this.element.result).toEqual(this.element.record);
       });
 
     });

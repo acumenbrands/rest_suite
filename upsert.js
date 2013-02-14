@@ -2,6 +2,7 @@ this.Upserter = (function() {
 
   function Upserter(recordType, recordData) {
     this.RECORD_DATA_KEY      = 'record_data';
+    this.SUBLIST_KEY          = 'sublist_data';
     this.DO_SOURCING_KEY      = 'do_sourcing';
     this.IGNORE_MANDATORY_KEY = 'ignore_mandatory';
 
@@ -58,7 +59,10 @@ this.Upserter = (function() {
     return nlapiInitializeRecord(this.recordType);
   }
 
-  Upserter.prototype.populateRecordFields = function(recordFieldData) {
+  Upserter.prototype.populateRecordFields = function(record, recordData) {
+  }
+
+  Upserter.prototype.setRecordField = function(record, fieldName, value) {
   }
 
   Upserter.prototype.updateSublists = function(sublistsData) {
@@ -67,10 +71,10 @@ this.Upserter = (function() {
   Upserter.prototype.populateSublist = function(sublistData) {
   }
 
-  Upserter.prototype.buildSublistItem = function(sublistItemData) {
+  Upserter.prototype.populateSublistItemFields = function(sublistItemData) {
   }
 
-  Upserter.prototype.buildSublists = function() {
+  Upserter.prototype.setSublistItemField = function(sublistItem, sublistItemFieldName, value) {
   }
 
   Upserter.prototype.pushRecordToRecordList = function(recordData, record, exception) {
@@ -80,7 +84,7 @@ this.Upserter = (function() {
 
   Upserter.prototype.submitRecordList = function() {
     for(index in this.recordList) {
-      record    = this.recordList[index][this.RECORD_LIST_RECORD_KEY];
+      record = this.recordList[index].record;
 
       try {
         result = this.submitRecord(record);
@@ -136,6 +140,10 @@ this.UpsertRecordListElement = (function() {
 
     this.isException = function() {
       return this.exception == true;
+    }
+
+    if(this.isException()) {
+      this.result = this.record;
     }
   }
 
