@@ -1,5 +1,3 @@
-var Upserter;
-
 this.Upserter = (function() {
 
   function Upserter(recordType, recordData) {
@@ -13,7 +11,7 @@ this.Upserter = (function() {
     this.replyList  = [];
 
     this.common = new CommonObject;
-  };
+  }
 
   Upserter.prototype.upsertRecords = function() {
     this.populateRecordList();
@@ -23,17 +21,32 @@ this.Upserter = (function() {
   Upserter.prototype.populateRecordList = function() {
     for(index in this.recordData) {
       recordData = this.recordData[index];
-      record     = this.loadOrInitializeRecord(recordData)
-      this.populateRecordFields(record, recordData)
-      this.pushRecordToRecordList(recordData, record);
+      record     = this.loadOrInitializeRecord(recordData);
+
+      if(!record.hasOwnProperty['message'] && !record.hasOwnProperty['trace']) {
+        this.populateRecordFields(record, recordData);
+        this.pushRecordToRecordList(recordData, record, false);
+      } else {
+        this.pushRecordToRecordList(recordData, record, true);
+      }
     }
   }
 
-  Upserter.prototype.loadOrInitializeRecord = function(record) {
-    if(record[this.RECORD_DATA_KEY].hasOwnProperty('id')) {
-      return this.loadRecord(record['id']);
+  Upserter.prototype.loadOrInitializeRecord = function(recordData) {
+    data = recordData[this.RECORD_DATA_KEY];
+
+    if(data.hasOwnProperty('id')) {
+      func     = this.loadRecord;
+      argument = data['id'];
     } else {
-      return this.initializeRecord();
+      func     = this.initializeRecord;
+      argument = this.recordType;
+    }
+
+    try {
+      return func(argument);
+    } catch(exception) {
+      return this.common.formatException(recordData, exception);
     }
   }
 
@@ -60,8 +73,8 @@ this.Upserter = (function() {
   Upserter.prototype.buildSublists = function() {
   }
 
-  Upserter.prototype.pushRecordToRecordList = function(recordData, record) {
-    recordListElement = new global.UpsertRecordListElement(recordData, record);
+  Upserter.prototype.pushRecordToRecordList = function(recordData, record, exception) {
+    recordListElement = new global.UpsertRecordListElement(recordData, record, exception);
     this.recordList.push(recordListElement);
   }
 
@@ -73,9 +86,8 @@ this.Upserter = (function() {
         result = this.submitRecord(record);
         this.addResultToRecord(record, result);
       } catch(exception) {
-        result    = this.common.formatException(exception);
-        exception = true;
-        this.addResultToRecord(record, result, exception);
+        result = this.common.formatException(exception);
+        this.addResultToRecord(record, result, true);
       }
     }
   }
@@ -114,15 +126,17 @@ this.Upserter = (function() {
   return Upserter;
 })();
 
-var UpsertRecordListElement;
-
 this.UpsertRecordListElement = (function() {
 
-  function UpsertRecordListElement(recordData, record) {
+  function UpsertRecordListElement(recordData, record, exception) {
     this.recordData = recordData;
     this.record     = record;
     this.result     = null;
-    this.exception  = false;
+    this.exception  = exception || false;
+
+    this.isException = function() {
+      return this.exception == true;
+    }
   }
 
   return UpsertRecordListElement;

@@ -25,9 +25,8 @@ describe('Upserter', function() {
   ];
 
   beforeEach(function () {
-    upserter        = new Upserter(recordType, recordData);
-    recordWithoutId = recordData[0];
-    recordWithId    = recordData[1];
+    upserter = new Upserter(recordType, recordData);
+    errorMessage = "ZOMG AN ERROR DONE HAPPENED";
   });
 
   describe('#init(recordType, recordData)', function() {
@@ -113,16 +112,55 @@ describe('Upserter', function() {
 
   describe('#loadOrInitializeRecord', function() {
 
-    it("should call loadRecord if an id is supplied", function() {
-      spyOn(upserter, 'loadRecord').andReturn({});
-      upserter.loadOrInitializeRecord(recordWithId);
-      expect(upserter.loadRecord).toHaveBeenCalled();
+    beforeEach(function() {
+      this.recordWithId    = recordData[1];
+      this.recordWithoutId = recordData[0];
     });
 
-    it("should call initializeRecord if an id is suppplied", function() {
-      spyOn(upserter, 'initializeRecord').andReturn({});
-      upserter.loadOrInitializeRecord(recordWithoutId);
-      expect(upserter.initializeRecord).toHaveBeenCalled();
+    describe('no exception is thrown', function() {
+
+      beforeEach(function() {
+        spyOn(upserter, 'loadRecord').andReturn({});
+        spyOn(upserter, 'initializeRecord').andReturn({});
+      });
+
+      it("should call loadRecord if an id is supplied", function() {
+        data = this.recordWithId['record_data'];
+        upserter.loadOrInitializeRecord(this.recordWithId);
+        expect(upserter.loadRecord).toHaveBeenCalledWith(data['id']);
+      });
+
+      it("should call initializeRecord if an id is suppplied", function() {
+        upserter.loadOrInitializeRecord(this.recordWithoutId);
+        expect(upserter.initializeRecord).toHaveBeenCalledWith(upserter.recordType);
+      });
+
+    });
+
+    describe('an exception is thrown', function() {
+
+      beforeEach(function() {
+        spyOn(upserter, 'loadRecord').andCallFake(function() {
+          throw errorMessage;
+        });
+        spyOn(upserter, 'initializeRecord').andCallFake(function() {
+          throw errorMessage;
+        });
+        spyOn(upserter.common, 'formatException');
+
+        this.formatter = upserter.common.formatException;
+      });
+
+      it("should call formatException on CommonObject when given an id", function() {
+        upserter.loadOrInitializeRecord(this.recordWithId);
+        expect(this.formatter).toHaveBeenCalledWith(this.recordWithId, errorMessage);
+      });
+
+      it("should call formatException on CommonObject when given no id", function() {
+        upserter.loadOrInitializeRecord(this.recordWithoutId);
+        expect(this.formatter).toHaveBeenCalledWith(this.recordWithoutId, errorMessage);
+      });
+
     });
 
   });
@@ -174,26 +212,53 @@ describe('Upserter', function() {
   describe('#pushRecordToRecordList(recordData, record)', function() {
 
     beforeEach(function() {
+      spyOn(global, 'UpsertRecordListElement').andCallThrough();
+
+      this.elementMaker   = global.UpsertRecordListElement;
       this.recordData     = {};
       this.record         = {};
       upserter.recordList = [];
-      spyOn(global, 'UpsertRecordListElement').andCallThrough();
-      upserter.pushRecordToRecordList(this.recordData, this.record);
     });
 
-    it("should add a new element to recordList", function() {
-      expect(upserter.recordList.length).toEqual(1);
+
+    describe('it is not an exception', function() {
+
+      beforeEach(function() {
+        upserter.pushRecordToRecordList(this.recordData, this.record, false);
+        this.element = upserter.recordList[0];
+      });
+
+      it("should add a new element to recordList", function() {
+        expect(upserter.recordList.length).toEqual(1);
+      });
+
+      it("should not add an exception element", function() {
+        expect(this.element.isException()).toEqual(false);
+      });
+
+      it("should call new UpsertRecordListElement", function() {
+        expect(this.elementMaker).toHaveBeenCalledWith(this.recordData, this.record, false);
+      });
+
     });
 
-    it("should call new UpsertRecordListElement", function() {
-      expect(global.UpsertRecordListElement).toHaveBeenCalledWith(this.recordData, this.record);
-    });
+    describe('it is an exception', function() {
 
-    describe('new element', function() {
+      beforeEach(function() {
+        upserter.pushRecordToRecordList(this.recordData, this.record, true);
+        this.element = upserter.recordList[0]
+      });
 
-      it("should be a new UpsertRecordListElement", function() {
-        element = new UpsertRecordListElement(this.recordData, this.record);
-        expect(element).toEqual(upserter.recordList[0]);
+      it("should add a new element to recordList", function() {
+        expect(upserter.recordList.length).toEqual(1);
+      });
+
+      it("should add an exception element", function() {
+        expect(this.element.isException()).toEqual(true);
+      });
+
+      it("should call new UpsertRecordListElement", function() {
+        expect(this.elementMaker).toHaveBeenCalledWith(this.recordData, this.record, true);
       });
 
     });
@@ -230,7 +295,7 @@ describe('Upserter', function() {
 
       beforeEach(function() {
         spyOn(upserter, 'submitRecord').andCallFake(function() {
-          throw "ZOMG AN ERROR HAPPENED";
+          throw errorMessage;
         });
         upserter.submitRecordList();
       });
@@ -332,26 +397,78 @@ describe('UpsertRecordListElement', function() {
   var recordData = { 'schwa': 'foo' };
   var record     = {};
 
-  beforeEach(function() {
-    upsertRecordListElement = new UpsertRecordListElement(recordData, record);
-  });
-
   describe('#init', function() {
 
-    it("should set the recordData", function() {
-      expect(upsertRecordListElement.recordData).toEqual(recordData);
+    describe('in all cases', function() {
+
+      beforeEach(function() {
+        this.element = new UpsertRecordListElement(recordData, record);
+      });
+
+      it("should set the recordData", function() {
+        expect(this.element.recordData).toEqual(recordData);
+      });
+
+      it("should set the record", function() {
+        expect(this.element.record).toEqual(record);
+      });
+
+      it("should set the result field to null", function() {
+        expect(this.element.result).toEqual(null);
+      });
+
     });
 
-    it("should set the record", function() {
-      expect(upsertRecordListElement.record).toEqual(record);
+    describe('it is an exception', function() {
+
+      beforeEach(function() {
+        this.element = new UpsertRecordListElement(recordData, record, true);
+      });
+
+      it("should set the exception field", function() {
+        expect(this.element.exception).toEqual(true);
+      });
+
     });
 
-    it("should set the result field to null", function() {
-      expect(upsertRecordListElement.result).toEqual(null);
+    describe('it is not an exception', function() {
+
+      beforeEach(function() {
+        this.element = new UpsertRecordListElement(recordData, record);
+      });
+
+      it("should set the exception field", function() {
+        expect(this.element.exception).toEqual(false);
+      });
+
     });
 
-    it("should set the exception field to false", function() {
-      expect(upsertRecordListElement.exception).toEqual(false);
+  });
+
+  describe('#isException', function() {
+    
+    describe('it is an exception', function() {
+
+      beforeEach(function() {
+        this.element = new UpsertRecordListElement(recordData, record, true);
+      });
+
+      it("should return true", function() {
+        expect(this.element.isException()).toEqual(true);
+      });
+
+    });
+
+    describe('it is not an exception', function() {
+
+      beforeEach(function() {
+        this.element = new UpsertRecordListElement(recordData, record);
+      });
+
+      it("should return false", function() {
+        expect(this.element.isException()).toEqual(false);
+      });
+
     });
 
   });
