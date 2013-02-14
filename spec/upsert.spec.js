@@ -33,6 +33,15 @@ describe('Upserter', function() {
   beforeEach(function () {
     upserter = new Upserter(recordType, recordData);
     errorMessage = "ZOMG AN ERROR DONE HAPPENED";
+    NetsuiteRecord = (function() {
+      function NetsuiteRecord() {
+        this.setFieldValue    = function(fieldName, value) {};
+        this.getLineItemCount = function() {};
+        this.insertLineItem   = function() {};
+        this.setLineItemValue = function(lineItemFieldName, fieldName, lineItemIndex, value) {};
+        this.removeLineItem   = function(lineItemFieldName, index) {};
+      }
+    })();
   });
 
   describe('#init(recordType, recordData)', function() {
@@ -226,7 +235,6 @@ describe('Upserter', function() {
       beforeEach(function() {
         this.exception          = new Error(errorMessage);
         this.formattedException = upserter.common.formatException(this.exception);
-
         spyOn(upserter.common, 'formatException');
         spyOn(upserter, 'setRecordField').andCallFake(function() {
           throw errorMessage;
