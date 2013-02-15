@@ -2,9 +2,13 @@ this.Upserter = (function() {
 
   function Upserter(recordType, recordData) {
     this.RECORD_DATA_KEY      = 'record_data';
-    this.SUBLIST_KEY          = 'sublist_data';
     this.DO_SOURCING_KEY      = 'do_sourcing';
     this.IGNORE_MANDATORY_KEY = 'ignore_mandatory';
+
+    this.SUBLIST_KEY          = 'sublist_data';
+    this.SUBLIST_MATCH_KEY    = 'match_field';
+    this.SUBLIST_DELETE_KEY   = 'delete';
+    this.SUBLIST_DATA_KEY     = 'item_data';
 
     this.recordType = recordType;
     this.recordData = recordData;
@@ -79,18 +83,29 @@ this.Upserter = (function() {
   }
 
   Upserter.prototype.setRecordField = function(record, fieldName, value) {
+    record.setFieldValue(fieldName, value);
   }
 
   Upserter.prototype.updateSublists = function(sublistsData) {
+    for(sublistName in sublistsData) {
+      this.populateSublist(sublistsData[sublistName]);
+    }
   }
 
   Upserter.prototype.populateSublist = function(sublistData) {
   }
 
-  Upserter.prototype.populateSublistItemFields = function(sublistItemData) {
+  Upserter.prototype.matchSublistItem = function(sublistData) {
   }
 
-  Upserter.prototype.setSublistItemField = function(sublistItem, sublistItemFieldName, value) {
+  Upserter.prototype.populateSublistItemFields = function(sublistItemData, index) {
+  }
+
+  Upserter.prototype.setSublistItemField = function(sublistItem, sublistItemFieldName,
+                                                    index, value) {
+  }
+
+  Upserter.prototype.deleteSublistItem = function(sublistFieldName, index) {
   }
 
   Upserter.prototype.pushRecordToRecordList = function(recordData, record, exception) {

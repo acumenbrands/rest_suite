@@ -12,10 +12,16 @@ describe('Upserter', function() {
         'custitem22':  '17'
       },
       'sublist_data': {
-        'item': {
-          'item':     '12345',
-          'quantity': '7'
-        }
+        'item': [
+          {
+            'match_field': 'item',
+            'delete':      'false',
+            'item_data': {
+              'item':     '12345',
+              'quantity': '7'
+            }
+          }
+        ]
       },
       'do_sourcing':      true,
       'ignore_mandatory': true
@@ -31,17 +37,20 @@ describe('Upserter', function() {
   ];
 
   beforeEach(function () {
-    upserter = new Upserter(recordType, recordData);
-    errorMessage = "ZOMG AN ERROR DONE HAPPENED";
-    NetsuiteRecord = (function() {
-      function NetsuiteRecord() {
-        this.setFieldValue    = function(fieldName, value) {};
-        this.getLineItemCount = function() {};
-        this.insertLineItem   = function() {};
-        this.setLineItemValue = function(lineItemFieldName, fieldName, lineItemIndex, value) {};
-        this.removeLineItem   = function(lineItemFieldName, index) {};
-      }
-    })();
+    upserter             = new Upserter(recordType, recordData);
+    errorMessage         = "ZOMG AN ERROR DONE HAPPENED";
+    recordWithSublist    = recordData[0];
+    recordwithoutSublist = recordData[1];
+    netsuiteRecord       = jasmine.createSpyObj(
+      'netsuiteRecord', [
+        'setFieldValue',    // (sublistFieldName, value)
+        'getLineItemCount', // (sublistFieldName)
+        'getLineItemValue', // (sublistFieldName, lineItemFieldName, index)
+        'insertLineItem',   // (sublistFieldName, index)
+        'setLineItemValue', // (sublistFieldName, lineItemFieldName, index, value)
+        'removeLineItem',   // (sublistFieldName, index)
+      ]
+    );
   });
 
   describe('#init(recordType, recordData)', function() {
@@ -54,6 +63,18 @@ describe('Upserter', function() {
 
       it("shuld define SUBLIST_KEY", function() { 
         expect(upserter.SUBLIST_KEY).toBeDefined();
+      });
+
+      it("should define SUBLIST_MATCH_KEY", function() {
+        expect(upserter.SUBLIST_MATCH_KEY).toBeDefined();
+      });
+
+      it("should define SUBLIST_DELETE_KEY", function() {
+        expect(upserter.SUBLIST_DELETE_KEY).toBeDefined();
+      });
+
+      it("should define SUBLIST_DATA_KEY", function() {
+        expect(upserter.SUBLIST_DATA_KEY).toBeDefined();
       });
 
       it("should define DO_SOURCING_KEY", function() {
@@ -255,35 +276,72 @@ describe('Upserter', function() {
 
   describe('#setRecordField(record, fieldName, value)', function() {
 
+    beforeEach(function() {
+      this.fieldName = 'displayname';
+      this.value     = 'VENDOR-MODEL-COLOR';
+      upserter.setRecordField(netsuiteRecord, this.fieldName, this.value);
+    });
+
     it("should call setFieldValue on the record object", function() {
+      expect(netsuiteRecord.setFieldValue).toHaveBeenCalledWith(this.fieldName, this.value);
     });
 
   });
 
   describe('#updateSublists(sublistsData)', function() {
 
+    beforeEach(function() {
+      this.sublistData = recordWithSublist[upserter.SUBLIST_KEY];
+      spyOn(upserter, 'populateSublist');
+      upserter.updateSublists(this.sublistData);
+    });
+
     it("should call populateSublist for each sublist given", function() {
+      expect(upserter.populateSublist.callCount).toEqual(Object.keys(this.sublistData).length);
     });
 
   });
 
   describe('#populateSublist(sublistData)', function() {
 
-    it("should call populateSublistItemFields for each sublist item given", function() {
+    it("should call matchSublistItem for each sublist item with a match field defined", function() {
+    });
+
+    it("should call populateSublistItemFields for each sublist item to be written", function() {
+    });
+
+    it("should call deleteSublistItem for each sublist item to be deleted", function() {
     });
 
   });
 
-  describe('#populateSublistItemFields(sublistItemData)', function() {
+  describe('#matchSublistItem(sublistData)', function() {
+
+    it("should call getLineItemValue", function() {
+    });
+
+    it("should return the index of a matching line item", function() {
+    });
+
+  });
+
+  describe('#populateSublistItemFields(sublistItemData, index)', function() {
 
     it("should call setSublistItemField for each sublist item field given", function() {
     });
 
   });
 
-  describe('#setSublistItemField(sublistItem, sublistItemFieldName, value)', function() {
+  describe('#setSublistItemField(sublistItem, sublistItemFieldName, index, value)', function() {
 
     it("should setSublistItemField with the given params", function() {
+    });
+
+  });
+
+  describe('#deleteSublistItem(sublistFieldName, index)', function() {
+
+    it("should call removeLineItem wth the given field name and index", function() {
     });
 
   });
