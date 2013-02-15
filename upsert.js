@@ -107,14 +107,21 @@ this.Upserter = (function() {
     return null;
   }
 
-  Upserter.prototype.populateSublistItemFields = function(record, sublistItemData, index) {
+  Upserter.prototype.populateSublistItemFields = function(record, sublistField, sublistItemData,
+                                                          index) {
+    for(fieldName in sublistItemData) {
+      value = sublistItemData[fieldName];
+      this.setSublistItemField(record, sublistField, fieldName, index, value);
+    }
   }
 
-  Upserter.prototype.setSublistItemField = function(record, sublistItem, sublistItemFieldName,
+  Upserter.prototype.setSublistItemField = function(record, sublistField, sublistItemFieldName,
                                                     index, value) {
+    record.setLineItemValue(sublistField, sublistItemFieldName, index, value);
   }
 
   Upserter.prototype.deleteSublistItem = function(record, sublistFieldName, index) {
+    record.removeLineItem(sublistFieldName, index);
   }
 
   Upserter.prototype.pushRecordToRecordList = function(recordData, record, exception) {

@@ -357,23 +357,42 @@ describe('Upserter', function() {
 
   });
 
-  describe('#populateSublistItemFields(record, sublistItemData, index)', function() {
+  describe('#populateSublistItemFields(record, sublistField, sublistItemData, index)', function() {
+
+    beforeEach(function() {
+      this.sublistItemData     = recordWithSublist[upserter.SUBLIST_KEY]['item'][0];
+      this.sublistFieldChanges = this.sublistItemData[upserter.SUBLIST_DATA_KEY];
+      this.fieldCount          = Object.keys(this.sublistFieldChanges).length;
+      spyOn(upserter, 'setSublistItemField');
+      upserter.populateSublistItemFields(netsuiteRecord, 'item', this.sublistFieldChanges, 1);
+    });
 
     it("should call setSublistItemField for each sublist item field given", function() {
+      expect(upserter.setSublistItemField.callCount).toEqual(this.fieldCount);
     });
 
   });
 
-  describe('#setSublistItemField(record, sublistItem, sublistItemFieldName, index, value)', function() {
+  describe('#setSublistItemField(record, sublistField, sublistItemFieldName, index, value)', function() {
 
-    it("should setSublistItemField with the given params", function() {
+    beforeEach(function() {
+      upserter.setSublistItemField(netsuiteRecord, 'item', 'item', 1, '12345');
+    });
+
+    it("should setLineItemValue with the given params", function() {
+      expect(netsuiteRecord.setLineItemValue).toHaveBeenCalledWith('item', 'item', 1, '12345');
     });
 
   });
 
   describe('#deleteSublistItem(record, sublistFieldName, index)', function() {
 
+    beforeEach(function() {
+      upserter.deleteSublistItem(netsuiteRecord, 'item', 1);
+    });
+
     it("should call removeLineItem wth the given field name and index", function() {
+      expect(netsuiteRecord.removeLineItem).toHaveBeenCalledWith('item', 1);
     });
 
   });
