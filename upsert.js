@@ -93,6 +93,22 @@ this.Upserter = (function() {
   }
 
   Upserter.prototype.populateSublist = function(record, sublistName, sublistData) {
+    if(sublistData.hasOwnProperty(this.SUBLIST_MATCH_KEY)) {
+      matchField = sublistData[this.SUBLIST_MATCH_KEY];
+      matchValue = sublistData[this.SUBLIST_DATA_KEY][matchField];
+      index = this.matchSublistItem(record, sublistName, sublistData, matchField, matchValue);
+      if(!index) { throw "Sublist item not matched"; };
+    } else {
+      index = (record.getLineItemCount() + 1);
+      this.insertSublistItem(record, sublistName, index);
+    }
+
+    if(sublistData.hasOwnProperty(this.SUBLIST_DELETE_KEY) &&
+       Boolean(sublistData[this.SUBLIST_DELETE_KEY])) {
+      this.deleteSublistItem(record, sublistName, index);
+    } else {
+      this.populateSublistItemFields(record, sublistName, sublistData, index);
+    }
   }
 
   Upserter.prototype.matchSublistItem = function(record, sublistName, sublistItemData,
@@ -105,6 +121,10 @@ this.Upserter = (function() {
     }
     
     return null;
+  }
+
+  Upserter.prototype.insertSublistItem = function(record, sublistName, index) {
+    record.insertLineItem(sublistName, index);
   }
 
   Upserter.prototype.populateSublistItemFields = function(record, sublistField, sublistItemData,

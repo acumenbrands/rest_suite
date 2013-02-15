@@ -320,14 +320,21 @@ describe('Upserter', function() {
     beforeEach(function() {
       this.sublistData = recordWithSublist[upserter.SUBLIST_KEY]['item'];
       spyOn(upserter, 'matchSublistItem');
+      spyOn(upserter, 'insertSublistItem');
       spyOn(upserter, 'populateSublistItemFields');
       spyOn(upserter, 'deleteSublistItem');
+      netsuiteRecord.getLineItemCount = function() {};
+      spyOn(netsuiteRecord, 'getLineItemCount').andReturn(7);
       console.log(this.sublistData);
-      upserter.populateSublist(netsuiteRecord, this.sublistData);
+      upserter.populateSublist(netsuiteRecord, 'item', this.sublistData);
     });
 
     it("should call matchSublistItem for each sublist item with a match field", function() {
       expect(upserter.matchSublistItem.callCount).toEqual(2);
+    });
+
+    it("should call insertSublistItem for each sublist item without a match field", function() {
+      expect(upserter.insertSublistItem.callCount).toEqual(1);
     });
 
     it("should call populateSublistItemFields for each sublist item to be written", function() {
@@ -365,6 +372,20 @@ describe('Upserter', function() {
 
     it("should return the index of a matching line item", function() {
       expect(this.returnValue).toEqual(1);
+    });
+
+  });
+
+  describe('#insertSublistItem(record, sublistName, index)', function() {
+
+    beforeEach(function() {
+      this.sublistName = 'item';
+      this.index       = 7;
+      upserter.insertSublistItem(netsuiteRecord, this.sublistName, this.index);
+    });
+
+    it("should call insertLineItem on the record with the given params", function() {
+      expect(netsuiteRecord.insertLineItem).toHaveBeenCalledWith(this.sublistName, this.index);
     });
 
   });
