@@ -315,15 +315,27 @@ describe('Upserter', function() {
 
   });
 
-  describe('#populateSublist(record, sublistData)', function() {
+  describe('#populateSublist(record, sublistName, sublistData)', function() {
+
+    beforeEach(function() {
+      this.sublistData = recordWithSublist[upserter.SUBLIST_KEY]['item'];
+      spyOn(upserter, 'matchSublistItem');
+      spyOn(upserter, 'populateSublistItemFields');
+      spyOn(upserter, 'deleteSublistItem');
+      console.log(this.sublistData);
+      upserter.populateSublist(netsuiteRecord, this.sublistData);
+    });
 
     it("should call matchSublistItem for each sublist item with a match field", function() {
+      expect(upserter.matchSublistItem.callCount).toEqual(2);
     });
 
     it("should call populateSublistItemFields for each sublist item to be written", function() {
+      expect(upserter.populateSublistItemFields.callCount).toEqual(2);
     });
 
     it("should call deleteSublistItem for each sublist item to be deleted", function() {
+      expect(upserter.deleteSublistItem.callCount).toEqual(1);
     });
 
   });

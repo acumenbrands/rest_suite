@@ -92,7 +92,7 @@ this.Upserter = (function() {
     }
   }
 
-  Upserter.prototype.populateSublist = function(record, sublistData) {
+  Upserter.prototype.populateSublist = function(record, sublistName, sublistData) {
   }
 
   Upserter.prototype.matchSublistItem = function(record, sublistName, sublistItemData,
