@@ -75,7 +75,7 @@ this.Upserter = (function() {
 
       if(recordData.hasOwnProperty(this.SUBLIST_KEY)) {
         sublistData = recordData[this.SUBLIST_KEY];
-        this.updateSublists(sublistData);
+        this.updateSublists(record, sublistData);
       }
     } catch(exception) {
       record = this.common.formatException(exception);
@@ -86,26 +86,35 @@ this.Upserter = (function() {
     record.setFieldValue(fieldName, value);
   }
 
-  Upserter.prototype.updateSublists = function(sublistsData) {
+  Upserter.prototype.updateSublists = function(record, sublistsData) {
     for(sublistName in sublistsData) {
-      this.populateSublist(sublistsData[sublistName]);
+      this.populateSublist(record, sublistName, sublistsData[sublistName]);
     }
   }
 
-  Upserter.prototype.populateSublist = function(sublistData) {
+  Upserter.prototype.populateSublist = function(record, sublistData) {
   }
 
-  Upserter.prototype.matchSublistItem = function(sublistData) {
+  Upserter.prototype.matchSublistItem = function(record, sublistName, sublistItemData,
+                                                 matchField, matchValue) {
+    for(index=1; index<record.getLineItemCount(sublistName)+1; index++) {
+      checkValue = record.getLineItemValue(sublistName, matchField, index);
+      if(checkValue == matchValue) {
+        return index;
+      }
+    }
+    
+    return null;
   }
 
-  Upserter.prototype.populateSublistItemFields = function(sublistItemData, index) {
+  Upserter.prototype.populateSublistItemFields = function(record, sublistItemData, index) {
   }
 
-  Upserter.prototype.setSublistItemField = function(sublistItem, sublistItemFieldName,
+  Upserter.prototype.setSublistItemField = function(record, sublistItem, sublistItemFieldName,
                                                     index, value) {
   }
 
-  Upserter.prototype.deleteSublistItem = function(sublistFieldName, index) {
+  Upserter.prototype.deleteSublistItem = function(record, sublistFieldName, index) {
   }
 
   Upserter.prototype.pushRecordToRecordList = function(recordData, record, exception) {

@@ -20,6 +20,19 @@ describe('Upserter', function() {
               'item':     '12345',
               'quantity': '7'
             }
+          },
+          {
+            'match_field': 'item',
+            'delete':      'true',
+            'item_data': {
+              'item': '67890'
+            }
+          },
+          {
+            'item_data': {
+              'item':     '34567',
+              'quantity': '15'
+            }
           }
         ]
       },
@@ -288,12 +301,12 @@ describe('Upserter', function() {
 
   });
 
-  describe('#updateSublists(sublistsData)', function() {
+  describe('#updateSublists(record, sublistsData)', function() {
 
     beforeEach(function() {
       this.sublistData = recordWithSublist[upserter.SUBLIST_KEY];
       spyOn(upserter, 'populateSublist');
-      upserter.updateSublists(this.sublistData);
+      upserter.updateSublists(netsuiteRecord, this.sublistData);
     });
 
     it("should call populateSublist for each sublist given", function() {
@@ -302,9 +315,9 @@ describe('Upserter', function() {
 
   });
 
-  describe('#populateSublist(sublistData)', function() {
+  describe('#populateSublist(record, sublistData)', function() {
 
-    it("should call matchSublistItem for each sublist item with a match field defined", function() {
+    it("should call matchSublistItem for each sublist item with a match field", function() {
     });
 
     it("should call populateSublistItemFields for each sublist item to be written", function() {
@@ -315,31 +328,50 @@ describe('Upserter', function() {
 
   });
 
-  describe('#matchSublistItem(sublistData)', function() {
+  describe('#matchSublistItem(record, sublistName, sublistItemData)', function() {
+
+    beforeEach(function() {
+      netsuiteRecord.getLineItemCount = function() {};
+      spyOn(netsuiteRecord, 'getLineItemCount').andReturn(1);
+      netsuiteRecord.getLineItemValue = function() {};
+      spyOn(netsuiteRecord, 'getLineItemValue').andReturn('12345');
+      this.sublistName     = 'item';
+      this.matchField      = 'item';
+      this.matchValue      = '12345';
+      this.sublistItemData = recordWithSublist[upserter.SUBLIST_KEY][this.sublistName][0];
+      this.returnValue     = upserter.matchSublistItem(netsuiteRecord, 'item', this.sublistData,
+                                                       this.matchField, this.matchValue);
+    });
+
+    it("should call getLineItemCount", function() {
+      expect(netsuiteRecord.getLineItemCount).toHaveBeenCalledWith('item');
+    });
 
     it("should call getLineItemValue", function() {
+      expect(netsuiteRecord.getLineItemValue).toHaveBeenCalledWith('item', 'item', 1);
     });
 
     it("should return the index of a matching line item", function() {
+      expect(this.returnValue).toEqual(1);
     });
 
   });
 
-  describe('#populateSublistItemFields(sublistItemData, index)', function() {
+  describe('#populateSublistItemFields(record, sublistItemData, index)', function() {
 
     it("should call setSublistItemField for each sublist item field given", function() {
     });
 
   });
 
-  describe('#setSublistItemField(sublistItem, sublistItemFieldName, index, value)', function() {
+  describe('#setSublistItemField(record, sublistItem, sublistItemFieldName, index, value)', function() {
 
     it("should setSublistItemField with the given params", function() {
     });
 
   });
 
-  describe('#deleteSublistItem(sublistFieldName, index)', function() {
+  describe('#deleteSublistItem(record, sublistFieldName, index)', function() {
 
     it("should call removeLineItem wth the given field name and index", function() {
     });
