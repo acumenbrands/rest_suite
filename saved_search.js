@@ -33,10 +33,6 @@ this.SavedSearch = (function() {
     this.searchColumns.push(column);
   }
 
-  SavedSearch.prototype.getSearchFilter = function() {
-    return this.searchFilters[0];
-  }
-
   SavedSearch.prototype.getParams = function() {
     return {
       'recordType': this.recordType,
@@ -47,12 +43,33 @@ this.SavedSearch = (function() {
   }
 
   SavedSearch.prototype.executeSearch = function() {
+    while(true) {
+      try {
+        resultsBlock = this.searchIteration();
+        if(this.isExecutionDone(resultsBlock)) { break; }
+      } catch(exception) {
+        this.results = this.common.formatException(exception);
+        break;
+      }
+    }
+  }
+
+  SavedSearch.prototype.searchIteration = function() {
+    resultsBlock = this.getSearchResults();
+    this.updateBoundAndFilter(resultsBlock);
+    this.appendResults(resultsBlock);
+    return resultsBlock;
   }
 
   SavedSearch.prototype.getSearchResults = function() {
-    console.log("schwa");
     return nlapiSearchRecord(this.recordType, this.searchId,
                              this.searchFilters, this.searchColumns);
+  }
+
+  SavedSearch.prototype.updateBoundAndFilter = function(resultsBlock) {
+    newLowerBound = this.extractLowerBound(resultsBlock);
+    this.lowerBound = newLowerBound;
+    this.createSearchFilter();
   }
 
   SavedSearch.prototype.extractLowerBound = function(resultsBlock) {
@@ -60,10 +77,8 @@ this.SavedSearch = (function() {
     return resultRow.getId();
   }
 
-  SavedSearch.prototype.updateBoundAndFilter = function(resultsBlock) {
-    newLowerBound = this.extractLowerBound(resultsBlock);
-    this.lowerBound = newLowerBound;
-    this.createSearchFilter();
+  SavedSearch.prototype.appendResults = function(resultsBlock) {
+    this.results = this.results.concat(resultsBlock);
   }
 
   SavedSearch.prototype.isExecutionDone = function(resultsBlock) {

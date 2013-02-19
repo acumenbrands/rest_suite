@@ -159,50 +159,93 @@ describe("SavedSearch", function() {
 
   describe('#executeSearch', function() {
 
-    // beforeEach(function() {
-    //   this.loopCount = savedSearch.batchSize / 1000;
-    //   spyOn(savedSearch, 'getSearchResults');
-    //   spyOn(savedSearch, 'extractLowerBound');
-    //   spyOn(savedSearch, 'updateBoundAndFilter');
-    //   spyOn(savedSearch.common, 'formatReply');
-    //   savedSearch.executeSearch();
-    // });
+    beforeEach(function() {
+      spyOn(savedSearch, 'searchIteration');
+    });
 
-    // it("should call getSearchResults for each 1k record slice of the batchs size", function() {
-    //   expect(savedSearch.getSearchResults.callCount).toEqual(this.loopCount);
-    // });
+    describe('normal operation', function() {
 
-    // it("should accumulate search results", function() {
-    //   expect(savedSearch.results).toEqual(Array(savedSearch.batchSize));
-    // });
+      beforeEach(function() {
+        this.loopCount = savedSearch.batchSize / 1000;
+        spyOn(savedSearch, 'isExecutionDone').andCallThrough();
+        savedSearch.executeSearch();
+      });
 
-    // it("should call extractLowerBound for each 1k record slive of the batch size", function() {
-    //   expect(savedSearch.extractLowerBound.callCount).toEqual(this.loopCount);
-    // });
+      it("should call searchIteration for each 1k batch of results", function() {
+        expect(savedSearch.searchIteration.callCount).toEqual(this.loopCount);
+      });
 
-    // it("should call updateBoundAndFilter with the last record id fetched", function() {
-    //   expect(savedSearch.updateBoundAndFilter.callCount).toEqual(this.loopCount);
-    // });
+      it("should call isExecutionDone for each 1k batch of results", function() {
+        expect(savedSearch.isExecutionDone.callCount).toEqual(this.loopCount);
+      });
 
-    // it("should call formatReply on CommobObject", function() {
-    //   expect(savedSearch.common.formatReply).toHaveBeenCalledWith(savedSearch.getParams(),
-    //                                                               savedSearch.results)
-    // });
+    });
 
     describe('#isExecutionDone returns true after the first iteration', function() {
 
-      // beforeEach(function() {
-      //   spyOn(savedSearch, 'isExecutionDone').andReturn(true);
-      // });
+      beforeEach(function() {
+        spyOn(savedSearch, 'isExecutionDone').andReturn(true);
+        savedSearch.executeSearch();
+      });
 
-      // it("should only call getSearchResults once", function() {
-      //   expect(savedSearch.getSearchResults.callCount).toEqual(1);
-      // });
+      it("should call searchIteration once", function() {
+        expect(savedSearch.searchIteration.callCount).toEqual(1);
+      });
 
-      // it("should only call extractLowerBound once", function() {
-      //   expect(savedSearch.extractLowerBound.callCount).toEqual(1);
-      // });
+      it("should call isExecutionDone once", function() {
+        expect(savedSearch.isExecutionDone.callCount).toEqual(1);
+      });
 
+    });
+
+    describe('an exception occurs', function() {
+
+      beforeEach(function() {
+        this.exception = new Error("An error occured");
+        this.formattedException = savedSearch.common.formatException(this.exception);
+        spyOn(savedSearch.common, 'formatException').andReturn(this.formattedException);
+        savedSearch.searchIteration = jasmine.createSpy('zomgspy').andCallFake(function() {
+          throw this.exception;
+        });
+        savedSearch.executeSearch();
+      });
+
+      it("should call formatException on CommonObject", function() {
+        expect(savedSearch.common.formatException).toHaveBeenCalledWith(this.exception);
+      });
+
+      it("should set results to the formatted exception", function() {
+        expect(savedSearch.results).toEqual(this.formattedException);
+      });
+
+    });
+
+  });
+
+  describe('#searchIteration', function() {
+
+    beforeEach(function() {
+      this.resultsBlock = [{}];
+      spyOn(savedSearch, 'getSearchResults').andReturn(this.resultsBlock);
+      spyOn(savedSearch, 'updateBoundAndFilter');
+      spyOn(savedSearch, 'appendResults');
+      this.returnValue = savedSearch.searchIteration();
+    });
+
+    it("should call getSearchResults", function() {
+      expect(savedSearch.getSearchResults).toHaveBeenCalled();
+    });
+
+    it("should call updateBoundAndFilter", function() {
+      expect(savedSearch.updateBoundAndFilter).toHaveBeenCalledWith(this.resultsBlock);
+    });
+
+    it("should call appendResults", function() {
+      expect(savedSearch.appendResults).toHaveBeenCalledWith(this.resultsBlock);
+    });
+
+    it("should return the resultsBlock", function() {
+      expect(this.returnValue).toEqual(this.resultsBlock);
     });
 
   });
@@ -233,7 +276,6 @@ describe("SavedSearch", function() {
     });
     
     it("should call getId on the resultRow", function() {
-      console.log(this.resultsBlock);
       expect(this.resultRow.getId).toHaveBeenCalled();
     });
 
@@ -263,6 +305,20 @@ describe("SavedSearch", function() {
 
     it("should call createSearchFilter", function() {
       expect(savedSearch.createSearchFilter).toHaveBeenCalled();
+    });
+
+  });
+
+  describe('#appendResults(resultsBlock)', function() {
+
+    beforeEach(function() {
+      savedSearch.results = [{}];
+      this.resultsBlock   = [{}];
+      savedSearch.appendResults(this.resultsBlock);
+    });
+
+    it("should add resultsBlock to results", function() {
+      expect(savedSearch.results).toEqual([{}, {}]);
     });
 
   });
