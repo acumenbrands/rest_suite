@@ -6,77 +6,82 @@ describe("SavedSearch", function() {
   var recordType = 'inventoryitem';
   var searchId   = '12345';
   var lowerBound = '1000';
-  var batchSize  = '10000';
+  var batchSize  = '2000';
 
-  var searchFilter = jasmine.createSpyObj('nlobjSearchFilter', ['foo']);
-  var searchColumn = jasmine.createSpyObj('nlobjSearchColumn', ['setSort']);
+  var searchFilter = jasmine.createSpyObj('searchFilter', ['lowerBound']);
+  var searchColumn = jasmine.createSpyObj('searchColumn', ['setSort']);
 
   beforeEach(function() {
-    savedSearch = new SavedSearch(recordType, searchId, lowerBound, batchSize);
     global.nlapiSearchRecord = function() {};
     spyOn(global, 'nlapiSearchRecord').andReturn(new Array(1000));
-    global.nlapiSearchFilter = function() {};
-    spyOn(global, 'nlapiSearchFilter').andReturn(searchFilter);
-    global.nlapiSearchColumn = function() {};
-    spyOn(global, 'nlapiSearchColumn').andReturn(searchcolumn);
+    global.nlobjSearchFilter = function() {};
+    spyOn(global, 'nlobjSearchFilter').andReturn(searchFilter);
+    global.nlobjSearchColumn = function() {};
+    spyOn(global, 'nlobjSearchColumn').andReturn(searchColumn);
+    savedSearch = new SavedSearch(recordType, searchId, lowerBound, batchSize);
   });
 
   describe('#init(recordType, searchId, lowerBound, batchSize)', function() {
 
     beforeEach(function() {
-      spyOn(savedSearch, 'createSearchFilter');
-      spyOn(savedSearch, 'createSearchColumn');
+      spyOn(SavedSearch.prototype, 'createSearchFilter');
+      spyOn(SavedSearch.prototype, 'createSearchColumn');
+      this.newSavedSearch = new SavedSearch(recordType, searchId, lowerBound, batchSize);
     });
     
+    it("should populate the common object", function() {
+      expect(this.newSavedSearch.common).toEqual(new CommonObject());
+    });
+
     it("should set the record type", function() {
-      expect(savedSearch.recordType).toEqual(recordType);
+      expect(this.newSavedSearch.recordType).toEqual(recordType);
     });
 
     it("should set the search id", function() {
-      expect(savedSearch.searchId).toEqual(searchId);
-    });
-
-    it("should call createSearchFilter", function() {
-      expect(savedSearch.createSearchFilter).toHaveBeenCalledWith(savedSearch.lowerBound);
-    });
-
-    it("should populate the search filters", function() {
-      expect(savedSearch.searchFilters[0] instanceof nlobjSearchFilter).toEqual(true);
-    });
-
-    it("should create a new search column", function() {
-      expect(savedSearch.createSearchColumn).toHaveBeenCalled();
-    });
-
-    it("should set the sort mode on the newly created search column", function() {
-      expect(savedSearch.searchColumns[0].setSort).toHaveBeenCalled();
-    });
-
-    it("should populate the search columns", function() {
-      expect(savedSearch.searchColumns[0] instanceof nlobjSearchColumn).toEqual(true);
+      expect(this.newSavedSearch.searchId).toEqual(searchId);
     });
 
     it("should set the lower bound", function() {
-      expect(savedSearch.lowerBound).toEqual(lowerBound);
+      expect(this.newSavedSearch.lowerBound).toEqual(lowerBound);
     });
 
-    it("should set the batch size", function() {
-      expect(savedSearch.batchSize).toEqual(batchSize);
+    it("should set the original lower bound", function() {
+      expect(this.newSavedSearch.originalLowerBound).toEqual(lowerBound);
+    });
+
+    it("should set the batch size to an integer", function() {
+      expect(this.newSavedSearch.batchSize).toEqual(parseInt(batchSize));
+    });
+
+    it("should set the search filters to an empty list", function() {
+      expect(this.newSavedSearch.searchFilters).toEqual([]);
+    });
+
+    it("should set the search columns to an empty list", function() {
+      expect(this.newSavedSearch.searchColumns).toEqual([]);
     });
 
     it("should set the results to an empty list", function() {
-      expect(savedSearch.results).toEqual([]);
+      expect(this.newSavedSearch.results).toEqual([]);
+    });
+
+    it("should call createSearchFilter", function() {
+      expect(this.newSavedSearch.createSearchFilter).toHaveBeenCalled();
+    });
+
+    it("should call createSearchColumn", function() {
+      expect(this.newSavedSearch.createSearchColumn).toHaveBeenCalled();
     });
 
     describe('a batch size that is not a multiple of one thousand', function() {
 
       beforeEach(function() {
-        this.batchSize   = '1500';
-        this.savedSearch = new SavedSearch(recordType, searchId, lowerBound, this.batchSize);
+        this.batchSize   = '1376';
+        this.searchWithOffBatch = new SavedSearch(recordType, searchId, lowerBound, this.batchSize);
       });
 
       it("should set the batch size to the next-highest multiple of one thousand", function() {
-        expect(this.savedSearch.batchSize).toEqual(2000);
+        expect(this.searchWithOffBatch.batchSize).toEqual(2000);
       });
 
     });
@@ -90,8 +95,16 @@ describe("SavedSearch", function() {
     });
 
     it("should create a new search filter with the given params", function() {
-      expect(nlobjSearchFilter.nlobjSearchFilter).toHaveBeenCalledWith('internalidnumber', null,
-                                                                       'greaterthan', lowerBound);
+      expect(global.nlobjSearchFilter).toHaveBeenCalledWith('internalidnumber', null,
+                                                            'greaterthan', lowerBound);
+    });
+
+    it("should populate the search filters", function() {
+      expect(savedSearch.searchFilters[0]).toEqual(searchFilter);
+    });
+
+    it("should only populate search filters with a single element", function() {
+      expect(savedSearch.searchFilters.length).toEqual(1);
     });
 
   });
@@ -103,19 +116,19 @@ describe("SavedSearch", function() {
     });
 
     it("should create a new search column with the given params", function() {
-      expect(nlobjSearchcolumn.nlobjSearchColumn).toHaveBeenCalledWith('internaid', null);
+      expect(global.nlobjSearchColumn).toHaveBeenCalledWith('internalid', null);
     });
 
-  });
-
-  describe('#getSearchFilter', function() {
-
-    beforeEach(function() {
-      this.filter = savedSearch.getSearchFilter();
+    it("should set the sort mode on the newly created search column", function() {
+      expect(savedSearch.searchColumns[0].setSort).toHaveBeenCalled();
     });
 
-    it("should return the first element of the search filters", function() {
-      expect(this.filter).toEqual(savedSearch.searchFilters[0]);
+    it("should populate the search columns", function() {
+      expect(savedSearch.searchColumns[0]).toEqual(searchColumn);
+    });
+
+    it("should only populate search columns with a single element", function() {
+      expect(savedSearch.searchColumns.length).toEqual(1);
     });
 
   });
@@ -139,76 +152,57 @@ describe("SavedSearch", function() {
     });
 
     it("should populate the value for lowerBound", function() {
-      expect(this.params['lowerBound']).toEqual(savedSearch.lowerBound);
+      expect(this.params['lowerBound']).toEqual(savedSearch.originalLowerBound);
     });
 
   });
 
   describe('#executeSearch', function() {
 
-    beforeEach(function() {
-      this.loopCount = savedSearch.batchSize / 1000;
-      spyOn(savedSearch, 'getSearchResults');
-      spyOn(savedSearch, 'extractLowerBound');
-      spyOn(savedSearch, 'updateBoundAndFilter');
-      spyOn(savedSearch.common, 'formatReply');
-      savedSearch.executeSearch();
-    });
+    // beforeEach(function() {
+    //   this.loopCount = savedSearch.batchSize / 1000;
+    //   spyOn(savedSearch, 'getSearchResults');
+    //   spyOn(savedSearch, 'extractLowerBound');
+    //   spyOn(savedSearch, 'updateBoundAndFilter');
+    //   spyOn(savedSearch.common, 'formatReply');
+    //   savedSearch.executeSearch();
+    // });
 
-    it("should call getSearchResults for each 1k record slice of the batchs size", function() {
-      expect(savedSearch.getSearchResults.callCount).toEqual(this.loopCount);
-    });
+    // it("should call getSearchResults for each 1k record slice of the batchs size", function() {
+    //   expect(savedSearch.getSearchResults.callCount).toEqual(this.loopCount);
+    // });
 
-    it("should accumulate search results", function() {
-      expect(savedSearch.results).toEqual(Array(savedSearch.batchSize));
-    });
+    // it("should accumulate search results", function() {
+    //   expect(savedSearch.results).toEqual(Array(savedSearch.batchSize));
+    // });
 
-    it("should call extractLowerBound for each 1k record slive of the batch size", function() {
-      expect(savedSearch.extractLowerBound.callCount).toEqual(this.loopCount);
-    });
+    // it("should call extractLowerBound for each 1k record slive of the batch size", function() {
+    //   expect(savedSearch.extractLowerBound.callCount).toEqual(this.loopCount);
+    // });
 
-    it("should call updateBoundAndFilter with the last record id fetched", function() {
-      expect(savedSearch.updateBoundAndFilter.callCount).toEqual(this.loopCount);
-    });
+    // it("should call updateBoundAndFilter with the last record id fetched", function() {
+    //   expect(savedSearch.updateBoundAndFilter.callCount).toEqual(this.loopCount);
+    // });
 
-    it("should call formatReply on CommobObject", function() {
-      expect(savedSearch.common.formatReply).toHaveBeenCalledWith(savedSearch.getParams(),
-                                                                  savedSearch.results)
-    });
+    // it("should call formatReply on CommobObject", function() {
+    //   expect(savedSearch.common.formatReply).toHaveBeenCalledWith(savedSearch.getParams(),
+    //                                                               savedSearch.results)
+    // });
 
-  });
+    describe('#isExecutionDone returns true after the first iteration', function() {
 
-  describe('#extractLowerBound(resultRow)', function() {
-    
-    it("should call getId on the resultRow", function() {
-      expect(this.resultRow.getId).toHaveBeenCalled();
-    });
+      // beforeEach(function() {
+      //   spyOn(savedSearch, 'isExecutionDone').andReturn(true);
+      // });
 
-    it("should return the lowerBound", function() {
-      expect(this.bound).toEqual(this.recordId);
-    });
+      // it("should only call getSearchResults once", function() {
+      //   expect(savedSearch.getSearchResults.callCount).toEqual(1);
+      // });
 
-  });
+      // it("should only call extractLowerBound once", function() {
+      //   expect(savedSearch.extractLowerBound.callCount).toEqual(1);
+      // });
 
-  describe('#updateBoundAndFilter(newLowerBound)', function() {
-
-    beforeEach(function() {
-      this.newLowerBound = '12345678';
-      savedSearch.updateBoundAndFilter(this.newLowerBound);
-    });
-
-    it("should set the lowerBound", function() {
-      expect(savedSearch.lowerBound).toEqual(this.newLowerBound);
-    });
-
-    it("should create a new search filter with the new lower bound", function() {
-      expect(nlobjSearchFilter.nlobjSearchFilter).toHaveBeenCalledWith('internalidnumber', null,
-                                                                       'greaterthan',
-                                                                       this.newLowerBound);
-    });
-
-    it("should populate the search filters", function() {
-      expect(savedSearch.searchFilters[0] instanceof nlobjSearchFilter).toEqual(true);
     });
 
   });
@@ -224,6 +218,95 @@ describe("SavedSearch", function() {
                                                             savedSearch.searchId,
                                                             savedSearch.searchFilters,
                                                             savedSearch.searchColumns);
+    });
+
+  });
+
+  describe('#extractLowerBound(resultsBlock)', function() {
+
+    beforeEach(function() {
+      this.newLowerBound = '7890';
+      this.resultRow = { getId: function() {} };
+      spyOn(this.resultRow, 'getId').andReturn(this.newLowerBound);
+      this.resultsBlock = ([{}, {}, {}, {}, this.resultRow]);
+      this.recordId = savedSearch.extractLowerBound(this.resultsBlock);
+    });
+    
+    it("should call getId on the resultRow", function() {
+      console.log(this.resultsBlock);
+      expect(this.resultRow.getId).toHaveBeenCalled();
+    });
+
+    it("should return the lowerBound", function() {
+      expect(this.newLowerBound).toEqual(this.recordId);
+    });
+
+  });
+
+  describe('#updateBoundAndFilter(resultsBlock)', function() {
+
+    beforeEach(function() {
+      this.resultsBlock  = [{}, {}, {}, {}, {}];
+      this.newLowerBound = '7890';
+      spyOn(savedSearch, 'createSearchFilter');
+      spyOn(savedSearch, 'extractLowerBound').andReturn(this.newLowerBound);
+      savedSearch.updateBoundAndFilter(this.resultsBlock);
+    });
+
+    it("should call extractLowerBound", function() {
+      expect(savedSearch.extractLowerBound).toHaveBeenCalledWith(this.resultsBlock);
+    });
+
+    it("should set the lowerBound", function() {
+      expect(savedSearch.lowerBound).toEqual(this.newLowerBound);
+    });
+
+    it("should call createSearchFilter", function() {
+      expect(savedSearch.createSearchFilter).toHaveBeenCalled();
+    });
+
+  });
+
+  describe('#isExecutionDone(resultsBlock)', function() {
+
+    it("should be true if resultsBlock is undefined", function() {
+      expect(savedSearch.isExecutionDone(null)).toEqual(true);
+    });
+
+    it("should be true if resultsBlock is less than one thousand elements", function() {
+      resultsBlock = [{}, {}];
+      expect(savedSearch.isExecutionDone(resultsBlock)).toEqual(true);
+    });
+
+    it("should be true if results has an element count equal to the batch size", function() {
+      resultsBlock        = new Array(1000);
+      savedSearch.results = new Array(savedSearch.batchSize);
+      expect(savedSearch.isExecutionDone(resultsBlock)).toEqual(true);
+    });
+
+    it("should be false if resultsBlock length is 1k and results is shorter batch size", function() {
+      resultsBlock = new Array(1000);
+      savedSearch.results = [];
+      expect(savedSearch.isExecutionDone(resultsBlock)).toEqual(false);
+    });
+
+  });
+
+  describe('#reply', function() {
+
+    beforeEach(function() {
+      spyOn(savedSearch.common, 'formatReply').andCallThrough();
+      this.params  = savedSearch.getParams();
+      this.value   = savedSearch.results;
+      this.reply   = savedSearch.reply(this.params, this.value);
+    });
+
+    it("should call formatReply on CommobObject", function() {
+      expect(savedSearch.common.formatReply).toHaveBeenCalledWith(this.params, this.value);
+    });
+
+    it("should return the results for formatReply", function() {
+      expect(this.reply).toEqual(savedSearch.common.formatReply(this.params, this.value));
     });
 
   });
