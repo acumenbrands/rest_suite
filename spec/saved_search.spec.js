@@ -163,37 +163,25 @@ describe("SavedSearch", function() {
       spyOn(savedSearch, 'searchIteration');
     });
 
-    describe('normal operation', function() {
+    describe('execution halts after #isExecutionDone returns true', function() {
 
       beforeEach(function() {
-        this.loopCount = savedSearch.batchSize / 1000;
-        spyOn(savedSearch, 'isExecutionDone').andCallThrough();
-        savedSearch.executeSearch();
-      });
-
-      it("should call searchIteration for each 1k batch of results", function() {
-        expect(savedSearch.searchIteration.callCount).toEqual(this.loopCount);
-      });
-
-      it("should call isExecutionDone for each 1k batch of results", function() {
-        expect(savedSearch.isExecutionDone.callCount).toEqual(this.loopCount);
-      });
-
-    });
-
-    describe('#isExecutionDone returns true after the first iteration', function() {
-
-      beforeEach(function() {
-        spyOn(savedSearch, 'isExecutionDone').andReturn(true);
+        spyOn(savedSearch, 'isExecutionDone').andCallFake(function() {
+          if(savedSearch.isExecutionDone.callCount == 3) {
+            return true;
+          } else {
+            return false;
+          }
+        });
         savedSearch.executeSearch();
       });
 
       it("should call searchIteration once", function() {
-        expect(savedSearch.searchIteration.callCount).toEqual(1);
+        expect(savedSearch.searchIteration.callCount).toEqual(3);
       });
 
       it("should call isExecutionDone once", function() {
-        expect(savedSearch.isExecutionDone.callCount).toEqual(1);
+        expect(savedSearch.isExecutionDone.callCount).toEqual(3);
       });
 
     });
@@ -201,17 +189,17 @@ describe("SavedSearch", function() {
     describe('an exception occurs', function() {
 
       beforeEach(function() {
-        this.exception = new Error("An error occured");
-        this.formattedException = savedSearch.common.formatException(this.exception);
+        global.exception = new Error("An error occured");
+        this.formattedException = savedSearch.common.formatException(global.exception);
         spyOn(savedSearch.common, 'formatException').andReturn(this.formattedException);
         savedSearch.searchIteration = jasmine.createSpy('zomgspy').andCallFake(function() {
-          throw this.exception;
+          throw global.exception;
         });
         savedSearch.executeSearch();
       });
 
       it("should call formatException on CommonObject", function() {
-        expect(savedSearch.common.formatException).toHaveBeenCalledWith(this.exception);
+        expect(savedSearch.common.formatException).toHaveBeenCalledWith(global.exception);
       });
 
       it("should set results to the formatted exception", function() {
