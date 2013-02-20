@@ -49,6 +49,10 @@ describe("SavedSearch", function() {
       expect(this.newSavedSearch.originalLowerBound).toEqual(lowerBound);
     });
 
+    it("should set the original batch size", function() {
+      expect(this.newSavedSearch.originalBatchSize).toEqual(batchSize);
+    });
+
     it("should set the batch size to an integer", function() {
       expect(this.newSavedSearch.batchSize).toEqual(parseInt(batchSize));
     });
@@ -148,7 +152,7 @@ describe("SavedSearch", function() {
     });
 
     it("should populate the value for batchSize", function() {
-      expect(this.params['batchSize']).toEqual(savedSearch.batchSize);
+      expect(this.params['batchSize']).toEqual(savedSearch.originalBatchSize);
     });
 
     it("should populate the value for lowerBound", function() {

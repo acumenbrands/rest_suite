@@ -1,16 +1,19 @@
 this.SavedSearch = (function() {
 
   function SavedSearch(recordType, searchId, lowerBound, batchSize) {
-    batchSize = parseInt(batchSize);
-    remainder = batchSize % 1000;
-    if(remainder > 0) { batchSize = batchSize + (1000 - remainder); };
-
     this.common             = new CommonObject();
     this.recordType         = recordType;
     this.searchId           = searchId;
     this.lowerBound         = lowerBound;
     this.originalLowerBound = lowerBound;
-    this.batchSize          = batchSize;
+    this.originalBatchSize  = batchSize;
+
+    intBatchSize = parseInt(batchSize);
+    if((intBatchSize % 1000) != 0) {
+      intBatchSize = intBatchSize + (1000 - (intBatchSize % 1000));
+    }
+    this.batchSize = intBatchSize;
+
     this.searchFilters      = [];
     this.searchColumns      = [];
     this.results            = [];
@@ -37,7 +40,7 @@ this.SavedSearch = (function() {
     return {
       'recordType': this.recordType,
       'searchId':   this.searchId,
-      'batchSize':  this.batchSize,
+      'batchSize':  this.originalBatchSize,
       'lowerBound': this.originalLowerBound
     }
   }
@@ -97,7 +100,8 @@ this.SavedSearch = (function() {
 })();
 
 var postHandler = function() {
-  var savedSearch = new SavedSearch(recordType, searchId, lowerBound, batchSize);
+  var savedSearch = new SavedSearch(request['recordType'], request['searchId'],
+                                    request['lowerBound'], request['batchSize']);
   savedSearch.executeSearch();
   return savedSearch.reply();
 }
