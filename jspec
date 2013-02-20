@@ -1,3 +1,15 @@
 #!/bin/sh
 
+NODE_MODULES_DIRECTORY=node_modules
+
+if [ ! "$(command npm &>/dev/null)" ]; then
+  echo "npm command not found, pleace ensure node package manager is installed and in your path." 1>&2
+  exit 1
+fi
+
+if [ ! -d "${NODE_MODULES_DIRECTORY}" ]; then
+  echo "No node modules directory found locally, running 'npm install'..."
+  npm install
+fi
+
 ./node_modules/jasmine-node/bin/jasmine-node --forceexit spec
