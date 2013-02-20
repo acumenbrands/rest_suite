@@ -15,7 +15,6 @@ describe('Upserter', function() {
         'item': [
           {
             'match_field': 'item',
-            'delete':      'false',
             'item_data': {
               'item':     '12345',
               'quantity': '7'
@@ -319,30 +318,74 @@ describe('Upserter', function() {
 
     beforeEach(function() {
       this.sublistData = recordWithSublist[upserter.SUBLIST_KEY]['item'];
-      spyOn(upserter, 'matchSublistItem');
-      spyOn(upserter, 'insertSublistItem');
+      spyOn(upserter, 'findSublistIndex');
       spyOn(upserter, 'populateSublistItemFields');
       spyOn(upserter, 'deleteSublistItem');
-      netsuiteRecord.getLineItemCount = function() {};
-      spyOn(netsuiteRecord, 'getLineItemCount').andReturn(7);
-      console.log(this.sublistData);
       upserter.populateSublist(netsuiteRecord, 'item', this.sublistData);
     });
 
-    it("should call matchSublistItem for each sublist item with a match field", function() {
-      expect(upserter.matchSublistItem.callCount).toEqual(2);
-    });
-
-    it("should call insertSublistItem for each sublist item without a match field", function() {
-      expect(upserter.insertSublistItem.callCount).toEqual(1);
+    it("should call findSublistIndex for each sublist item", function() {
+      expect(upserter.findSublistIndex.callCount).toEqual(3);
     });
 
     it("should call populateSublistItemFields for each sublist item to be written", function() {
       expect(upserter.populateSublistItemFields.callCount).toEqual(2);
     });
 
-    it("should call deleteSublistItem for each sublist item to be deleted", function() {
+    it("should call deleteSublistItem for each sublist item with a delete key", function() {
       expect(upserter.deleteSublistItem.callCount).toEqual(1);
+    });
+
+  });
+
+  describe('#findSublistIndex(record, sublistName, sublistItemData)', function() {
+
+    beforeEach(function() {
+      this.sublistName   = 'item';
+      this.lineItemCount = 7;
+      spyOn(upserter, 'matchSublistItem').andReturn(3);
+      spyOn(upserter, 'insertSublistItem');
+      recordWithSublist.getLineItemCount = function() {};
+      spyOn(recordWithSublist, 'getLineItemCount').andReturn(this.lineItemCount);
+    });
+
+    describe('an item with a match field is given', function() {
+
+      beforeEach(function() {
+        this.sublistItemData = recordWithSublist[upserter.SUBLIST_KEY][this.sublistName][0];
+        this.matchField      = this.sublistItemData[upserter.SUBLIST_MATCH_KEY];
+        this.matchValue      = this.sublistItemData[upserter.SUBLIST_DATA_KEY][this.matchField];
+        upserter.findSublistIndex(recordWithSublist, this.sublistName, this.sublistItemData);
+      });
+
+      it("should call matchSublistItem when a match field is defined", function() {
+        expect(upserter.matchSublistItem).toHaveBeenCalledWith(recordWithSublist,
+                                                               this.sublistName,
+                                                               this.sublistItemData,
+                                                               this.matchField,
+                                                               this.matchValue);
+      });
+
+    });
+
+    describe('an item with no match field is submitted', function() {
+
+      beforeEach(function() {
+        this.sublistItemData = recordWithSublist[upserter.SUBLIST_KEY][this.sublistName][2];
+        this.index           = this.lineItemCount + 1;
+        upserter.findSublistIndex(recordWithSublist, this.sublistName, this.sublistItemData);
+      });
+
+      it("should call getLineItemCount", function() {
+        expect(recordWithSublist.getLineItemCount).toHaveBeenCalledWith(this.sublistName);
+      });
+
+      it("should call insertSublistItem when no match field is present", function() {
+        expect(upserter.insertSublistItem).toHaveBeenCalledWith(recordWithSublist,
+                                                                this.sublistName,
+                                                                this.index);
+      });
+
     });
 
   });

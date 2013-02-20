@@ -93,22 +93,30 @@ this.Upserter = (function() {
   }
 
   Upserter.prototype.populateSublist = function(record, sublistName, sublistData) {
-    if(sublistData.hasOwnProperty(this.SUBLIST_MATCH_KEY)) {
-      matchField = sublistData[this.SUBLIST_MATCH_KEY];
-      matchValue = sublistData[this.SUBLIST_DATA_KEY][matchField];
-      index = this.matchSublistItem(record, sublistName, sublistData, matchField, matchValue);
+    for(index in sublistData) {
+      sublistItemData = sublistData[index];
+      index = this.findSublistIndex(record, sublistName, sublistItemData);
+
+      if(sublistItemData.hasOwnProperty(this.SUBLIST_DELETE_KEY)) {
+        this.deleteSublistItem(record, sublistName, index);
+      } else {
+        this.populateSublistItemFields(record, sublistName, sublistData, index);
+      }
+    }
+  }
+
+  Upserter.prototype.findSublistIndex = function(record, sublistName, sublistItemData) {
+    if(sublistItemData.hasOwnProperty(this.SUBLIST_MATCH_KEY)) {
+      matchField = sublistItemData[this.SUBLIST_MATCH_KEY];
+      matchValue = sublistItemData[this.SUBLIST_DATA_KEY][matchField];
+      index = this.matchSublistItem(record, sublistName, sublistItemData, matchField, matchValue);
       if(!index) { throw "Sublist item not matched"; };
     } else {
-      index = (record.getLineItemCount() + 1);
+      index = (record.getLineItemCount(sublistName) + 1);
       this.insertSublistItem(record, sublistName, index);
     }
 
-    if(sublistData.hasOwnProperty(this.SUBLIST_DELETE_KEY) &&
-       Boolean(sublistData[this.SUBLIST_DELETE_KEY])) {
-      this.deleteSublistItem(record, sublistName, index);
-    } else {
-      this.populateSublistItemFields(record, sublistName, sublistData, index);
-    }
+    return index;
   }
 
   Upserter.prototype.matchSublistItem = function(record, sublistName, sublistItemData,
