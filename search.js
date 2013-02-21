@@ -6,6 +6,7 @@ this.Searcher = (function() {
     this.SEARCH_FILTER_VALUE_KEY    = 'value';
     this.SEARCH_COLUMN_NAME_KEY     = 'name';
     this.SEARCH_COLUMN_JOIN_KEY     = 'join';
+    this.SEARCH_COLUMN_SORT_KEY     = 'sort';
 
     this.common        = new CommonObject();
     this.recordType    = recordType;
@@ -23,11 +24,16 @@ this.Searcher = (function() {
     }
     this.batchSize = intBatchSize;
 
-    this.createFilters();
-    this.createColumns();
+    this.createSearchFilters();
+    this.createSearchColumns();
   }
 
-  Searcher.prototype.createFilters = function() {
+  Searcher.prototype.createSearchFilters = function() {
+    for(index in this.rawSearchFilters) {
+      searchFilterData   = this.rawSearchFilters[index];
+      searchFilterObject = this.getSearchFilterObject(searchFilterData);
+      this.searchFilters.push(searchFilterObject);
+    }
   }
 
   Searcher.prototype.getSearchFilterObject = function(searchFilterData) {
@@ -37,7 +43,15 @@ this.Searcher = (function() {
     return nlobjSearchFilter(name, null, operator, value);
   }
 
-  Searcher.prototype.createColumns = function() {
+  Searcher.prototype.createSearchColumns = function() {
+    for(index in this.rawSearchColumns) {
+      searchColumnData   = this.rawSearchColumns[index];
+      searchColumnObject = this.getSearchColumnObject(searchColumnData);
+      if(searchColumnData.hasOwnProperty(this.SEARCH_COLUMN_SORT_KEY)) {
+        this.setSortColumn(searchColumnObject);
+      }
+      this.searchColumns.push(searchColumnObject);
+    }
   }
 
   Searcher.prototype.getSearchColumnObject = function(searchColumnData) {
@@ -46,8 +60,8 @@ this.Searcher = (function() {
     return nlobjSearchColumn(name, join);
   }
 
-  Searcher.prototype.setSortColumn = function(sortColumn) {
-    sortColumn.setSort();
+  Searcher.prototype.setSortColumn = function(sortColumnObject) {
+    sortColumnObject.setSort();
   }
 
   Searcher.prototype.executeSearch = function() {

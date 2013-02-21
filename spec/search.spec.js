@@ -3,6 +3,7 @@ require('./spec_helper.js');
 describe("Searcher", function() {
 
   var searcher;
+  var netsuiteSearchColumnObject;
   var recordType    = 'inventoryitem';
   var batchSize     = '5000';
   var lowerBound    = '17384';
@@ -30,6 +31,12 @@ describe("Searcher", function() {
   ];
 
   beforeEach(function() {
+    netsuiteSearchFilterObject = jasmine.createSpyObj('filter', ['foo']);
+    netsuiteSearchColumnObject = jasmine.createSpyObj('column', ['setSort']);
+    global.nlobjSearchFilter = function() {};
+    spyOn(global, 'nlobjSearchFilter').andReturn(netsuiteSearchFilterObject);
+    global.nlobjSearchColumn = function() {};
+    spyOn(global, 'nlobjSearchColumn').andReturn(netsuiteSearchColumnObject);
     searcher   = new Searcher(recordType, batchSize, lowerBound, searchFilters, searchColumns);
     sortColumn = searchColumns[0];
   });
@@ -37,8 +44,8 @@ describe("Searcher", function() {
   describe('#init(recordType, batchSize, lowerBound, searchFilters, searchColumns', function() {
 
     beforeEach(function() {
-      spyOn(Searcher.prototype, 'createFilters');
-      spyOn(Searcher.prototype, 'createColumns');
+      spyOn(Searcher.prototype, 'createSearchFilters');
+      spyOn(Searcher.prototype, 'createSearchColumns');
       this.newSearcher = new Searcher(recordType, batchSize, lowerBound,
                                       searchFilters, searchColumns);
     });
@@ -61,6 +68,10 @@ describe("Searcher", function() {
 
     it("should set the SEARCH_COLUMN_JOIN_KEY", function() {
       expect(searcher.SEARCH_COLUMN_JOIN_KEY).toBeDefined();
+    });
+
+    it("should set the SEARCH_COLUMN_SORT_KEY", function() {
+      expect(searcher.SEARCH_COLUMN_SORT_KEY).toBeDefined();
     });
 
     it("should set the common object", function() {
@@ -104,11 +115,11 @@ describe("Searcher", function() {
     });
 
     it("should call createFilters", function() {
-      expect(this.newSearcher.createFilters).toHaveBeenCalled();
+      expect(this.newSearcher.createSearchFilters).toHaveBeenCalled();
     });
 
     it("should call createColumns", function() {
-      expect(this.newSearcher.createColumns).toHaveBeenCalled();
+      expect(this.newSearcher.createSearchColumns).toHaveBeenCalled();
     });
 
     describe('a batch size that is not a multiple of one thousand is given', function() {
@@ -127,15 +138,29 @@ describe("Searcher", function() {
 
   });
 
-  describe('#createFilters', function() {
+  describe('#createSearchFilters', function() {
+
+    beforeEach(function() {
+      searcher.searchFilters = [];
+      this.mockFilterObjects = [{}, {}];
+      spyOn(searcher, 'getSearchFilterObject').andReturn({});
+      searcher.createSearchFilters();
+    });
+
+    it("should call getSearchFilterObject for each search filter", function() {
+      expect(searcher.getSearchFilterObject.callCount).toEqual(2);
+    });
+
+    it("should append the filter objects to searchFilters", function() {
+      expect(searcher.searchFilters).toEqual(this.mockFilterObjects);
+    });
+
   });
 
   describe('#getSearchFilterObject(searchFilterData)', function() {
 
     beforeEach(function() {
       this.searchFilterData = searchFilters[0];
-      global.nlobjSearchFilter = function() {};
-      spyOn(global, 'nlobjSearchFilter');
       searcher.getSearchFilterObject(this.searchFilterData);
     });
 
@@ -148,15 +173,34 @@ describe("Searcher", function() {
 
   });
 
-  describe('#createColumns', function() {
+  describe('#createSearchColumns', function() {
+
+    beforeEach(function() {
+      searcher.searchColumns = [];
+      this.mockColumnObjects = [netsuiteSearchColumnObject, netsuiteSearchColumnObject];
+      spyOn(searcher, 'getSearchColumnObject').andReturn(netsuiteSearchColumnObject);
+      spyOn(searcher, 'setSortColumn');
+      searcher.createSearchColumns();
+    });
+
+    it("should call getSearchColumnObject for each search column", function() {
+      expect(searcher.getSearchColumnObject.callCount).toEqual(2);
+    });
+
+    it("should append the filter objects to searchColumns", function() {
+      expect(searcher.searchColumns).toEqual(this.mockColumnObjects);
+    });
+
+    it("should call setSortColumn for the column with sort: true", function() {
+      expect(searcher.setSortColumn).toHaveBeenCalledWith(netsuiteSearchColumnObject);
+    });
+
   });
 
   describe('#getSearchColumnObject(searchColumnData)', function() {
 
     beforeEach(function() {
       this.searchColumnData = searchColumns[1];
-      global.nlobjSearchColumn = function() {};
-      spyOn(global, 'nlobjSearchColumn');
       searcher.getSearchColumnObject(this.searchColumnData);
     });
 
@@ -168,7 +212,7 @@ describe("Searcher", function() {
 
   });
 
-  describe('#setSortColumn(sortColumn)', function() {
+  describe('#setSortColumn(sortColumnObject)', function() {
 
     beforeEach(function() {
       sortColumn.setSort = function() {};
