@@ -37,6 +37,8 @@ describe("Searcher", function() {
     spyOn(global, 'nlobjSearchFilter').andReturn(netsuiteSearchFilterObject);
     global.nlobjSearchColumn = function() {};
     spyOn(global, 'nlobjSearchColumn').andReturn(netsuiteSearchColumnObject);
+    global.nlapiSearchRecord = function() {};
+    spyOn(global, 'nlapiSearchRecord').andReturn([{}]);
     searcher   = new Searcher(recordType, batchSize, lowerBound, searchFilters, searchColumns);
     sortColumn = searchColumns[0];
   });
@@ -243,6 +245,17 @@ describe("Searcher", function() {
   });
 
   describe('#getSearchResults', function() {
+
+    beforeEach(function() {
+      searcher.getSearchResults();
+    });
+
+    it("should call nlapiSearchRecord", function() {
+      expect(global.nlapiSearchRecord).toHaveBeenCalledWith(searcher.recordType, null,
+                                                            searcher.searchFilters,
+                                                            searcher.searchColumns);
+    });
+
   });
 
   describe('#updateBoundAndFilter(resultsBlock)', function() {

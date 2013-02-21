@@ -74,6 +74,7 @@ this.Searcher = (function() {
   }
 
   Searcher.prototype.getSearchResults = function() {
+    return nlapiSearchRecord(this.recordType, null, this.searchFilters, this.searchColumns);
   }
 
   Searcher.prototype.updateBoundAndFilter = function(resultsBlock) {
