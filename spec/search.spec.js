@@ -123,6 +123,31 @@ describe("Searcher", function() {
   });
 
   describe('#getParams', function() {
+
+    beforeEach(function() {
+      this.params = searcher.getParams();
+    });
+
+    it("should populate the recordType", function() {
+      expect(this.params['recordType']).toEqual(recordType);
+    });
+
+    it("should populate the batchSize", function() {
+      expect(this.params['batchSize']).toEqual(batchSize);
+    });
+
+    it("should populate the lowerBound", function() {
+      expect(this.params['lowerBound']).toEqual(lowerBound);
+    });
+
+    it("should populate the searchFilters", function() {
+      expect(this.params['searchFilters']).toEqual(searchFilters);
+    });
+
+    it("should populate the searchColumns", function() {
+      expect(this.params['searchColumns']).toEqual(searchColumns);
+    });
+
   });
 
   describe('#reply', function() {

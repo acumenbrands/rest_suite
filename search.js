@@ -7,16 +7,15 @@ this.Searcher = (function() {
     this.lowerBound    = lowerBound;
     this.rawSearchFilters = searchFilters;
     this.rawSearchColumns = searchColumns;
+    this.searchFilters = [];
+    this.searchColumns = [];
+    this.results       = [];
 
     intBatchSize = parseInt(this.rawBatchSize);
     if((intBatchSize % 1000) != 0) {
       intBatchSize = intBatchSize + (1000 - (intBatchSize % 1000));
     }
     this.batchSize = intBatchSize;
-
-    this.searchFilters = [];
-    this.searchColumns = [];
-    this.results       = [];
 
     this.createFilters();
     this.createColumns();
@@ -59,6 +58,13 @@ this.Searcher = (function() {
   }
 
   Searcher.prototype.getParams = function() {
+    params = {};
+    params['recordType']    = this.recordType;
+    params['batchSize']     = this.rawBatchSize;
+    params['lowerBound']    = this.lowerBound;
+    params['searchFilters'] = this.rawSearchFilters;
+    params['searchColumns'] = this.rawSearchColumns;
+    return params;
   }
 
   Searcher.prototype.reply = function() {
