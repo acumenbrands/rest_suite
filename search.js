@@ -83,6 +83,7 @@ this.Searcher = (function() {
   }
 
   Searcher.prototype.appendResults = function(resultsBlock) {
+    this.results = this.results.concat(resultsBlock);
   }
 
   Searcher.prototype.getParams = function() {

@@ -252,6 +252,16 @@ describe("Searcher", function() {
   });
 
   describe('#appendResults(resultsBlock)', function() {
+
+    beforeEach(function() {
+      searcher.results = [{}];
+      searcher.appendResults([{}]);
+    });
+
+    it("should add the given resultsBlock to the results field", function() {
+      expect(searcher.results).toEqual([{}, {}]);
+    });
+
   });
 
   describe('#getParams', function() {
