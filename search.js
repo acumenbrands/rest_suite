@@ -1,6 +1,12 @@
 this.Searcher = (function() {
 
   function Searcher(recordType, batchSize, lowerBound, searchFilters, searchColumns) {
+    this.SEARCH_FILTER_NAME_KEY     = 'name';
+    this.SEARCH_FILTER_OPERATOR_KEY = 'operator';
+    this.SEARCH_FILTER_VALUE_KEY    = 'value';
+    this.SEARCH_COLUMN_NAME_KEY     = 'name';
+    this.SEARCH_COLUMN_JOIN_KEY     = 'join';
+
     this.common        = new CommonObject();
     this.recordType    = recordType;
     this.rawBatchSize  = batchSize;
@@ -24,13 +30,20 @@ this.Searcher = (function() {
   Searcher.prototype.createFilters = function() {
   }
 
-  Searcher.prototype.getSearchFilterObject = function() {
+  Searcher.prototype.getSearchFilterObject = function(searchFilterData) {
+    name     = searchFilterData[this.SEARCH_FILTER_NAME_KEY];
+    operator = searchFilterData[this.SEARCH_FILTER_OPERATOR_KEY];
+    value    = searchFilterData[this.SEARCH_FILTER_VALUE_KEY];
+    return nlobjSearchFilter(name, null, operator, value);
   }
 
   Searcher.prototype.createColumns = function() {
   }
 
-  Searcher.prototype.getSearchColumnObject = function() {
+  Searcher.prototype.getSearchColumnObject = function(searchColumnData) {
+    name = searchColumnData[this.SEARCH_COLUMN_NAME_KEY];
+    join = searchColumnData[this.SEARCH_COLUMN_JOIN_KEY];
+    return nlobjSearchColumn(name, join);
   }
 
   Searcher.prototype.setSortColumn = function(sortColumn) {

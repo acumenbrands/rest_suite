@@ -6,7 +6,18 @@ describe("Searcher", function() {
   var recordType    = 'inventoryitem';
   var batchSize     = '5000';
   var lowerBound    = '17384';
-  var searchFilters = {};
+  var searchFilters = [
+    {
+      'name':     'displayname',
+      'value':    'VENDOR-STYLE-SIZE',
+      'operator': 'is'
+    },
+    {
+      'name':     'upccode',
+      'value':    ['123456789012', '098765432109'],
+      'operator': 'anyof'
+    }
+  ];
   var searchColumns = [
     {
       'name': 'custitem22',
@@ -30,6 +41,26 @@ describe("Searcher", function() {
       spyOn(Searcher.prototype, 'createColumns');
       this.newSearcher = new Searcher(recordType, batchSize, lowerBound,
                                       searchFilters, searchColumns);
+    });
+
+    it("should set the SEARCH_FILTER_NAME_KEY", function() {
+      expect(searcher.SEARCH_FILTER_NAME_KEY).toBeDefined();
+    });
+
+    it("should set the SEARCH_FILTER_OPERATOR_KEY", function() {
+      expect(searcher.SEARCH_FILTER_OPERATOR_KEY).toBeDefined();
+    });
+
+    it("should set the SEARCH_FILTER_VALUE_KEY", function() {
+      expect(searcher.SEARCH_FILTER_VALUE_KEY).toBeDefined();
+    });
+
+    it("should set the SEARCH_COLUMN_NAME_KEY", function() {
+      expect(searcher.SEARCH_COLUMN_NAME_KEY).toBeDefined();
+    });
+
+    it("should set the SEARCH_COLUMN_JOIN_KEY", function() {
+      expect(searcher.SEARCH_COLUMN_JOIN_KEY).toBeDefined();
     });
 
     it("should set the common object", function() {
@@ -99,13 +130,42 @@ describe("Searcher", function() {
   describe('#createFilters', function() {
   });
 
-  describe('#getSearchFilterObject', function() {
+  describe('#getSearchFilterObject(searchFilterData)', function() {
+
+    beforeEach(function() {
+      this.searchFilterData = searchFilters[0];
+      global.nlobjSearchFilter = function() {};
+      spyOn(global, 'nlobjSearchFilter');
+      searcher.getSearchFilterObject(this.searchFilterData);
+    });
+
+    it("should call nlobjSearchFilter", function() {
+      name     = this.searchFilterData[searcher.SEARCH_FILTER_NAME_KEY];
+      operator = this.searchFilterData[searcher.SEARCH_FILTER_OPERATOR_KEY];
+      value    = this.searchFilterData[searcher.SEARCH_FILTER_VALUE_KEY];
+      expect(global.nlobjSearchFilter).toHaveBeenCalledWith(name, null, operator, value);
+    });
+
   });
 
   describe('#createColumns', function() {
   });
 
-  describe('#getSearchColumnObject', function() {
+  describe('#getSearchColumnObject(searchColumnData)', function() {
+
+    beforeEach(function() {
+      this.searchColumnData = searchColumns[1];
+      global.nlobjSearchColumn = function() {};
+      spyOn(global, 'nlobjSearchColumn');
+      searcher.getSearchColumnObject(this.searchColumnData);
+    });
+
+    it("should call nlobjSearchColumn", function() {
+      name = this.searchColumnData[searcher.SEARCH_COLUMN_NAME_KEY];
+      join = this.searchColumnData[searcher.SEARCH_COLUMN_JOIN_KEY];
+      expect(global.nlobjSearchColumn).toHaveBeenCalledWith(name, join);
+    });
+
   });
 
   describe('#setSortColumn(sortColumn)', function() {
