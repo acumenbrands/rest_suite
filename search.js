@@ -33,7 +33,8 @@ this.Searcher = (function() {
   Searcher.prototype.getSearchColumnObject = function() {
   }
 
-  Searcher.prototype.setSortColumn = function() {
+  Searcher.prototype.setSortColumn = function(sortColumn) {
+    sortColumn.setSort();
   }
 
   Searcher.prototype.executeSearch = function() {
@@ -68,6 +69,7 @@ this.Searcher = (function() {
   }
 
   Searcher.prototype.reply = function() {
+    this.common.formatReply(this.getParams(), this.results);
   }
 
   return Searcher;

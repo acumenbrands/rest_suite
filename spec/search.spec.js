@@ -7,10 +7,20 @@ describe("Searcher", function() {
   var batchSize     = '5000';
   var lowerBound    = '17384';
   var searchFilters = {};
-  var searchColumns = {};
+  var searchColumns = [
+    {
+      'name': 'custitem22',
+      'sort': 'true'
+    },
+    {
+      'name': 'financial', // This is gibberish, but illustrative of the structure.
+      'join': 'tranid'
+    }
+  ];
 
   beforeEach(function() {
-    searcher = new Searcher(recordType, batchSize, lowerBound, searchFilters, searchColumns);
+    searcher   = new Searcher(recordType, batchSize, lowerBound, searchFilters, searchColumns);
+    sortColumn = searchColumns[0];
   });
 
   describe('#init(recordType, batchSize, lowerBound, searchFilters, searchColumns', function() {
@@ -98,10 +108,28 @@ describe("Searcher", function() {
   describe('#getSearchColumnObject', function() {
   });
 
-  describe('#setSortColumn', function() {
+  describe('#setSortColumn(sortColumn)', function() {
+
+    beforeEach(function() {
+      sortColumn.setSort = function() {};
+      spyOn(sortColumn, 'setSort');
+      searcher.setSortColumn(sortColumn)
+    });
+
+    it("should call setSort() on the selected column", function() {
+      expect(sortColumn.setSort).toHaveBeenCalled();
+    });
+
   });
 
   describe('#executeSearch', function() {
+
+    describe('normal operation', function() {
+    });
+
+    describe('an exception occurs', function() {
+    });
+
   });
 
   describe('#searchIteration', function() {
@@ -151,6 +179,17 @@ describe("Searcher", function() {
   });
 
   describe('#reply', function() {
+
+    beforeEach(function() {
+      spyOn(searcher.common, 'formatReply');
+      this.reply = searcher.reply();
+    });
+
+    it("should call formatReply on CommonObject", function() {
+      expect(searcher.common.formatReply).toHaveBeenCalledWith(searcher.getParams(),
+                                                               searcher.results);
+    });
+
   });
 
 });
