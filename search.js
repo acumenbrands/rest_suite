@@ -34,6 +34,16 @@ this.Searcher = (function() {
       searchFilterObject = this.getSearchFilterObject(searchFilterData);
       this.searchFilters.push(searchFilterObject);
     }
+    this.generateLowerBoundFilter();
+  }
+
+  Searcher.prototype.generateLowerBoundFilter = function() {
+    searchFilterData = {};
+    searchFilterData[this.SEARCH_FILTER_NAME_KEY]     = 'id';
+    searchFilterData[this.SEARCH_FILTER_OPERATOR_KEY] = 'greaterthan';
+    searchFilterData[this.SEARCH_FILTER_VALUE_KEY]    = this.lowerBound;
+    lowerBoundFilterObject = this.getSearchFilterObject(searchFilterData)
+    this.searchFilters.push(lowerBoundFilterObject);
   }
 
   Searcher.prototype.getSearchFilterObject = function(searchFilterData) {

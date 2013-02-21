@@ -146,6 +146,7 @@ describe("Searcher", function() {
       searcher.searchFilters = [];
       this.mockFilterObjects = [{}, {}];
       spyOn(searcher, 'getSearchFilterObject').andReturn({});
+      spyOn(searcher, 'generateLowerBoundFilter');
       searcher.createSearchFilters();
     });
 
@@ -155,6 +156,32 @@ describe("Searcher", function() {
 
     it("should append the filter objects to searchFilters", function() {
       expect(searcher.searchFilters).toEqual(this.mockFilterObjects);
+    });
+
+    it("should call generateLowerBoundFilter", function() {
+      expect(searcher.generateLowerBoundFilter).toHaveBeenCalled();
+    });
+
+  });
+
+  describe('#generateLowerBoundFilter', function() {
+
+    beforeEach(function() {
+      this.searchFilterData = {};
+      this.searchFilterData[searcher.SEARCH_FILTER_NAME_KEY]     = 'id';
+      this.searchFilterData[searcher.SEARCH_FILTER_OPERATOR_KEY] = 'greaterthan';
+      this.searchFilterData[searcher.SEARCH_FILTER_VALUE_KEY]    = searcher.lowerBound;
+      spyOn(searcher, 'getSearchFilterObject').andReturn(netsuiteSearchFilterObject);
+      searcher.searchFilters = [];
+      searcher.generateLowerBoundFilter();
+    });
+
+    it("should call getSearchFilterObject with the current lowerBound", function() {
+      expect(searcher.getSearchFilterObject).toHaveBeenCalledWith(this.searchFilterData);
+    });
+
+    it("should append the lowerBound filter to the searchFilters", function() {
+      expect(searcher.searchFilters).toEqual([netsuiteSearchFilterObject]);
     });
 
   });
@@ -259,9 +286,23 @@ describe("Searcher", function() {
   });
 
   describe('#updateBoundAndFilter(resultsBlock)', function() {
+
+    it("should call extractLowerBound", function() {
+    });
+
+    it("should set the lowerBound", function() {
+    });
+
+    it("should call updateLowerBoundFilter", function() {
+    });
+
   });
 
   describe('#extractLowerBound(resultsBlock)', function() {
+
+    it("should return the lowerBound to id of the last element", function() {
+    });
+
   });
 
   describe('#appendResults(resultsBlock)', function() {
