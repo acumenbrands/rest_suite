@@ -1,5 +1,3 @@
-var Loader;
-
 this.Loader = (function() {
   function Loader(recordType, idList) {
     this.recordType = recordType;
@@ -12,13 +10,14 @@ this.Loader = (function() {
 
   Loader.prototype.loadRecords = function() {
     for(index=0; index<this.idList.length; index++) {
-      var recordType = this.recordType;
-      var recordId   = this.idList[index];
-      var record     = null;
+      recordType = this.recordType;
+      recordId   = this.idList[index];
+      record     = null;
+      params     = this.formatParams(recordId);
 
       try {
         record = nlapiLoadRecord(recordType, recordId);
-        this.addFormattedReply(recordId, record);
+        this.addFormattedReply(params, record);
       } catch(exception) {
         record = this.common.formatException(exception);
         this.addFormattedReply(recordId, null, record);
@@ -28,8 +27,15 @@ this.Loader = (function() {
     }
   }
 
+  Loader.prototype.formatParams = function(id) {
+    return {
+      'recordType': this.recordType,
+      'id':         id
+    };
+  }
+
   Loader.prototype.addFormattedReply = function (params, result, exception) {
-    var reply = this.common.formatReply(params, result, exception);
+    reply = this.common.formatReply(params, result, exception);
     this.replyList.push(reply);
   }
 
@@ -41,7 +47,7 @@ this.Loader = (function() {
 })();
 
 var postHandler = function(request) {
-  var loader = new Loader(request['record_type'], request['id_list']);
+  loader = new Loader(request['record_type'], request['id_list']);
   loader.loadRecords();
   return recordLoader.reply();
 }

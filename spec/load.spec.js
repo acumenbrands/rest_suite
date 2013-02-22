@@ -5,7 +5,6 @@ describe("Loader", function() {
   var loader;
   var recordType   = 'inventoryitem';
   var idList       = ['12345', '12345', '67890'];
-  var uniqueList   = ['12345', '67890'];
 
   beforeEach(function() {
     loader = new Loader(recordType, idList);
@@ -28,15 +27,51 @@ describe("Loader", function() {
   });
 
   describe("#loadRecords", function() {
-    it("calls nlapiLoadRecord on each id", function() {
+
+    beforeEach(function() {
+      this.id       = '7';
+      loader.idList = [this.id];
+      spyOn(loader, 'formatParams');
+      spyOn(loader, 'addFormattedReply');
       loader.loadRecords();
-      expect(global.nlapiLoadRecord).toHaveBeenCalled();
+    });
+
+    it("calls nlapiLoadRecord on each id", function() {
+      expect(global.nlapiLoadRecord).toHaveBeenCalledWith(loader.recordType, this.id);
     });
 
     it("should have an equal element count between idList and resultList", function() {
-      loader.loadRecords();
       expect(loader.idList.length).toEqual(loader.resultList.length);
     });
+
+    it("should call formatParams", function() {
+      expect(loader.formatParams).toHaveBeenCalledWith(this.id);
+    });
+
+    it("should call addFormattedReply", function() {
+      expect(loader.addFormattedReply).toHaveBeenCalledWith(this.params, {});
+    });
+
+    describe("an exception occurs", function() {
+
+    });
+  });
+
+  describe("#formatParams(id)", function() {
+
+    beforeEach(function() {
+      this.id     = '7';
+      this.params = loader.formatParams(this.id);
+    });
+
+    it("should populate the recordType field", function() {
+      expect(this.params['recordType']).toEqual(recordType);
+    });
+
+    it("should populate the id field", function() {
+      expect(this.params['id']).toEqual(this.id);
+    });
+
   });
 
   describe("#addFormattedReply", function() {
