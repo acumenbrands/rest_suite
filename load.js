@@ -9,32 +9,36 @@ this.Loader = (function() {
   };
 
   Loader.prototype.loadRecords = function() {
-    for(index=0; index<this.idList.length; index++) {
-      recordType = this.recordType;
-      recordId   = this.idList[index];
-      record     = null;
-      params     = this.formatParams(recordId);
+    for(index=0;index<this.idList.length;index++) {
+      recordId = this.idList[index];
 
       try {
-        record = nlapiLoadRecord(recordType, recordId);
-        this.addFormattedReply(params, record);
+        record = this.getRecordFromNetsuite(recordId);
+        this.processResult(record);
       } catch(exception) {
-        record = this.common.formatException(exception);
-        this.addFormattedReply(recordId, null, record);
+        this.processResult(null, exception);
       }
-
-      this.resultList.push(record);
     }
   }
 
-  Loader.prototype.formatParams = function(id) {
+  Loader.prototype.getRecordFromNetsuite = function(recordId) {
+    return nlapiLoadRecord(this.recordType, recordId);
+  }
+
+  Loader.prototype.processResult = function(result, exception) {
+    this.resultList.push(result);
+    this.addFormattedReply(result, exception);
+  }
+
+  Loader.prototype.getParams = function(id) {
     return {
       'recordType': this.recordType,
       'id':         id
     };
   }
 
-  Loader.prototype.addFormattedReply = function (params, result, exception) {
+  Loader.prototype.addFormattedReply = function (result, exception) {
+    params = this.getParams();
     reply = this.common.formatReply(params, result, exception);
     this.replyList.push(reply);
   }

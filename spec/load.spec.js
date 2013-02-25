@@ -3,13 +3,14 @@ require('./spec_helper.js');
 describe("Loader", function() {
 
   var loader;
-  var recordType   = 'inventoryitem';
-  var idList       = ['12345', '12345', '67890'];
+  var recordType = 'inventoryitem';
+  var idList     = ['12345', '12345', '67890'];
+  var fakeRecord = {};
 
   beforeEach(function() {
     loader = new Loader(recordType, idList);
     global.nlapiLoadRecord = function() {};
-    spyOn(global, 'nlapiLoadRecord').andReturn({});
+    spyOn(global, 'nlapiLoadRecord').andReturn(fakeRecord);
   });
 
   describe("#init", function() {
@@ -29,39 +30,81 @@ describe("Loader", function() {
   describe("#loadRecords", function() {
 
     beforeEach(function() {
-      this.id       = '7';
-      loader.idList = [this.id];
-      spyOn(loader, 'formatParams');
-      spyOn(loader, 'addFormattedReply');
-      loader.loadRecords();
+      loader.idList = [ '12345' ];
+      spyOn(loader, 'processResult');
     });
 
-    it("calls nlapiLoadRecord on each id", function() {
-      expect(global.nlapiLoadRecord).toHaveBeenCalledWith(loader.recordType, this.id);
-    });
+    describe('normal operation', function() {
 
-    it("should have an equal element count between idList and resultList", function() {
-      expect(loader.idList.length).toEqual(loader.resultList.length);
-    });
+      beforeEach(function() {
+        spyOn(loader, 'getRecordFromNetsuite').andReturn(fakeRecord);
+        loader.loadRecords();
+      });
 
-    it("should call formatParams", function() {
-      expect(loader.formatParams).toHaveBeenCalledWith(this.id);
-    });
+      it("should call getRecordFromNetsuite", function() {
+        expect(loader.getRecordFromNetsuite).toHaveBeenCalledWith(loader.idList[0]);
+      });
 
-    it("should call addFormattedReply", function() {
-      expect(loader.addFormattedReply).toHaveBeenCalledWith(this.params, {});
+      it("should call processResult", function() {
+        expect(loader.processResult).toHaveBeenCalledWith(fakeRecord);
+      });
+
     });
 
     describe("an exception occurs", function() {
 
+      beforeEach(function() {
+        this.errorMessage = "ZOMG ERROR";
+        spyOn(loader, 'getRecordFromNetsuite').andCallFake(function() {
+          throw this.errorMessage;
+        });
+        loader.loadRecords();
+      });
+
+      it("should call formatException on CommonObject", function() {
+        expect(loader.processResult).toHaveBeenCalledWith(null, this.exception);
+      });
+
     });
   });
 
-  describe("#formatParams(id)", function() {
+  describe("#getRecordFromNetsuite", function() {
+
+    beforeEach(function() {
+      this.recordId = '7';
+      loader.getRecordFromNetsuite(this.recordId);
+    });
+
+    it("shuld call nlapiLoadRecord", function() {
+      expect(global.nlapiLoadRecord).toHaveBeenCalledWith(loader.recordType, this.recordId);
+    });
+
+  });
+
+  describe("#processResult", function() {
+
+    beforeEach(function() {
+      this.result    = {};
+      this.exception = new Error("ZOMG");
+      spyOn(loader.resultList, 'push');
+      spyOn(loader, 'addFormattedReply');
+      loader.processResult(this.result, this.exception);
+    });
+
+    it("should call push on resultList", function() {
+      expect(loader.resultList.push).toHaveBeenCalledWith(this.result);
+    });
+
+    it("should call addFormattedReply", function() {
+      expect(loader.addFormattedReply).toHaveBeenCalledWith(this.result, this.exception);
+    });
+  });
+
+  describe("#getParams(id)", function() {
 
     beforeEach(function() {
       this.id     = '7';
-      this.params = loader.formatParams(this.id);
+      this.params = loader.getParams(this.id);
     });
 
     it("should populate the recordType field", function() {
@@ -76,16 +119,24 @@ describe("Loader", function() {
 
   describe("#addFormattedReply", function() {
     beforeEach(function() {
-      loader.loadRecords();
-      this.missing = false;
-    });
-
-    it("should have an equal element count between idList and replyList", function() {
-      expect(loader.idList.length).toEqual(loader.replyList.length);
+      this.result         = {};
+      this.formattedReply = loader.common.formatReply(this.params, this.result);
+      this.params         = loader.getParams(this.id);
+      spyOn(loader, 'getParams').andReturn(this.params);
+      spyOn(loader.common, 'formatReply').andReturn(this.formattedReply);
+      spyOn(loader.replyList, 'push');
+      loader.addFormattedReply(this.result);
     });
 
     it("should call formatReply() on CommonObject", function() {
+      expect(loader.common.formatReply).toHaveBeenCalledWith(loader.getParams(), this.result,
+                                                             undefined);
     });
+
+    it("should call push on the replyList", function() {
+      expect(loader.replyList.push).toHaveBeenCalledWith(this.formattedReply);
+    });
+
   });
 
   describe("#reply", function() {
