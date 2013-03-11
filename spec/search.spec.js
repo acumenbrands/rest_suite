@@ -171,8 +171,9 @@ describe("Searcher", function() {
       this.searchFilterData[searcher.SEARCH_FILTER_NAME_KEY]     = 'id';
       this.searchFilterData[searcher.SEARCH_FILTER_OPERATOR_KEY] = 'greaterthan';
       this.searchFilterData[searcher.SEARCH_FILTER_VALUE_KEY]    = searcher.lowerBound;
-      spyOn(searcher, 'getSearchFilterObject').andReturn(netsuiteSearchFilterObject);
+      searcher.lowerBound = lowerBound;
       searcher.searchFilters = [];
+      spyOn(searcher, 'getSearchFilterObject').andReturn(netsuiteSearchFilterObject);
       searcher.generateLowerBoundFilter();
     });
 
@@ -207,7 +208,7 @@ describe("Searcher", function() {
 
   });
 
-  describe('#locateSearchFilter(searchFilter)', function() {
+  describe('#locateSearchFilter', function() {
   });
 
   describe('#getSearchFilterObject(searchFilterData)', function() {

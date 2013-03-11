@@ -44,7 +44,8 @@ this.Searcher = (function() {
     searchFilterData[this.SEARCH_FILTER_VALUE_KEY]    = this.lowerBound;
     lowerBoundFilterObject = this.getSearchFilterObject(searchFilterData)
     this.lowerBoundFilter  = lowerBoundFilterObject;
-    if(this.searchFilters.indexOf(this.lowerBoundFilter) != -1) {
+
+    if(this.searchFilters.indexOf(this.lowerBoundFilter) == -1) {
       this.searchFilters.push(this.lowerBoundFilter);
     }
   }
