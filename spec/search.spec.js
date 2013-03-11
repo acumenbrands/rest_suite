@@ -223,6 +223,35 @@ describe("Searcher", function() {
   });
 
   describe('#locateSearchFilterIndex', function() {
+
+    beforeEach(function() {
+      this.filter = netsuiteSearchFilterObject;
+    });
+
+    describe("a matching filter exists", function() {
+
+      beforeEach(function() {
+        searcher.searchFilters = [{}, this.filter];
+      });
+
+      it("should return the index of the filter", function() {
+        expect(searcher.locateSearchFilterIndex(this.filter)).toEqual(1);
+      });
+
+    });
+
+    describe("no matching filter exists", function() {
+
+      beforeEach(function() {
+        searcher.searchFilters = [];
+      });
+
+      it("should return -1", function() {
+        expect(searcher.locateSearchFilterIndex(this.filter)).toEqual(-1);
+      });
+
+    });
+
   });
 
   describe('#getSearchFilterObject(searchFilterData)', function() {

@@ -56,6 +56,7 @@ this.Searcher = (function() {
   }
 
   Searcher.prototype.locateSearchFilterIndex = function(searchFilter) { 
+    return this.searchFilters.indexOf(searchFilter);
   }
 
   Searcher.prototype.getSearchFilterObject = function(searchFilterData) {
