@@ -383,7 +383,20 @@ describe("Searcher", function() {
 
   describe('#extractLowerBound(resultsBlock)', function() {
 
-    it("should return the lowerBound to id of the last element", function() {
+    beforeEach(function() {
+      this.newLowerBound = '7890';
+      this.resultRow = { getId: function() {} };
+      spyOn(this.resultRow, 'getId').andReturn(this.newLowerBound);
+      this.resultsBlock = ([{}, {}, {}, {}, this.resultRow]);
+      this.recordId = savedSearch.extractLowerBound(this.resultsBlock);
+    });
+    
+    it("should call getId on the resultRow", function() {
+      expect(this.resultRow.getId).toHaveBeenCalled();
+    });
+
+    it("should return the lowerBound", function() {
+      expect(this.newLowerBound).toEqual(this.recordId);
     });
 
   });
