@@ -364,6 +364,7 @@ describe("Searcher", function() {
       this.newLowerBound = '12345';
       spyOn(searcher, 'extractLowerBound').andReturn(this.newLowerBound);
       spyOn(searcher, 'generateLowerBoundFilter');
+      searcher.updateBoundAndFilter(this.resultsBlock);
     });
 
     it("should call extractLowerBound", function() {
