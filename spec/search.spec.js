@@ -298,13 +298,13 @@ describe("Searcher", function() {
 
     beforeEach(function() {
       this.searchColumnData = searchColumns[1];
+      this.name = this.searchColumnData[searcher.SEARCH_COLUMN_NAME_KEY];
+      this.join = this.searchColumnData[searcher.SEARCH_COLUMN_JOIN_KEY];
       searcher.getSearchColumnObject(this.searchColumnData);
     });
 
     it("should call nlobjSearchColumn", function() {
-      name = this.searchColumnData[searcher.SEARCH_COLUMN_NAME_KEY];
-      join = this.searchColumnData[searcher.SEARCH_COLUMN_JOIN_KEY];
-      expect(global.nlobjSearchColumn).toHaveBeenCalledWith(name, join);
+      expect(global.nlobjSearchColumn).toHaveBeenCalledWith(this.name, this.join);
     });
 
   });
