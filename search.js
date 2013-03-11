@@ -94,7 +94,11 @@ this.Searcher = (function() {
   Searcher.prototype.searchIteration = function() {
   }
 
-  Searcher.prototype.isExecutionDone = function() {
+  Searcher.prototype.isExecutionDone = function(resultsBlock) {
+    if(!resultsBlock) { return true }
+    allResultsFound = resultsBlock.length != 1000;
+    batchSizeMet    = this.results.length >= this.batchSize;
+    return allResultsFound || batchSizeMet;
   }
 
   Searcher.prototype.getSearchResults = function() {

@@ -85,7 +85,7 @@ this.SavedSearch = (function() {
   }
 
   SavedSearch.prototype.isExecutionDone = function(resultsBlock) {
-    if(!resultsBlock) { return true; };
+    if(!resultsBlock) { return true }
     allResultsFound = resultsBlock.length != 1000;
     batchSizeMet    = this.results.length >= this.batchSize;
     return allResultsFound || batchSizeMet;

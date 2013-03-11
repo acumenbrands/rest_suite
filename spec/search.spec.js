@@ -340,7 +340,29 @@ describe("Searcher", function() {
   describe('#searchIteration', function() {
   });
 
-  describe('#isExecutionDone', function() {
+  describe('#isExecutionDone(resultsBlock)', function() {
+
+    it("should be true if resultsBlock is undefined", function() {
+      expect(searcher.isExecutionDone(null)).toEqual(true);
+    });
+
+    it("should be true if resultsBlock is less than one thousand elements", function() {
+      resultsBlock = [{}, {}];
+      expect(searcher.isExecutionDone(resultsBlock)).toEqual(true);
+    });
+
+    it("should be true if results has an element count equal to the batch size", function() {
+      resultsBlock     = new Array(1000);
+      searcher.results = new Array(searcher.batchSize);
+      expect(searcher.isExecutionDone(resultsBlock)).toEqual(true);
+    });
+
+    it("should be false if resultsBlock length is 1k and results is shorter batch size", function() {
+      resultsBlock = new Array(1000);
+      searcher.results = [];
+      expect(searcher.isExecutionDone(resultsBlock)).toEqual(false);
+    });
+
   });
 
   describe('#getSearchResults', function() {
