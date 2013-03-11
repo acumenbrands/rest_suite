@@ -92,6 +92,10 @@ this.Searcher = (function() {
   }
 
   Searcher.prototype.searchIteration = function() {
+    resultsBlock = this.getSearchResults();
+    this.updateBoundAndFilter(resultsBlock);
+    this.appendResults(resultsBlock);
+    return resultsBlock;
   }
 
   Searcher.prototype.isExecutionDone = function(resultsBlock) {

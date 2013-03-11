@@ -338,6 +338,31 @@ describe("Searcher", function() {
   });
 
   describe('#searchIteration', function() {
+
+    beforeEach(function() {
+      this.resultsBlock = [{}];
+      spyOn(searcher, 'getSearchResults').andReturn(this.resultsBlock);
+      spyOn(searcher, 'updateBoundAndFilter');
+      spyOn(searcher, 'appendResults');
+      this.returnValue = searcher.searchIteration();
+    });
+
+    it("should call getSearchResults", function() {
+      expect(searcher.getSearchResults).toHaveBeenCalled();
+    });
+
+    it("should call updateBoundAndFilter", function() {
+      expect(searcher.updateBoundAndFilter).toHaveBeenCalledWith(this.resultsBlock);
+    });
+
+    it("should call appendResults", function() {
+      expect(searcher.appendResults).toHaveBeenCalledWith(this.resultsBlock);
+    });
+
+    it("should return the resultsBlock", function() {
+      expect(this.returnValue).toEqual(this.resultsBlock);
+    });
+
   });
 
   describe('#isExecutionDone(resultsBlock)', function() {
