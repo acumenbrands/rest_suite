@@ -108,6 +108,8 @@ this.Searcher = (function() {
   }
 
   Searcher.prototype.extractLowerBound = function(resultsBlock) {
+    resultRow = resultsBlock[resultsBlock.length - 1];
+    return resultRow.getId();
   }
 
   Searcher.prototype.appendResults = function(resultsBlock) {

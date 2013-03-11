@@ -388,7 +388,7 @@ describe("Searcher", function() {
       this.resultRow = { getId: function() {} };
       spyOn(this.resultRow, 'getId').andReturn(this.newLowerBound);
       this.resultsBlock = ([{}, {}, {}, {}, this.resultRow]);
-      this.recordId = savedSearch.extractLowerBound(this.resultsBlock);
+      this.recordId = searcher.extractLowerBound(this.resultsBlock);
     });
     
     it("should call getId on the resultRow", function() {
