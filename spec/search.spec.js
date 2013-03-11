@@ -96,6 +96,10 @@ describe("Searcher", function() {
       expect(this.newSearcher.lowerBound).toEqual(lowerBound);
     });
 
+    it("should set the lowerBoundFilter to an empty object", function() {
+      expect(this.newSearcher.lowerBoundFilter).toEqual({});
+    });
+
     it("should set the rawSearchFilters", function() {
       expect(this.newSearcher.rawSearchFilters).toEqual(searchFilters);
     });
@@ -172,31 +176,41 @@ describe("Searcher", function() {
       this.searchFilterData[searcher.SEARCH_FILTER_OPERATOR_KEY] = 'greaterthan';
       this.searchFilterData[searcher.SEARCH_FILTER_VALUE_KEY]    = searcher.lowerBound;
       searcher.lowerBound = lowerBound;
-      searcher.searchFilters = [];
       spyOn(searcher, 'getSearchFilterObject').andReturn(netsuiteSearchFilterObject);
-      searcher.generateLowerBoundFilter();
     });
 
-    it("should call getSearchFilterObject with the current lowerBound", function() {
-      expect(searcher.getSearchFilterObject).toHaveBeenCalledWith(this.searchFilterData);
-    });
+    describe('no lower bound filter exists', function() {
 
-    it("should append the lowerBound filter to the searchFilters", function() {
-      expect(searcher.searchFilters).toEqual([netsuiteSearchFilterObject]);
-    });
+      beforeEach(function() {
+        searcher.searchFilters = [];
+        spyOn(searcher, 'locateSearchFilterIndex').andReturn(-1);
+        searcher.generateLowerBoundFilter();
+      });
+      
+      it("should call getSearchFilterObject with the current lowerBound", function() {
+        expect(searcher.getSearchFilterObject).toHaveBeenCalledWith(this.searchFilterData);
+      });
 
-    it("should set the lowerBoundFilter field", function() {
-      expect(searcher.lowerBoundFilter).toEqual(netsuiteSearchFilterObject);
+      it("should set the lowerBoundFilter field", function() {
+        expect(searcher.lowerBoundFilter).toEqual(netsuiteSearchFilterObject);
+      });
+
+      it("should append the lowerBound filter to the searchFilters", function() {
+        expect(searcher.searchFilters).toEqual([netsuiteSearchFilterObject]);
+      });
+
     });
 
     describe('a lower bound filter already exists', function() {
 
       beforeEach(function() {
-        searcher.lowerBoundFilter = {};
+        searcher.searchFilters = ([netsuiteSearchFilterObject]);
+        searcher.lowerBoundFilter = null;
+        spyOn(searcher, 'locateSearchFilterIndex').andReturn(0);
         searcher.generateLowerBoundFilter();
       });
 
-      it("should update the lowerBoundFilter field", function() {
+      it("should set the lowerBoundFilter field", function() {
         expect(searcher.lowerBoundFilter).toEqual(netsuiteSearchFilterObject);
       });
 
@@ -208,7 +222,7 @@ describe("Searcher", function() {
 
   });
 
-  describe('#locateSearchFilter', function() {
+  describe('#locateSearchFilterIndex', function() {
   });
 
   describe('#getSearchFilterObject(searchFilterData)', function() {

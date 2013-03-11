@@ -12,6 +12,7 @@ this.Searcher = (function() {
     this.recordType    = recordType;
     this.rawBatchSize  = batchSize;
     this.lowerBound    = lowerBound;
+    this.lowerBoundFilter = {};
     this.rawSearchFilters = searchFilters;
     this.rawSearchColumns = searchColumns;
     this.searchFilters = [];
@@ -42,15 +43,19 @@ this.Searcher = (function() {
     searchFilterData[this.SEARCH_FILTER_NAME_KEY]     = 'id';
     searchFilterData[this.SEARCH_FILTER_OPERATOR_KEY] = 'greaterthan';
     searchFilterData[this.SEARCH_FILTER_VALUE_KEY]    = this.lowerBound;
-    lowerBoundFilterObject = this.getSearchFilterObject(searchFilterData)
-    this.lowerBoundFilter  = lowerBoundFilterObject;
 
-    if(this.searchFilters.indexOf(this.lowerBoundFilter) == -1) {
-      this.searchFilters.push(this.lowerBoundFilter);
+    lowerBoundFilterObject = this.getSearchFilterObject(searchFilterData)
+    this.lowerBoundFilter = lowerBoundFilterObject;
+
+    filterIndex = this.locateSearchFilterIndex();
+    if(filterIndex == -1) {
+      this.searchFilters.push(lowerBoundFilterObject);
+    } else {
+      this.searchFilters[filterIndex] = lowerBoundFilterObject;
     }
   }
 
-  Searcher.prototype.locateSearchFilter = function(searchFilter) { 
+  Searcher.prototype.locateSearchFilterIndex = function(searchFilter) { 
   }
 
   Searcher.prototype.getSearchFilterObject = function(searchFilterData) {
