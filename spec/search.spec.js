@@ -84,8 +84,12 @@ describe("Searcher", function() {
       expect(this.newSearcher.recordType).toEqual(recordType);
     });
 
-    it("should set the rawBatchSize", function() {
-      expect(this.newSearcher.rawBatchSize).toEqual(batchSize);
+    it("should set the originalBatchSize", function() {
+      expect(this.newSearcher.originalBatchSize).toEqual(batchSize);
+    });
+
+    it("should set the originalLowerBound", function() {
+      expect(this.newSearcher.originalLowerBound).toEqual(lowerBound);
     });
 
     it("should set the batchSize to an integer", function() {
@@ -355,17 +359,24 @@ describe("Searcher", function() {
 
   describe('#updateBoundAndFilter(resultsBlock)', function() {
 
-    // it("should call extractLowerBound", function() {
-    //   expect(searcher.extractLowerBound).toHaveBeenCalledWith(resultsBlock);
-    // });
+    beforeEach(function() {
+      this.resultsBlock  = [{}, {}, {}];
+      this.newLowerBound = '12345';
+      spyOn(searcher, 'extractLowerBound').andReturn(this.newLowerBound);
+      spyOn(searcher, 'generateLowerBoundFilter');
+    });
 
-    // it("should set the lowerBound", function() {
-    //   expect(searcher.lowerBound).toEqual(this.newLowerBound);
-    // });
+    it("should call extractLowerBound", function() {
+      expect(searcher.extractLowerBound).toHaveBeenCalledWith(this.resultsBlock);
+    });
 
-    // it("should call updateLowerBoundFilter", function() {
-    //   expect(searcher.generateLowerBoundFilter).toHaveBeenCalled();
-    // });
+    it("should set the lowerBound", function() {
+      expect(searcher.lowerBound).toEqual(this.newLowerBound);
+    });
+
+    it("should call generateLowerBoundFilter", function() {
+      expect(searcher.generateLowerBoundFilter).toHaveBeenCalled();
+    });
 
   });
 

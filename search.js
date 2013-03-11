@@ -8,18 +8,19 @@ this.Searcher = (function() {
     this.SEARCH_COLUMN_JOIN_KEY     = 'join';
     this.SEARCH_COLUMN_SORT_KEY     = 'sort';
 
-    this.common        = new CommonObject();
-    this.recordType    = recordType;
-    this.rawBatchSize  = batchSize;
-    this.lowerBound    = lowerBound;
-    this.lowerBoundFilter = {};
-    this.rawSearchFilters = searchFilters;
-    this.rawSearchColumns = searchColumns;
-    this.searchFilters = [];
-    this.searchColumns = [];
-    this.results       = [];
+    this.common             = new CommonObject();
+    this.recordType         = recordType;
+    this.originalBatchSize  = batchSize;
+    this.originalLowerBound = lowerBound;
+    this.lowerBound         = lowerBound;
+    this.lowerBoundFilter   = {};
+    this.rawSearchFilters   = searchFilters;
+    this.rawSearchColumns   = searchColumns;
+    this.searchFilters      = [];
+    this.searchColumns      = [];
+    this.results            = [];
 
-    intBatchSize = parseInt(this.rawBatchSize);
+    intBatchSize = parseInt(this.originalBatchSize);
     if((intBatchSize % 1000) != 0) {
       intBatchSize = intBatchSize + (1000 - (intBatchSize % 1000));
     }
@@ -101,6 +102,9 @@ this.Searcher = (function() {
   }
 
   Searcher.prototype.updateBoundAndFilter = function(resultsBlock) {
+    newLowerBound   = this.extractLowerBound(resultsBlock);
+    this.lowerBound = newLowerBound;
+    this.generateLowerBoundFilter();
   }
 
   Searcher.prototype.extractLowerBound = function(resultsBlock) {
@@ -113,8 +117,8 @@ this.Searcher = (function() {
   Searcher.prototype.getParams = function() {
     params = {};
     params['recordType']    = this.recordType;
-    params['batchSize']     = this.rawBatchSize;
-    params['lowerBound']    = this.lowerBound;
+    params['batchSize']     = this.originalBatchSize;
+    params['lowerBound']    = this.originalLowerBound;
     params['searchFilters'] = this.rawSearchFilters;
     params['searchColumns'] = this.rawSearchColumns;
     return params;
