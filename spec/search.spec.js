@@ -329,10 +329,53 @@ describe("Searcher", function() {
 
   describe('#executeSearch', function() {
 
-    describe('normal operation', function() {
+    beforeEach(function() {
+      spyOn(searcher, 'searchIteration');
+    });
+
+    describe('execution halts after #isExecutionDone returns true', function() {
+
+      beforeEach(function() {
+        spyOn(searcher, 'isExecutionDone').andCallFake(function() {
+          if(searcher.isExecutionDone.callCount == 3) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+        searcher.executeSearch();
+      });
+
+      it("should call searchIteration three times", function() {
+        expect(searcher.searchIteration.callCount).toEqual(3);
+      });
+
+      it("should call isExecutionDone three times", function() {
+        expect(searcher.isExecutionDone.callCount).toEqual(3);
+      });
+
     });
 
     describe('an exception occurs', function() {
+
+      beforeEach(function() {
+        global.exception = new Error("An error occured");
+        this.formattedException = searcher.common.formatException(global.exception);
+        spyOn(searcher.common, 'formatException').andReturn(this.formattedException);
+        searcher.searchIteration = jasmine.createSpy('zomgspy').andCallFake(function() {
+            throw global.exception;
+        });
+        searcher.executeSearch();
+      });
+
+      it("should call formatException on CommonObject", function() {
+        expect(searcher.common.formatException).toHaveBeenCalledWith(global.exception);
+      });
+
+      it("should set the results to the formatted exception", function() {
+        expect(searcher.results).toEqual(this.formattedException);
+      });
+
     });
 
   });

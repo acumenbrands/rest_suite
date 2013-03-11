@@ -180,11 +180,11 @@ describe("SavedSearch", function() {
         savedSearch.executeSearch();
       });
 
-      it("should call searchIteration once", function() {
+      it("should call searchIteration three times", function() {
         expect(savedSearch.searchIteration.callCount).toEqual(3);
       });
 
-      it("should call isExecutionDone once", function() {
+      it("should call isExecutionDone three times", function() {
         expect(savedSearch.isExecutionDone.callCount).toEqual(3);
       });
 

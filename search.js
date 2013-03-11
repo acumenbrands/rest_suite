@@ -89,6 +89,15 @@ this.Searcher = (function() {
   }
 
   Searcher.prototype.executeSearch = function() {
+    while(true) {
+      try {
+        resultsBlock = this.searchIteration();
+        if(this.isExecutionDone(resultsBlock)) { break; }
+      } catch(exception) {
+        this.results = this.common.formatException(exception);
+        break;
+      }
+    }
   }
 
   Searcher.prototype.searchIteration = function() {
