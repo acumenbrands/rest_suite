@@ -27,7 +27,7 @@ this.Initializer = (function() {
   return Initializer;
 })();
 
-var postHandler = function() {
+var postHandler = function(request) {
   initializer = new Initializer(request['record_type']);
   initializer.initializeRecord();
   return initializer.reply();

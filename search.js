@@ -151,7 +151,7 @@ this.Searcher = (function() {
 
 })();
 
-var postHandler = function() {
+var postHandler = function(request) {
   var searcher = new Searcher(request['recordType'], request['batchSize'], request['lowerBound'],
                               request['searchFilters'], request['searchColumns']);
   searcher.executeSearch();

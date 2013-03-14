@@ -237,7 +237,7 @@ this.UpsertRecordListElement = (function() {
 })();
 
 var postHandler = function(request) {
-  var upserter = new Upserter();
+  var upserter = new Upserter(request['record_type'], request['record_data']);
   upserter.loadRecords();
   return recordUpserter.reply();
 }

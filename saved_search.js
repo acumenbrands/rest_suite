@@ -99,7 +99,7 @@ this.SavedSearch = (function() {
 
 })();
 
-var postHandler = function() {
+var postHandler = function(request) {
   var savedSearch = new SavedSearch(request['recordType'], request['searchId'],
                                     request['lowerBound'], request['batchSize']);
   savedSearch.executeSearch();
