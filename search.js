@@ -102,8 +102,7 @@ this.Searcher = (function() {
         if(this.isExecutionDone(resultsBlock)) { break; }
       } catch(exception) {
         formattedException = this.common.formatException(exception);
-        this.results   = formattedException;
-        this.replyList = formattedException;
+        this.results = formattedException;
         break;
       }
     }

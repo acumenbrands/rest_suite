@@ -402,10 +402,6 @@ describe("Searcher", function() {
         expect(searcher.results).toEqual(this.formattedException);
       });
 
-      it("should set the formatted exception to the replyList", function() {
-        expect(searcher.replyList).toEqual(this.formattedException);
-      });
-
     });
 
   });
