@@ -24,14 +24,14 @@ this.SavedSearch = (function() {
 
   SavedSearch.prototype.createSearchFilter = function() {
     this.searchFilters = []
-    filter = nlobjSearchFilter('internalidnumber', null,
-                               'greaterthan', this.lowerBound);
+    filter = new nlobjSearchFilter('internalidnumber', null,
+                                   'greaterthan', this.lowerBound);
     this.searchFilters.push(filter);
   }
 
   SavedSearch.prototype.createSearchColumn = function() {
     this.searchColumns = [];
-    column = nlobjSearchColumn('internalid', null);
+    column = new nlobjSearchColumn('internalid', null);
     column.setSort();
     this.searchColumns.push(column);
   }
