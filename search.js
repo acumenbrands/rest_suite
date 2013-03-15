@@ -137,7 +137,7 @@ this.Searcher = (function() {
 
   Searcher.prototype.appendResults = function(resultsBlock) {
     this.results = this.results.concat(resultsBlock);
-    this.replyList.push(this.common.formatReply(resultsBlock));
+    this.replyList.push(this.common.formatReply(this.getParams(), resultsBlock));
   }
 
   Searcher.prototype.getParams = function() {

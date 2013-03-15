@@ -509,6 +509,7 @@ describe("Searcher", function() {
     beforeEach(function() {
       searcher.results = [{}];
       this.formattedReplyList = [{'reply': 'success'}];
+      spyOn(searcher, 'getParams').andReturn({});
       spyOn(searcher.common, 'formatReply').andReturn(this.formattedReplyList[0]);
       searcher.appendResults([{}]);
     });
@@ -518,7 +519,7 @@ describe("Searcher", function() {
     });
 
     it("should call formatReply on CommobObject", function() {
-      expect(searcher.common.formatReply).toHaveBeenCalledWith([{}]);
+      expect(searcher.common.formatReply).toHaveBeenCalledWith(searcher.getParams(), [{}]);
     });
 
     it("should append the formatted reply to the replyList", function() {
