@@ -47,6 +47,7 @@ describe("Searcher", function() {
 
     beforeEach(function() {
       spyOn(Searcher.prototype, 'createSearchFilters');
+      spyOn(Searcher.prototype, 'generateLowerBoundFilter');
       spyOn(Searcher.prototype, 'createSearchColumns');
       this.newSearcher = new Searcher(recordType, batchSize, lowerBound,
                                       searchFilters, searchColumns);
@@ -132,6 +133,10 @@ describe("Searcher", function() {
       expect(this.newSearcher.createSearchFilters).toHaveBeenCalled();
     });
 
+    it("should call generateLowerBoundFilter", function() {
+      expect(this.newSearcher.generateLowerBoundFilter).toHaveBeenCalled();
+    });
+
     it("should call createColumns", function() {
       expect(this.newSearcher.createSearchColumns).toHaveBeenCalled();
     });
@@ -180,7 +185,7 @@ describe("Searcher", function() {
 
     beforeEach(function() {
       this.searchFilterData = {};
-      this.searchFilterData[searcher.SEARCH_FILTER_NAME_KEY]     = 'id';
+      this.searchFilterData[searcher.SEARCH_FILTER_NAME_KEY]     = 'internalid';
       this.searchFilterData[searcher.SEARCH_FILTER_OPERATOR_KEY] = 'greaterthan';
       this.searchFilterData[searcher.SEARCH_FILTER_VALUE_KEY]    = searcher.lowerBound;
       searcher.lowerBound = lowerBound;

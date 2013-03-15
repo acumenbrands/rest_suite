@@ -28,6 +28,7 @@ this.Searcher = (function() {
     this.batchSize = intBatchSize;
 
     this.createSearchFilters();
+    this.generateLowerBoundFilter();
     this.createSearchColumns();
   }
 
@@ -42,7 +43,7 @@ this.Searcher = (function() {
 
   Searcher.prototype.generateLowerBoundFilter = function() {
     searchFilterData = {};
-    searchFilterData[this.SEARCH_FILTER_NAME_KEY]     = 'id';
+    searchFilterData[this.SEARCH_FILTER_NAME_KEY]     = 'internalid';
     searchFilterData[this.SEARCH_FILTER_OPERATOR_KEY] = 'greaterthan';
     searchFilterData[this.SEARCH_FILTER_VALUE_KEY]    = this.lowerBound;
 
