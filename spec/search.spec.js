@@ -22,7 +22,6 @@ describe("Searcher", function() {
   var searchColumns = [
     {
       'name': 'custitem22',
-      'sort': 'true'
     },
     {
       'name': 'financial', // This is gibberish, but illustrative of the structure.
