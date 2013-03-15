@@ -144,19 +144,19 @@ describe("SavedSearch", function() {
     });
 
     it("should populate the value for recordType", function() {
-      expect(this.params['recordType']).toEqual(savedSearch.recordType);
+      expect(this.params['record_type']).toEqual(savedSearch.recordType);
     });
 
     it("should populate the value for recordId", function() {
-      expect(this.params['recordId']).toEqual(savedSearch.recordId);
+      expect(this.params['search_id']).toEqual(savedSearch.searchId);
     });
 
     it("should populate the value for batchSize", function() {
-      expect(this.params['batchSize']).toEqual(savedSearch.originalBatchSize);
+      expect(this.params['batch_size']).toEqual(savedSearch.originalBatchSize);
     });
 
     it("should populate the value for lowerBound", function() {
-      expect(this.params['lowerBound']).toEqual(savedSearch.originalLowerBound);
+      expect(this.params['lower_bound']).toEqual(savedSearch.originalLowerBound);
     });
 
   });

@@ -38,10 +38,10 @@ this.SavedSearch = (function() {
 
   SavedSearch.prototype.getParams = function() {
     return {
-      'recordType': this.recordType,
-      'searchId':   this.searchId,
-      'batchSize':  this.originalBatchSize,
-      'lowerBound': this.originalLowerBound
+      'record_type': this.recordType,
+      'search_id':   this.searchId,
+      'batch_size':  this.originalBatchSize,
+      'lower_bound': this.originalLowerBound
     }
   }
 
@@ -100,8 +100,8 @@ this.SavedSearch = (function() {
 })();
 
 var postHandler = function(request) {
-  var savedSearch = new SavedSearch(request['recordType'], request['searchId'],
-                                    request['lowerBound'], request['batchSize']);
+  var savedSearch = new SavedSearch(request['record_type'], request['search_id'],
+                                    request['lower_bound'], request['batch_size']);
   savedSearch.executeSearch();
   return savedSearch.reply();
 }
