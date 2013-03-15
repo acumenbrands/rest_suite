@@ -53,5 +53,5 @@ this.Loader = (function() {
 var postHandler = function(request) {
   loader = new Loader(request['record_type'], request['id_list']);
   loader.loadRecords();
-  return recordLoader.reply();
+  return loader.reply();
 }
