@@ -49,6 +49,7 @@ describe("Searcher", function() {
       spyOn(Searcher.prototype, 'createSearchFilters');
       spyOn(Searcher.prototype, 'generateLowerBoundFilter');
       spyOn(Searcher.prototype, 'createSearchColumns');
+      spyOn(Searcher.prototype, 'generateSortColumn');
       this.newSearcher = new Searcher(recordType, batchSize, lowerBound,
                                       searchFilters, searchColumns);
     });
@@ -139,6 +140,10 @@ describe("Searcher", function() {
 
     it("should call createColumns", function() {
       expect(this.newSearcher.createSearchColumns).toHaveBeenCalled();
+    });
+
+    it("should call generateSortColumn", function() {
+      expect(this.newSearcher.generateSortColumn).toHaveBeenCalled();
     });
 
     describe('a batch size that is not a multiple of one thousand is given', function() {
@@ -301,8 +306,25 @@ describe("Searcher", function() {
       expect(searcher.searchColumns).toEqual(this.mockColumnObjects);
     });
 
-    it("should call setSortColumn for the column with sort: true", function() {
-      expect(searcher.setSortColumn).toHaveBeenCalledWith(netsuiteSearchColumnObject);
+  });
+
+  describe('#generateSortColumn', function() {
+
+    beforeEach(function() {
+      searcher.searchColumns = [];
+      searcher.generateSortColumn();
+    });
+
+    it("should call getSearchColumnObject with the id sort data", function() {
+      expect(global.nlobjSearchColumn).toHaveBeenCalledWith('internalid', null);
+    });
+
+    it("should call setSort on the search column", function() {
+      expect(netsuiteSearchColumnObject.setSort).toHaveBeenCalled();
+    });
+
+    it("should append the new column to the searchColumns list", function() {
+      expect(searcher.searchColumns).toEqual([netsuiteSearchColumnObject]);
     });
 
   });

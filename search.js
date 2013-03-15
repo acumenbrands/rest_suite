@@ -30,6 +30,7 @@ this.Searcher = (function() {
     this.createSearchFilters();
     this.generateLowerBoundFilter();
     this.createSearchColumns();
+    this.generateSortColumn();
   }
 
   Searcher.prototype.createSearchFilters = function() {
@@ -74,11 +75,14 @@ this.Searcher = (function() {
     for(index in this.rawSearchColumns) {
       searchColumnData   = this.rawSearchColumns[index];
       searchColumnObject = this.getSearchColumnObject(searchColumnData);
-      if(searchColumnData.hasOwnProperty(this.SEARCH_COLUMN_SORT_KEY)) {
-        this.setSortColumn(searchColumnObject);
-      }
       this.searchColumns.push(searchColumnObject);
     }
+  }
+
+  Searcher.prototype.generateSortColumn = function() {
+    sortColumn = new nlobjSearchColumn('internalid', null);
+    sortColumn.setSort();
+    this.searchColumns.push(sortColumn);
   }
 
   Searcher.prototype.getSearchColumnObject = function(searchColumnData) {
