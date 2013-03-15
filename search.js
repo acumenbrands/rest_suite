@@ -135,11 +135,11 @@ this.Searcher = (function() {
 
   Searcher.prototype.getParams = function() {
     params = {};
-    params['recordType']    = this.recordType;
-    params['batchSize']     = this.originalBatchSize;
-    params['lowerBound']    = this.originalLowerBound;
-    params['searchFilters'] = this.rawSearchFilters;
-    params['searchColumns'] = this.rawSearchColumns;
+    params['record_type']    = this.recordType;
+    params['batch_size']     = this.originalBatchSize;
+    params['lower_bound']    = this.originalLowerBound;
+    params['search_filters'] = this.rawSearchFilters;
+    params['search_columns'] = this.rawSearchColumns;
     return params;
   }
 
