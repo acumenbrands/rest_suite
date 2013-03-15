@@ -65,7 +65,8 @@ this.Searcher = (function() {
     name     = searchFilterData[this.SEARCH_FILTER_NAME_KEY];
     operator = searchFilterData[this.SEARCH_FILTER_OPERATOR_KEY];
     value    = searchFilterData[this.SEARCH_FILTER_VALUE_KEY];
-    return nlobjSearchFilter(name, null, operator, value);
+    filter = new nlobjSearchFilter(name, null, operator, value);
+    return filter;
   }
 
   Searcher.prototype.createSearchColumns = function() {
@@ -82,7 +83,8 @@ this.Searcher = (function() {
   Searcher.prototype.getSearchColumnObject = function(searchColumnData) {
     name = searchColumnData[this.SEARCH_COLUMN_NAME_KEY];
     join = searchColumnData[this.SEARCH_COLUMN_JOIN_KEY];
-    return nlobjSearchColumn(name, join);
+    column = new nlobjSearchColumn(name, join);
+    return column;
   }
 
   Searcher.prototype.setSortColumn = function(sortColumnObject) {
