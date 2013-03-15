@@ -30,7 +30,7 @@ describe("Searcher", function() {
   ];
 
   beforeEach(function() {
-    netsuiteSearchFilterObject = jasmine.createSpyObj('filter', ['foo']);
+    netsuiteSearchFilterObject = jasmine.createSpyObj('filter', ['setFormula']);
     netsuiteSearchColumnObject = jasmine.createSpyObj('column', ['setSort']);
     global.nlobjSearchFilter = function() {};
     spyOn(global, 'nlobjSearchFilter').andReturn(netsuiteSearchFilterObject);
@@ -65,6 +65,10 @@ describe("Searcher", function() {
       expect(searcher.SEARCH_FILTER_VALUE_KEY).toBeDefined();
     });
 
+    it("should set the SEARCH_FILTER_FORMULA_KEY", function() {
+      expect(searcher.SEARCH_FILTER_FORMULA_KEY).toBeDefined();
+    });
+
     it("should set the SEARCH_COLUMN_NAME_KEY", function() {
       expect(searcher.SEARCH_COLUMN_NAME_KEY).toBeDefined();
     });
@@ -75,6 +79,22 @@ describe("Searcher", function() {
 
     it("should set the SEARCH_COLUMN_SORT_KEY", function() {
       expect(searcher.SEARCH_COLUMN_SORT_KEY).toBeDefined();
+    });
+
+    it("should set the SEARCH_FORMULA_FIELD_KEY", function() {
+      expect(searcher.SEARCH_FORMULA_FIELD_KEY).toBeDefined();
+    });
+
+    it("should set the SEARCH_FORMULA_VALUES_KEY", function() {
+      expect(searcher.SEARCH_FORMULA_VALUES_KEY).toBeDefined();
+    });
+
+    it("should set the SEARCH_FORMULA_COMPARISON_KEY", function() {
+      expect(searcher.SEARCH_FORMULA_COMPARISON_KEY).toBeDefined();
+    });
+
+    it("should set the SEARCH_FORMULA_JOIN_KEY", function() {
+      expect(searcher.SEARCH_FORMULA_JOIN_KEY).toBeDefined();
     });
 
     it("should set the common object", function() {
@@ -164,19 +184,98 @@ describe("Searcher", function() {
       this.mockFilterObjects = [{}, {}];
       spyOn(searcher, 'getSearchFilterObject').andReturn({});
       spyOn(searcher, 'generateLowerBoundFilter');
-      searcher.createSearchFilters();
     });
 
-    it("should call getSearchFilterObject for each search filter", function() {
-      expect(searcher.getSearchFilterObject.callCount).toEqual(2);
+    describe('basic operation', function() {
+
+      beforeEach(function() {
+        searcher.createSearchFilters();
+      });
+
+      it("should call getSearchFilterObject for each search filter", function() {
+        expect(searcher.getSearchFilterObject.callCount).toEqual(2);
+      });
+
+      it("should append the filter objects to searchFilters", function() {
+        expect(searcher.searchFilters).toEqual(this.mockFilterObjects);
+      });
+
+      it("should call generateLowerBoundFilter", function() {
+        expect(searcher.generateLowerBoundFilter).toHaveBeenCalled();
+      });
+
     });
 
-    it("should append the filter objects to searchFilters", function() {
-      expect(searcher.searchFilters).toEqual(this.mockFilterObjects);
+    describe('a formula key is present', function() {
+
+      beforeEach(function() {
+        spyOn(searcher, 'generateFormula').andReturn('foo');
+        spyOn(searcher, 'setFormula');
+        searcher.rawSearchFilters = [{ 'formula': {} }];
+        searcher.createSearchFilters();
+      });
+
+      it("should call generateFormula", function() {
+        expect(searcher.generateFormula).toHaveBeenCalledWith({});
+      });
+
+      it("should call set formula with the filter and generated formula", function() {
+        expect(searcher.setFormula).toHaveBeenCalledWith({}, 'foo');
+      });
+
     });
 
-    it("should call generateLowerBoundFilter", function() {
-      expect(searcher.generateLowerBoundFilter).toHaveBeenCalled();
+  });
+
+  describe('#generateFormula(formulaData)', function() {
+
+    beforeEach(function() {
+      spyOn(searcher, 'buildFormulaSegment').andReturn('*');
+      this.formulaData      = {
+        'field':      'email',
+        'values':     ['1', '2'],
+        'comparison': 'IS',
+        'join':       'OR'
+      };
+      this.formulaString = "CASE WHEN (* OR *) THEN 1 ELSE 0";
+      this.generatedFormula = searcher.generateFormula(this.formulaData);
+    });
+
+    it("should call buildFormulaSegment for each value", function() {
+      expect(searcher.buildFormulaSegment.callCount).toEqual(this.formulaData['values'].length);
+    });
+
+    it("should call buildFormulaSegment with the correct arguments", function() {
+      expect(searcher.buildFormulaSegment.mostRecentCall.args).toEqual(['email', 'IS', '2']);
+    });
+
+    it("should produce a validly formatted search string", function() {
+      expect(this.generatedFormula).toEqual(this.formulaString);
+    });
+
+  });
+
+  describe('#buildFormulaSegment(field, comparison, value)', function() {
+
+    beforeEach(function() {
+      this.segmentString   = "{field} IS 'schwa'";
+      this.generatedString = searcher.buildFormulaSegment('field', 'IS', 'schwa');
+    });
+
+    it("should produce a valid formula segment", function() {
+      expect(this.generatedString).toEqual(this.segmentString);
+    });
+
+  });
+
+  describe('#setFormula', function() {
+
+    beforeEach(function() {
+      searcher.setFormula(netsuiteSearchFilterObject, 'foo');
+    });
+
+    it("should call setFormula on the search filter object", function() {
+      expect(netsuiteSearchFilterObject.setFormula).toHaveBeenCalledWith('foo');
     });
 
   });

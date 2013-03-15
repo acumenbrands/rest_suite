@@ -4,9 +4,16 @@ this.Searcher = (function() {
     this.SEARCH_FILTER_NAME_KEY     = 'name';
     this.SEARCH_FILTER_OPERATOR_KEY = 'operator';
     this.SEARCH_FILTER_VALUE_KEY    = 'value';
-    this.SEARCH_COLUMN_NAME_KEY     = 'name';
-    this.SEARCH_COLUMN_JOIN_KEY     = 'join';
-    this.SEARCH_COLUMN_SORT_KEY     = 'sort';
+    this.SEARCH_FILTER_FORMULA_KEY  = 'formula';
+
+    this.SEARCH_COLUMN_NAME_KEY = 'name';
+    this.SEARCH_COLUMN_JOIN_KEY = 'join';
+    this.SEARCH_COLUMN_SORT_KEY = 'sort';
+
+    this.SEARCH_FORMULA_FIELD_KEY      = 'field';
+    this.SEARCH_FORMULA_VALUES_KEY     = 'values';
+    this.SEARCH_FORMULA_COMPARISON_KEY = 'comparison';
+    this.SEARCH_FORMULA_JOIN_KEY       = 'join';
 
     this.common             = new CommonObject();
     this.recordType         = recordType;
@@ -36,9 +43,43 @@ this.Searcher = (function() {
     for(index in this.rawSearchFilters) {
       searchFilterData   = this.rawSearchFilters[index];
       searchFilterObject = this.getSearchFilterObject(searchFilterData);
+
+      if(searchFilterData.hasOwnProperty(this.SEARCH_FILTER_FORMULA_KEY)) {
+        formulaData = searchFilterData[this.SEARCH_FILTER_FORMULA_KEY];
+        formula = this.generateFormula(formulaData);
+        this.setFormula(searchFilterObject, formula);
+      }
+
       this.searchFilters.push(searchFilterObject);
     }
     this.generateLowerBoundFilter();
+  }
+
+  Searcher.prototype.generateFormula = function(formulaData) {
+    field      = formulaData[this.SEARCH_FORMULA_FIELD_KEY];
+    values     = formulaData[this.SEARCH_FORMULA_VALUES_KEY];
+    comparison = formulaData[this.SEARCH_FORMULA_COMPARISON_KEY];
+    join       = formulaData[this.SEARCH_FORMULA_JOIN_KEY];
+
+    formula  = "CASE WHEN (";
+    segments = [];
+    for(index in values) {
+      value = values[index];
+      formulaSegment = this.buildFormulaSegment(field, comparison, value);
+      segments.push(formulaSegment);
+    }
+    formula += segments.join(' ' + join + ' ');
+    formula += ") THEN 1 ELSE 0";
+
+    return formula;
+  }
+
+  Searcher.prototype.buildFormulaSegment = function(field, comparison, value) {
+    return "{" + field + "} " + comparison + " '" + value + "'";
+  }
+
+  Searcher.prototype.setFormula = function(searchFilterObject, formulaString) {
+    searchFilterObject.setFormula(formulaString);
   }
 
   Searcher.prototype.generateLowerBoundFilter = function() {
@@ -160,8 +201,8 @@ this.Searcher = (function() {
 })();
 
 var postHandler = function(request) {
-  var searcher = new Searcher(request['record_type'], request['batch_size'], request['lower_bound'],
-                              request['search_filters'], request['search_columns']);
+  searcher = new Searcher(request['record_type'], request['batch_size'], request['lower_bound'],
+                          request['search_filters'], request['search_columns']);
   searcher.executeSearch();
   return searcher.reply();
 }
