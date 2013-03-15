@@ -185,7 +185,7 @@ describe("Searcher", function() {
 
     beforeEach(function() {
       this.searchFilterData = {};
-      this.searchFilterData[searcher.SEARCH_FILTER_NAME_KEY]     = 'internalid';
+      this.searchFilterData[searcher.SEARCH_FILTER_NAME_KEY]     = 'internalidnumber';
       this.searchFilterData[searcher.SEARCH_FILTER_OPERATOR_KEY] = 'greaterthan';
       this.searchFilterData[searcher.SEARCH_FILTER_VALUE_KEY]    = searcher.lowerBound;
       searcher.lowerBound = lowerBound;
