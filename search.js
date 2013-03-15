@@ -19,7 +19,6 @@ this.Searcher = (function() {
     this.searchFilters      = [];
     this.searchColumns      = [];
     this.results            = [];
-    this.replyList          = [];
 
     intBatchSize = parseInt(this.originalBatchSize);
     if((intBatchSize % 1000) != 0) {
@@ -103,8 +102,8 @@ this.Searcher = (function() {
         if(this.isExecutionDone(resultsBlock)) { break; }
       } catch(exception) {
         formattedException = this.common.formatException(exception);
-        this.results = formattedException;
-        this.replyList.push(formattedException);
+        this.results   = formattedException;
+        this.replyList = formattedException;
         break;
       }
     }
@@ -141,7 +140,6 @@ this.Searcher = (function() {
 
   Searcher.prototype.appendResults = function(resultsBlock) {
     this.results = this.results.concat(resultsBlock);
-    this.replyList.push(this.common.formatReply(this.getParams(), resultsBlock));
   }
 
   Searcher.prototype.getParams = function() {
@@ -155,7 +153,7 @@ this.Searcher = (function() {
   }
 
   Searcher.prototype.reply = function() {
-    return this.replyList;
+    return this.common.formatReply(this.getParams(), this.results);
   }
 
   return Searcher;
