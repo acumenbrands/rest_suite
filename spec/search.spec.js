@@ -511,23 +511,23 @@ describe("Searcher", function() {
     });
 
     it("should populate the recordType", function() {
-      expect(this.params['recordType']).toEqual(recordType);
+      expect(this.params['record_type']).toEqual(recordType);
     });
 
     it("should populate the batchSize", function() {
-      expect(this.params['batchSize']).toEqual(batchSize);
+      expect(this.params['batch_size']).toEqual(batchSize);
     });
 
     it("should populate the lowerBound", function() {
-      expect(this.params['lowerBound']).toEqual(lowerBound);
+      expect(this.params['lower_bound']).toEqual(lowerBound);
     });
 
     it("should populate the searchFilters", function() {
-      expect(this.params['searchFilters']).toEqual(searchFilters);
+      expect(this.params['search_filters']).toEqual(searchFilters);
     });
 
     it("should populate the searchColumns", function() {
-      expect(this.params['searchColumns']).toEqual(searchColumns);
+      expect(this.params['search_columns']).toEqual(searchColumns);
     });
 
   });
