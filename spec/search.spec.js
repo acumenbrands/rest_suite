@@ -124,6 +124,10 @@ describe("Searcher", function() {
       expect(this.newSearcher.results).toEqual([]);
     });
 
+    it("should set the replyList to an empty list", function() {
+      expect(this.newSearcher.replyList).toEqual([]);
+    });
+
     it("should call createFilters", function() {
       expect(this.newSearcher.createSearchFilters).toHaveBeenCalled();
     });
@@ -376,6 +380,10 @@ describe("Searcher", function() {
         expect(searcher.results).toEqual(this.formattedException);
       });
 
+      it("should append the formatted exception to the replyList", function() {
+        expect(searcher.replyList).toEqual([this.formattedException]);
+      });
+
     });
 
   });
@@ -495,11 +503,21 @@ describe("Searcher", function() {
 
     beforeEach(function() {
       searcher.results = [{}];
+      this.formattedReplyList = [{'reply': 'success'}];
+      spyOn(searcher.common, 'formatReply').andReturn(this.formattedReplyList[0]);
       searcher.appendResults([{}]);
     });
 
     it("should add the given resultsBlock to the results field", function() {
       expect(searcher.results).toEqual([{}, {}]);
+    });
+
+    it("should call formatReply on CommobObject", function() {
+      expect(searcher.common.formatReply).toHaveBeenCalledWith([{}]);
+    });
+
+    it("should append the formatted reply to the replyList", function() {
+      expect(searcher.replyList).toEqual(this.formattedReplyList);
     });
 
   });
@@ -534,14 +552,8 @@ describe("Searcher", function() {
 
   describe('#reply', function() {
 
-    beforeEach(function() {
-      spyOn(searcher.common, 'formatReply');
-      this.reply = searcher.reply();
-    });
-
-    it("should call formatReply on CommonObject", function() {
-      expect(searcher.common.formatReply).toHaveBeenCalledWith(searcher.getParams(),
-                                                               searcher.results);
+    it("should return the replyList", function() {
+      expect(searcher.reply()).toEqual(searcher.replyList);
     });
 
   });
