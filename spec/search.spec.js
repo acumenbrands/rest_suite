@@ -121,8 +121,8 @@ describe("Searcher", function() {
       expect(this.newSearcher.lowerBound).toEqual(lowerBound);
     });
 
-    it("should set the lowerBoundFilter to an empty object", function() {
-      expect(this.newSearcher.lowerBoundFilter).toEqual({});
+    it("should set the lowerBoundFilterIndex to 0", function() {
+      expect(this.newSearcher.lowerBoundFilterIndex).toEqual(0);
     });
 
     it("should set the rawSearchFilters", function() {
@@ -200,8 +200,8 @@ describe("Searcher", function() {
         expect(searcher.searchFilters).toEqual(this.mockFilterObjects);
       });
 
-      it("should call generateLowerBoundFilter", function() {
-        expect(searcher.generateLowerBoundFilter).toHaveBeenCalled();
+      it("should set the lowerBoundFilterIndex to the filter count", function() {
+        expect(searcher.lowerBoundFilterIndex).toEqual(searcher.searchFilters.length);
       });
 
     });
@@ -287,15 +287,15 @@ describe("Searcher", function() {
       this.searchFilterData[searcher.SEARCH_FILTER_NAME_KEY]     = 'internalidnumber';
       this.searchFilterData[searcher.SEARCH_FILTER_OPERATOR_KEY] = 'greaterthan';
       this.searchFilterData[searcher.SEARCH_FILTER_VALUE_KEY]    = searcher.lowerBound;
+      searcher.lowerBoundFilterIndex = 1;
       searcher.lowerBound = lowerBound;
-      spyOn(searcher, 'getSearchFilterObject').andReturn(netsuiteSearchFilterObject);
     });
 
     describe('no lower bound filter exists', function() {
 
       beforeEach(function() {
-        searcher.searchFilters = [];
-        spyOn(searcher, 'locateSearchFilterIndex').andReturn(-1);
+        searcher.searchFilters = [{}];
+        spyOn(searcher, 'getSearchFilterObject').andReturn(netsuiteSearchFilterObject);
         searcher.generateLowerBoundFilter();
       });
       
@@ -303,12 +303,8 @@ describe("Searcher", function() {
         expect(searcher.getSearchFilterObject).toHaveBeenCalledWith(this.searchFilterData);
       });
 
-      it("should set the lowerBoundFilter field", function() {
-        expect(searcher.lowerBoundFilter).toEqual(netsuiteSearchFilterObject);
-      });
-
       it("should append the lowerBound filter to the searchFilters", function() {
-        expect(searcher.searchFilters).toEqual([netsuiteSearchFilterObject]);
+        expect(searcher.searchFilters).toEqual([{}, netsuiteSearchFilterObject]);
       });
 
     });
@@ -316,50 +312,13 @@ describe("Searcher", function() {
     describe('a lower bound filter already exists', function() {
 
       beforeEach(function() {
-        searcher.searchFilters = ([netsuiteSearchFilterObject]);
-        searcher.lowerBoundFilter = null;
-        spyOn(searcher, 'locateSearchFilterIndex').andReturn(0);
+        searcher.searchFilters = ([{}, netsuiteSearchFilterObject]);
+        spyOn(searcher, 'getSearchFilterObject').andReturn({});
         searcher.generateLowerBoundFilter();
       });
 
-      it("should set the lowerBoundFilter field", function() {
-        expect(searcher.lowerBoundFilter).toEqual(netsuiteSearchFilterObject);
-      });
-
       it("should not add extra filters to the searchFilters field", function() {
-        expect(searcher.searchFilters).toEqual([netsuiteSearchFilterObject]);
-      });
-
-    });
-
-  });
-
-  describe('#locateSearchFilterIndex', function() {
-
-    beforeEach(function() {
-      this.filter = netsuiteSearchFilterObject;
-    });
-
-    describe("a matching filter exists", function() {
-
-      beforeEach(function() {
-        searcher.searchFilters = [{}, this.filter];
-      });
-
-      it("should return the index of the filter", function() {
-        expect(searcher.locateSearchFilterIndex(this.filter)).toEqual(1);
-      });
-
-    });
-
-    describe("no matching filter exists", function() {
-
-      beforeEach(function() {
-        searcher.searchFilters = [];
-      });
-
-      it("should return -1", function() {
-        expect(searcher.locateSearchFilterIndex(this.filter)).toEqual(-1);
+        expect(searcher.searchFilters).toEqual([{}, {}]);
       });
 
     });

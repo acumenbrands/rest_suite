@@ -15,17 +15,17 @@ this.Searcher = (function() {
     this.SEARCH_FORMULA_COMPARISON_KEY = 'comparison';
     this.SEARCH_FORMULA_JOIN_KEY       = 'join';
 
-    this.common             = new CommonObject();
-    this.recordType         = recordType;
-    this.originalBatchSize  = batchSize;
-    this.originalLowerBound = lowerBound;
-    this.lowerBound         = lowerBound;
-    this.lowerBoundFilter   = {};
-    this.rawSearchFilters   = searchFilters;
-    this.rawSearchColumns   = searchColumns;
-    this.searchFilters      = [];
-    this.searchColumns      = [];
-    this.results            = [];
+    this.common                = new CommonObject();
+    this.recordType            = recordType;
+    this.originalBatchSize     = batchSize;
+    this.originalLowerBound    = lowerBound;
+    this.lowerBound            = lowerBound;
+    this.lowerBoundFilterIndex = 0;
+    this.rawSearchFilters      = searchFilters;
+    this.rawSearchColumns      = searchColumns;
+    this.searchFilters         = [];
+    this.searchColumns         = [];
+    this.results               = [];
 
     intBatchSize = parseInt(this.originalBatchSize);
     if((intBatchSize % 1000) != 0) {
@@ -52,7 +52,7 @@ this.Searcher = (function() {
 
       this.searchFilters.push(searchFilterObject);
     }
-    this.generateLowerBoundFilter();
+    this.lowerBoundFilterIndex = this.searchFilters.length;
   }
 
   Searcher.prototype.generateFormula = function(formulaData) {
@@ -89,18 +89,7 @@ this.Searcher = (function() {
     searchFilterData[this.SEARCH_FILTER_VALUE_KEY]    = this.lowerBound;
 
     lowerBoundFilterObject = this.getSearchFilterObject(searchFilterData)
-    this.lowerBoundFilter = lowerBoundFilterObject;
-
-    filterIndex = this.locateSearchFilterIndex();
-    if(filterIndex == -1) {
-      this.searchFilters.push(lowerBoundFilterObject);
-    } else {
-      this.searchFilters[filterIndex] = lowerBoundFilterObject;
-    }
-  }
-
-  Searcher.prototype.locateSearchFilterIndex = function(searchFilter) { 
-    return this.searchFilters.indexOf(searchFilter);
+    this.searchFilters[this.lowerBoundFilterIndex] = lowerBoundFilterObject;
   }
 
   Searcher.prototype.getSearchFilterObject = function(searchFilterData) {
