@@ -237,7 +237,7 @@ describe("Searcher", function() {
         'comparison': 'IS',
         'join':       'OR'
       };
-      this.formulaString = "CASE WHEN (* OR *) THEN 1 ELSE 0";
+      this.formulaString = "CASE WHEN (* OR *) THEN 1 ELSE 0 END";
       this.generatedFormula = searcher.generateFormula(this.formulaData);
     });
 

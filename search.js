@@ -69,7 +69,7 @@ this.Searcher = (function() {
       segments.push(formulaSegment);
     }
     formula += segments.join(' ' + join + ' ');
-    formula += ") THEN 1 ELSE 0";
+    formula += ") THEN 1 ELSE 0 END";
 
     return formula;
   }
