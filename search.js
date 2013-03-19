@@ -153,7 +153,10 @@ this.Searcher = (function() {
   }
 
   Searcher.prototype.getSearchResults = function() {
-    return nlapiSearchRecord(this.recordType, null, this.searchFilters, this.searchColumns);
+    results = nlapiSearchRecord(this.recordType, null, this.searchFilters, this.searchColumns);
+    results = [].concat(results);
+    results = results.filter(function(result) { return(result != null) });
+    return results;
   }
 
   Searcher.prototype.updateBoundAndFilter = function(resultsBlock) {

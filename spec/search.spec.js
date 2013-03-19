@@ -519,14 +519,44 @@ describe("Searcher", function() {
 
   describe('#getSearchResults', function() {
 
-    beforeEach(function() {
-      searcher.getSearchResults();
+    describe('all cases', function() {
+
+      beforeEach(function() {
+        searcher.getSearchResults();
+      });
+
+      it("should call nlapiSearchRecord", function() {
+        expect(global.nlapiSearchRecord).toHaveBeenCalledWith(searcher.recordType, null,
+                                                              searcher.searchFilters,
+                                                              searcher.searchColumns);
+      });
+
     });
 
-    it("should call nlapiSearchRecord", function() {
-      expect(global.nlapiSearchRecord).toHaveBeenCalledWith(searcher.recordType, null,
-                                                            searcher.searchFilters,
-                                                            searcher.searchColumns);
+    describe('search provides an array', function() {
+
+      beforeEach(function() {
+        global.nlapiSearchRecord = function() {}
+        spyOn(global, 'nlapiSearchRecord').andReturn([{}, {}]);
+      });
+
+      it('should return an array of the results', function() {
+        expect(searcher.getSearchResults()).toEqual([{}, {}]);
+      });
+
+    });
+
+    describe('search returns null', function() {
+
+      beforeEach(function() {
+        global.nlapiSearchRecord = function() {}
+        spyOn(global, 'nlapiSearchRecord').andReturn(null);
+      });
+
+      it('should return an empty array', function() {
+        expect(searcher.getSearchResults()).toEqual([]);
+      });
+
     });
 
   });
