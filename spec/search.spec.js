@@ -413,15 +413,11 @@ describe("Searcher", function() {
 
   describe('#executeSearch', function() {
 
-    beforeEach(function() {
-      spyOn(searcher, 'searchIteration');
-    });
-
-    describe('execution halts after #isExecutionDone returns true', function() {
+    describe('execution halts after #searchIteration returns true', function() {
 
       beforeEach(function() {
-        spyOn(searcher, 'isExecutionDone').andCallFake(function() {
-          if(searcher.isExecutionDone.callCount == 3) {
+        spyOn(searcher, 'searchIteration').andCallFake(function() {
+          if(searcher.searchIteration.callCount == 3) {
             return true;
           } else {
             return false;
@@ -434,10 +430,6 @@ describe("Searcher", function() {
         expect(searcher.searchIteration.callCount).toEqual(3);
       });
 
-      it("should call isExecutionDone three times", function() {
-        expect(searcher.isExecutionDone.callCount).toEqual(3);
-      });
-
     });
 
     describe('an exception occurs', function() {
@@ -446,7 +438,7 @@ describe("Searcher", function() {
         global.exception = new Error("An error occured");
         this.formattedException = searcher.common.formatException(global.exception);
         spyOn(searcher.common, 'formatException').andReturn(this.formattedException);
-        searcher.searchIteration = jasmine.createSpy('zomgspy').andCallFake(function() {
+        spyOn(searcher, 'searchIteration').andCallFake(function() {
             throw global.exception;
         });
         searcher.executeSearch();
@@ -471,23 +463,64 @@ describe("Searcher", function() {
       spyOn(searcher, 'getSearchResults').andReturn(this.resultsBlock);
       spyOn(searcher, 'updateBoundAndFilter');
       spyOn(searcher, 'appendResults');
-      this.returnValue = searcher.searchIteration();
     });
 
-    it("should call getSearchResults", function() {
-      expect(searcher.getSearchResults).toHaveBeenCalled();
+    describe('isExecutionDone returns false', function() {
+
+      beforeEach(function() {
+        spyOn(searcher, 'isExecutionDone').andReturn(false);
+        this.returnValue = searcher.searchIteration();
+      });
+
+      it("should call getSearchResults", function() {
+        expect(searcher.getSearchResults).toHaveBeenCalled();
+      });
+
+      it("should call isExecutionDone", function() {
+        expect(searcher.isExecutionDone).toHaveBeenCalledWith(this.resultsBlock);
+      });
+
+      it("should call updateBoundAndFilter", function() {
+        expect(searcher.updateBoundAndFilter).toHaveBeenCalledWith(this.resultsBlock);
+      });
+
+      it("should call appendResults", function() {
+        expect(searcher.appendResults).toHaveBeenCalledWith(this.resultsBlock);
+      });
+
+      it("should return false", function() {
+        expect(this.returnValue).toEqual(false);
+      });
+
     });
 
-    it("should call updateBoundAndFilter", function() {
-      expect(searcher.updateBoundAndFilter).toHaveBeenCalledWith(this.resultsBlock);
-    });
+    describe('isExecutionDone returns true', function() {
 
-    it("should call appendResults", function() {
-      expect(searcher.appendResults).toHaveBeenCalledWith(this.resultsBlock);
-    });
+      beforeEach(function() {
+        spyOn(searcher, 'isExecutionDone').andReturn(true);
+        this.returnValue = searcher.searchIteration();
+      });
 
-    it("should return the resultsBlock", function() {
-      expect(this.returnValue).toEqual(this.resultsBlock);
+      it("should call getSearchResults", function() {
+        expect(searcher.getSearchResults).toHaveBeenCalled();
+      });
+
+      it("should call isExecutionDone", function() {
+        expect(searcher.isExecutionDone).toHaveBeenCalledWith(this.resultsBlock);
+      });
+
+      it("should not call updateBoundAndFilter", function() {
+        expect(searcher.updateBoundAndFilter.callCount).toEqual(0);
+      });
+
+      it("should call appendResults", function() {
+        expect(searcher.appendResults).toHaveBeenCalledWith(this.resultsBlock);
+      });
+
+      it("should return false", function() {
+        expect(this.returnValue).toEqual(true);
+      });
+
     });
 
   });

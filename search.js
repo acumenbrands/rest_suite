@@ -128,8 +128,8 @@ this.Searcher = (function() {
   Searcher.prototype.executeSearch = function() {
     while(true) {
       try {
-        resultsBlock = this.searchIteration();
-        if(this.isExecutionDone(resultsBlock)) { break; }
+        done = this.searchIteration();
+        if(done) { break; }
       } catch(exception) {
         formattedException = this.common.formatException(exception);
         this.results = formattedException;
@@ -140,9 +140,14 @@ this.Searcher = (function() {
 
   Searcher.prototype.searchIteration = function() {
     resultsBlock = this.getSearchResults();
-    this.updateBoundAndFilter(resultsBlock);
+    done = this.isExecutionDone(resultsBlock);
+
+    if(!done) {
+      this.updateBoundAndFilter(resultsBlock);
+    }
+
     this.appendResults(resultsBlock);
-    return resultsBlock;
+    return done;
   }
 
   Searcher.prototype.isExecutionDone = function(resultsBlock) {
