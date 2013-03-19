@@ -2,6 +2,6 @@
   "name":     "rest_suite",
   "version":  "1.0.0",
   "dependencies": {
-    "jasmine-node":   "1.0.26"
+    "jasmine-node":   "1.2.3"
   }
 }
