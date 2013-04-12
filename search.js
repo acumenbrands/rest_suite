@@ -140,13 +140,13 @@ this.Searcher = (function() {
 
   Searcher.prototype.searchIteration = function() {
     resultsBlock = this.getSearchResults();
+    this.appendResults(resultsBlock);
     done = this.isExecutionDone(resultsBlock);
 
     if(!done) {
       this.updateBoundAndFilter(resultsBlock);
     }
 
-    this.appendResults(resultsBlock);
     return done;
   }
 
