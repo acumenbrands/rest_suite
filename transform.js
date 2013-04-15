@@ -26,7 +26,8 @@ this.Transformer = (function() {
   Transformer.prototype.transformRecordList = function() {
   }
 
-  Transformer.prototype.transformSingleRecord = function() {
+  Transformer.prototype.transformSingleRecord = function(recordId) {
+    nlapiTransformRecord(this.initialRecordType, recordId, this.resultRecordType);
   }
 
   Transformer.prototype.updateTransformedRecord = function() {

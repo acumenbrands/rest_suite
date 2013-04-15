@@ -37,6 +37,8 @@ describe("Transformer", function() {
 
   beforeEach(function() {
     transformer = new Transformer(initialRecordType, resultRecordType, recordData);
+    global.nlapiLoadRecord = function() {}
+    global.nlapiTransformRecord = function() {}
   });
 
   describe('#init(initialRecordType, resultRecordType, recordData)', function() {
@@ -111,7 +113,19 @@ describe("Transformer", function() {
   describe('#transformRecordList', function() {
   });
 
-  describe('#transformSingleRecord', function() {
+  describe('#transformSingleRecord(recordId)', function() {
+
+    beforeEach(function() {
+      this.id = '12345';
+      spyOn(global, 'nlapiTransformRecord');
+      transformer.transformSingleRecord(this.id);
+    });
+
+    it('calls nlapiTransformRecord with the initial type, result type and given id', function() {
+      expect(global.nlapiTransformRecord).toHaveBeenCalledWith(transformer.initialRecordType, this.id,
+                                                               transformer.resultRecordType);
+    });
+
   });
 
   describe('#updateTransformedRecord', function() {
