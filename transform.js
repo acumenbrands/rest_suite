@@ -19,7 +19,8 @@ this.Transformer = (function() {
   Transformer.prototype.loadRecordsFromNetsuite = function() {
   }
 
-  Transformer.prototype.loadSingleRecord = function() {
+  Transformer.prototype.loadSingleRecord = function(recordId) {
+    nlapiLoadRecord(this.initialRecordType, recordId);
   }
 
   Transformer.prototype.transformRecordList = function() {

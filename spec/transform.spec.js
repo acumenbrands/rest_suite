@@ -94,7 +94,18 @@ describe("Transformer", function() {
   describe('#loadRecordsFromNetsuite', function() {
   });
 
-  describe('#loadSingleRecord', function() {
+  describe('#loadSingleRecord(recordId)', function() {
+
+    beforeEach(function() {
+      this.id = '12345';
+      spyOn(global, 'nlapiLoadRecord');
+      transformer.loadSingleRecord(this.id);
+    });
+
+    it('calls nlapiLoadRecord with the initial record type and id', function() {
+      expect(global.nlapiLoadRecord).toHaveBeenCalledWith(transformer.initialRecordType, this.id);
+    });
+
   });
 
   describe('#transformRecordList', function() {
