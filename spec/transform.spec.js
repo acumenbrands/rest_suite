@@ -23,7 +23,7 @@ describe("Transformer", function() {
   }
   var recordData = [
     {
-      'literal_fields': {
+      'record_data': {
         'custitemcustomdata': "Woo! It's a memo!"
       },
       'sublist_data': {
@@ -36,14 +36,57 @@ describe("Transformer", function() {
   ];
 
   beforeEach(function() {
+    transformer = new Transformer(initialRecordType, resultRecordType, recordData);
   });
 
-  describe('#init', function() {
+  describe('#init(initialRecordType, resultRecordType, recordData)', function() {
+
+    describe('Constants', function() {
+
+      it("should define RECORD_DATA_KEY", function() {
+        expect(transformer.RECORD_DATA_KEY).toBeDefined();
+      });
+
+      it("shuld define SUBLIST_KEY", function() { 
+        expect(transformer.SUBLIST_KEY).toBeDefined();
+      });
+
+      it("should define SUBLIST_MATCH_KEY", function() {
+        expect(transformer.SUBLIST_MATCH_KEY).toBeDefined();
+      });
+
+      it("should define SUBLIST_DELETE_KEY", function() {
+        expect(transformer.SUBLIST_DELETE_KEY).toBeDefined();
+      });
+
+      it("should define SUBLIST_DATA_KEY", function() {
+        expect(transformer.SUBLIST_DATA_KEY).toBeDefined();
+      });
+
+    });
 
     it('sets the initial record type', function() {
+      expect(transformer.initialRecordType).toEqual(initialRecordType);
     });
 
     it('sets the result record type', function() {
+      expect(transformer.resultRecordType).toEqual(resultRecordType);
+    });
+
+    it('sets the record data', function() {
+      expect(transformer.recordData).toEqual(recordData);
+    });
+
+    it('sets the loaded record list with a blank array', function() {
+      expect(transformer.loadedRecordList).toEqual([]);
+    });
+
+    it('sets the transformed record list with a blank array', function() {
+      expect(transformer.transformedRecordList).toEqual([]);
+    });
+
+    it('sets the reply list with a blank array', function() {
+      expect(transformer.replyList).toEqual([]);
     });
 
   });
