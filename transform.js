@@ -1,12 +1,15 @@
 this.Transformer = (function() {
 
   function Transformer(initialRecordType, resultRecordType, recordData) {
-    this.RECORD_DATA_KEY        = 'record_data';
     this.RECORD_INTERNAL_ID_KEY = 'id';
+    this.RECORD_DATA_KEY        = 'record_data';
+    this.RECORD_OBJECT_KEY      = 'record_object';
     this.SUBLIST_KEY            = 'sublist_data';
     this.SUBLIST_MATCH_KEY      = 'match_field';
     this.SUBLIST_DELETE_KEY     = 'delete';
     this.SUBLIST_DATA_KEY       = 'item_data';
+    this.TRANSFORMED_RECORD_KEY = 'transformed_record';
+    this.SUCCESS_KEY            = 'success';
 
     this.initialRecordType = initialRecordType;
     this.resultRecordType  = resultRecordType;

@@ -47,12 +47,16 @@ describe("Transformer", function() {
 
     describe('Constants', function() {
 
+      it("should define RECORD_INTERNAL_ID_KEY", function() {
+        expect(transformer.RECORD_INTERNAL_ID_KEY).toBeDefined();
+      });
+
       it("should define RECORD_DATA_KEY", function() {
         expect(transformer.RECORD_DATA_KEY).toBeDefined();
       });
 
-      it("should define RECORD_INTERNAL_ID_KEY", function() {
-        expect(transformer.RECORD_INTERNAL_ID_KEY).toBeDefined();
+      it("should define RECORD_OBJECT_KEY", function() {
+        expect(transformer.RECORD_OBJECT_KEY).toBeDefined();
       });
 
       it("shuld define SUBLIST_KEY", function() { 
@@ -69,6 +73,14 @@ describe("Transformer", function() {
 
       it("should define SUBLIST_DATA_KEY", function() {
         expect(transformer.SUBLIST_DATA_KEY).toBeDefined();
+      });
+
+      it("should define TRANSFORMED_RECORD_KEY", function() {
+        expect(transformer.TRANSFORMED_RECORD_KEY).toBeDefined();
+      });
+
+      it("should define SUCCESS_KEY", function() {
+        expect(transformer.SUCCESS_KEY).toBeDefined();
       });
 
     });
