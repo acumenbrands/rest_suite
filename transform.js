@@ -57,7 +57,11 @@ this.Transformer = (function() {
   Transformer.prototype.updateTransformedRecord = function() {
   }
 
-  Transformer.prototype.updateLiteralFields = function() {
+  Transformer.prototype.updateLiteralFields = function(record, fieldData) {
+    for(fieldName in fieldData) {
+      value = fieldData[fieldName];
+      this.setSingleLiteralField(record, fieldName, value);
+    }
   }
 
   Transformer.prototype.setSingleLiteralField = function(record, fieldName, value) {

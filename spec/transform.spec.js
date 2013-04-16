@@ -232,7 +232,29 @@ describe("Transformer", function() {
   describe('#updateTransformedRecord', function() {
   });
 
-  describe('#updateLiteralFields', function() {
+  describe('#updateLiteralFields(record, fieldData)', function() {
+
+    beforeEach(function() {
+      this.record = {};
+      this.fieldData = {
+        'quantity': '17',
+        'custitemnote': 'WOO! NOTES!'
+      }
+      this.firstCall = [this.record, 'quantity', '17'];
+      this.secondCall = [this.record, 'custitemnote', 'WOO! NOTES'];
+      spyOn(transformer, 'setSingleLiteralField');
+      transformer.updateLiteralFields(this.record, this.fieldData);
+    });
+
+    it('calls setSingleLiteralField for each element of fieldData', function() {
+      expect(transformer.setSingleLiteralField.callCount).toEqual(2);
+    });
+
+    it('calls setSingleLiteralField with the correct sequence of arguments', function() {
+      expect(transformer.setSingleLiteralField.argsForCall).toContain(this.firstCall,
+                                                                      this.secondCall);
+    });
+
   });
 
   describe('#setSingleLiteralField(record, fieldName, value)', function() {
