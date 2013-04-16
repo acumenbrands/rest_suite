@@ -47,6 +47,7 @@ this.Transformer = (function() {
   }
 
   Transformer.prototype.appendTransformedRecordToData = function(recordData, transformedRecord) {
+    recordData[this.TRANSFORMED_RECORD_KEY] = transformedRecord;
   }
 
   Transformer.prototype.transformSingleRecord = function(recordId) {
