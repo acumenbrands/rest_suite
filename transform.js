@@ -64,6 +64,11 @@ this.Transformer = (function() {
   }
 
   Transformer.prototype.getParams = function() {
+    return {
+      'initial_record_type': this.initialRecordType,
+      'result_record_type':  this.resultRecordType,
+      'record_data':         this.recordData
+    };
   }
 
   Transformer.prototype.reply = function() {

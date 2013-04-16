@@ -162,6 +162,23 @@ describe("Transformer", function() {
   });
 
   describe('#getParams', function() {
+
+    beforeEach(function() {
+      this.params = transformer.getParams();
+    });
+
+    it('populates the initial record type', function() {
+      expect(this.params['initial_record_type']).toBeDefined();
+    });
+
+    it('populates the result record type', function() {
+      expect(this.params['result_record_type']).toBeDefined();
+    });
+
+    it('populates the record data', function() {
+      expect(this.params['record_data']).toBeDefined();
+    });
+
   });
 
   describe('#reply', function() {
