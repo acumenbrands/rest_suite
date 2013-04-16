@@ -294,13 +294,33 @@ describe("Transformer", function() {
 
   });
 
-  describe('#filterSublists', function() {
+  describe('#filterSublists(record, sublistsData)', function() {
+
+    beforeEach(function() {
+    });
+
+    it('calls filterSingleSublist for each element of sublistData', function() {
+    });
+
+    it('calls filterSingleSublist with the correct sequence of arguments', function() {
+    });
+
   });
 
-  describe('#filterSingleSublist', function() {
+  describe('#filterSingleSublist(record, sublistData)', function() {
+
+    beforeEach(function() {
+    });
+
+    it('calls setSublistItemFields with all items that are not to be deleted', function() {
+    });
+
+    it('calls removeSingleSublistItems with all items to be deleted', function() {
+    });
+
   });
 
-  describe('#setSublistItemFields', function() {
+  describe('#setSublistItemFields(record, index, sublistFieldData)', function() {
   });
 
   describe('#setSingleSublistItemField(listName, fieldName, index, value)', function() {
@@ -324,10 +344,24 @@ describe("Transformer", function() {
 
   });
 
-  describe('#removeSublistItems', function() {
+  describe('#removeSublistItems(record, sublistData)', function() {
   });
 
   describe('#removeSingleSublistItem', function() {
+
+    beforeEach(function() {
+      this.sublistName = 'foo';
+      this.index = 13;
+      this.record = {}
+      this.record.removeLineItem = function() {}
+      spyOn(this.record, 'removeLineItem');
+      transformer.removeSingleSublistItem(this.record, this.sublistName, this.index);
+    });
+
+    it('calls removeLineItem on the given record with the sublist name and index', function() {
+      expect(this.record.removeLineItem).toHaveBeenCalledWith(this.sublistName, this.index);
+    });
+
   });
 
   describe('#writeTransformedRecord', function() {

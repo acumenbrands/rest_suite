@@ -77,20 +77,21 @@ this.Transformer = (function() {
   Transformer.prototype.filterSublists = function(record, sublistsData) {
   }
 
-  Transformer.prototype.filterSingleSublist = function() {
+  Transformer.prototype.filterSingleSublist = function(record, sublistData) {
   }
 
-  Transformer.prototype.setSublistItemFields = function() {
+  Transformer.prototype.setSublistItemFields = function(record, index, sublistFieldData) {
   }
 
   Transformer.prototype.setSingleSublistItemField = function(record, list, field, index, value) {
     record.setLineItemValue(list, field, index, value);
   }
 
-  Transformer.prototype.removeSublistItems = function() {
+  Transformer.prototype.removeSublistItems = function(record, sublistData) {
   }
 
-  Transformer.prototype.removeSingleSublistItem = function() {
+  Transformer.prototype.removeSingleSublistItem = function(record, sublistName, index) {
+    record.removeLineItem(sublistName, index);
   }
 
   Transformer.prototype.writeTransformedRecord = function(record) {
