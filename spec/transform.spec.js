@@ -135,7 +135,21 @@ describe("Transformer", function() {
   describe('#updateLiteralFields', function() {
   });
 
-  describe('#setSingleLiterlaField', function() {
+  describe('#setSingleLiteralField(record, fieldName, value)', function() {
+
+    beforeEach(function() {
+      this.record = {};
+      this.fieldName = 'custitem22';
+      this.value = '9001';
+      this.record.setFieldValue = function() {}
+      spyOn(this.record, 'setFieldValue');
+      transformer.setSingleLiteralField(this.record, this.fieldName, this.value);
+    });
+
+    it('calls setFieldValue with the given values', function() {
+      expect(this.record.setFieldValue).toHaveBeenCalledWith(this.fieldName, this.value);
+    });
+
   });
 
   describe('#filterSublists', function() {

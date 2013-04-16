@@ -36,7 +36,8 @@ this.Transformer = (function() {
   Transformer.prototype.updateLiteralFields = function() {
   }
 
-  Transformer.prototype.setSingleLiterlaField = function() {
+  Transformer.prototype.setSingleLiteralField = function(record, fieldName, value) {
+    record.setFieldValue(fieldName, value);
   }
 
   Transformer.prototype.filterSublists = function() {
