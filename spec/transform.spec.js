@@ -185,7 +185,8 @@ describe("Transformer", function() {
     });
 
     it('calls nlapiTransformRecord with the initial type, result type and given id', function() {
-      expect(global.nlapiTransformRecord).toHaveBeenCalledWith(transformer.initialRecordType, this.id,
+      expect(global.nlapiTransformRecord).toHaveBeenCalledWith(transformer.initialRecordType,
+                                                               this.id,
                                                                transformer.resultRecordType);
     });
 
