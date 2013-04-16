@@ -77,6 +77,12 @@ this.Transformer = (function() {
   Transformer.prototype.filterSingleSublist = function(record, sublistData) {
   }
 
+  Transformer.prototype.matchLineItemToSublistData = function(record, sublistItemData) {
+  }
+
+  Transformer.prototype.getsublistItemFieldValue = function(record, sublist, index, field) {
+  }
+
   Transformer.prototype.setSublistItemFields = function(record, index, sublistFieldData) {
   }
 
@@ -84,7 +90,7 @@ this.Transformer = (function() {
     record.setLineItemValue(list, field, index, value);
   }
 
-  Transformer.prototype.removeSublistItems = function(record, sublistData) {
+  Transformer.prototype.removeSublistItems = function(record, sublistName, indeces) {
   }
 
   Transformer.prototype.removeSingleSublistItem = function(record, sublistName, index) {

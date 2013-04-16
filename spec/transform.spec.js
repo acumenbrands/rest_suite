@@ -304,10 +304,10 @@ describe("Transformer", function() {
     beforeEach(function() {
     });
 
-    it('calls setSublistItemFields with all items that are not to be deleted', function() {
+    it('calls matchLineItemToSublistData for each line item in the sublist', function() {
     });
 
-    it('calls removeSingleSublistItems with all items to be deleted', function() {
+    it('calls removeSingleSublistItems with the record, sublist name and indeces', function() {
     });
 
   });
@@ -346,10 +346,10 @@ describe("Transformer", function() {
 
   });
 
-  describe('#removeSublistItems(record, sublistData)', function() {
+  describe('#removeSublistItems(record, sublistName, indeces)', function() {
   });
 
-  describe('#removeSingleSublistItem', function() {
+  describe('#removeSingleSublistItem(record, sublistName, index)', function() {
 
     beforeEach(function() {
       this.sublistName = 'foo';
