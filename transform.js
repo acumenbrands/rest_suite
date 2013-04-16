@@ -33,6 +33,7 @@ this.Transformer = (function() {
   }
 
   Transformer.prototype.appendRecordToData = function(recordData, record) {
+    recordData[this.RECORD_OBJECT_KEY] = record;
   }
 
   Transformer.prototype.transformRecordList = function() {

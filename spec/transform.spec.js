@@ -160,6 +160,19 @@ describe("Transformer", function() {
 
   });
 
+  describe('#appendRecordToData', function() {
+
+    beforeEach(function() {
+      this.record = {};
+      transformer.appendRecordToData(recordData[0], this.record);
+    });
+
+    it('sets the record object field equal to the given record', function() {
+      expect(recordData[0][transformer.RECORD_OBJECT_KEY]).toEqual(this.record);
+    });
+
+  });
+
   describe('#transformRecordList', function() {
   });
 
