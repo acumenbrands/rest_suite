@@ -39,6 +39,7 @@ describe("Transformer", function() {
     transformer = new Transformer(initialRecordType, resultRecordType, recordData);
     global.nlapiLoadRecord = function() {}
     global.nlapiTransformRecord = function() {}
+    global.nlapiSubmitRecord = function() {}
   });
 
   describe('#init(initialRecordType, resultRecordType, recordData)', function() {
@@ -156,6 +157,17 @@ describe("Transformer", function() {
   });
 
   describe('#writeTransformedRecord', function() {
+
+    beforeEach(function() {
+      this.record = {};
+      spyOn(global, 'nlapiSubmitRecord');
+      transformer.writeTransformedRecord(this.record);
+    });
+
+    it('calls nlapiSubmitRecord with the given record', function() {
+      expect(global.nlapiSubmitRecord).toHaveBeenCalledWith(this.record, false, false);
+    });
+
   });
 
   describe('#appendResults', function() {

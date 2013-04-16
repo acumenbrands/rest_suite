@@ -57,7 +57,8 @@ this.Transformer = (function() {
   Transformer.prototype.removeSingleSublistItem = function() {
   }
 
-  Transformer.prototype.writeTransformedRecord = function() {
+  Transformer.prototype.writeTransformedRecord = function(record) {
+    nlapiSubmitRecord(record, false, false);
   }
 
   Transformer.prototype.appendResults = function() {
