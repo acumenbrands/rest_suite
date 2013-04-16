@@ -38,6 +38,15 @@ this.Transformer = (function() {
   }
 
   Transformer.prototype.transformRecordList = function() {
+    for(index in this.recordData) {
+      data = this.recordData[index];
+      recordId = data[this.RECORD_INTERNAL_ID_KEY];
+      transformedRecord = this.transformSingleRecord(recordId);
+      this.appendTransformedRecordToData(data, transformedRecord);
+    }
+  }
+
+  Transformer.prototype.appendTransformedRecordToData = function(recordData, transformedRecord) {
   }
 
   Transformer.prototype.transformSingleRecord = function(recordId) {

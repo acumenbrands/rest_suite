@@ -178,6 +178,26 @@ describe("Transformer", function() {
   });
 
   describe('#transformRecordList', function() {
+
+    beforeEach(function() {
+      spyOn(transformer, 'transformSingleRecord');
+      spyOn(transformer, 'appendTransformedRecordToData');
+      transformer.transformRecordList();
+    });
+
+    it('calls transformSingleRecord for each element of record data', function() {
+      expect(transformer.transformSingleRecord.callCount).toEqual(recordData.length);
+    });
+
+    it('calls transformSingleRecord with each record object in record data', function() {
+      expect(transformer.transformSingleRecord.argsForCall).toEqual([[firstId],
+                                                                    [secondId]]);
+    });
+
+    it('calls appendTransformedRecordToData for each element of recordData', function() {
+      expect(transformer.appendTransformedRecordToData.callCount).toEqual(recordData.length);
+    });
+
   });
 
   describe('#transformSingleRecord(recordId)', function() {
