@@ -54,7 +54,12 @@ this.Transformer = (function() {
     nlapiTransformRecord(this.initialRecordType, recordId, this.resultRecordType);
   }
 
-  Transformer.prototype.updateTransformedRecord = function() {
+  Transformer.prototype.updateTransformedRecord = function(recordData) {
+    record = recordData[this.RECORD_OBJECT_KEY];
+    literalFieldData = recordData[this.RECORD_DATA_KEY];
+    sublistFieldData = recordData[this.SUBLIST_KEY];
+    this.updateLiteralFields(record, literalFieldData);
+    this.filterSublists(record, sublistFieldData);
   }
 
   Transformer.prototype.updateLiteralFields = function(record, fieldData) {
@@ -68,7 +73,7 @@ this.Transformer = (function() {
     record.setFieldValue(fieldName, value);
   }
 
-  Transformer.prototype.filterSublists = function() {
+  Transformer.prototype.filterSublists = function(record, sublistData) {
   }
 
   Transformer.prototype.filterSingleSublist = function() {

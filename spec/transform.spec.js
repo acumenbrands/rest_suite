@@ -229,7 +229,27 @@ describe("Transformer", function() {
 
   });
 
-  describe('#updateTransformedRecord', function() {
+  describe('#updateTransformedRecord(record)', function() {
+
+    beforeEach(function() {
+      this.record = {};
+      this.recordData = recordData[0];
+      this.recordData[transformer.RECORD_OBJECT_KEY] = this.record;
+      this.literalData = this.recordData[transformer.RECORD_DATA_KEY];
+      this.sublistData = this.recordData[transformer.SUBLIST_KEY];
+      spyOn(transformer, 'updateLiteralFields');
+      spyOn(transformer, 'filterSublists');
+      transformer.updateTransformedRecord(this.recordData);
+    });
+
+    it('calls updateLiteralFields with the record and its matching record data', function() {
+      expect(transformer.updateLiteralFields).toHaveBeenCalledWith(this.record, this.literalData);
+    });
+
+    it('calls filterSublists with the record and its matching sublist data', function() {
+      expect(transformer.filterSublists).toHaveBeenCalledWith(this.record, this.sublistData);
+    });
+
   });
 
   describe('#updateLiteralFields(record, fieldData)', function() {
