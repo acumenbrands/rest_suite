@@ -48,7 +48,8 @@ this.Transformer = (function() {
   Transformer.prototype.setSublistItemFields = function() {
   }
 
-  Transformer.prototype.setSingleSublistItemField = function() {
+  Transformer.prototype.setSingleSublistItemField = function(record, list, field, index, value) {
+    record.setLineItemValue(list, field, index, value);
   }
 
   Transformer.prototype.removeSublistItems = function() {

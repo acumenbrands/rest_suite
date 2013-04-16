@@ -147,7 +147,25 @@ describe("Transformer", function() {
   describe('#setSublistItemFields', function() {
   });
 
-  describe('#setSingleSublistItemField', function() {
+  describe('#setSingleSublistItemField(listName, fieldName, index, value)', function() {
+
+    beforeEach(function() {
+      this.record = {};
+      this.list = 'items';
+      this.field = 'quantity';
+      this.index = 7;
+      this.value = '17';
+      this.record.setLineItemValue = function() {}
+      spyOn(this.record, 'setLineItemValue');
+      transformer.setSingleSublistItemField(this.record, this.list, this.field,
+                                            this.index, this.value);
+    });
+
+    it('calls setLineItemValue with the given arguments', function() {
+      expect(this.record.setLineItemValue).toHaveBeenCalledWith(this.list, this.field,
+                                                                this.index, this.value);
+    });
+
   });
 
   describe('#removeSublistItems', function() {
