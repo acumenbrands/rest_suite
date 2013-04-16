@@ -11,9 +11,10 @@ this.Transformer = (function() {
     this.TRANSFORMED_RECORD_KEY = 'transformed_record';
     this.SUCCESS_KEY            = 'success';
 
-    this.initialRecordType = initialRecordType;
-    this.resultRecordType  = resultRecordType;
-    this.recordData        = recordData;
+    this.initialRecordType  = initialRecordType;
+    this.resultRecordType   = resultRecordType;
+    this.originalRecordData = recordData;
+    this.recordData         = recordData;
 
     this.loadedRecordList      = [];
     this.transformedRecordList = [];
@@ -83,7 +84,7 @@ this.Transformer = (function() {
     return {
       'initial_record_type': this.initialRecordType,
       'result_record_type':  this.resultRecordType,
-      'record_data':         this.recordData
+      'record_data':         this.originalRecordData
     };
   }
 

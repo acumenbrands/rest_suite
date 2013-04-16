@@ -101,6 +101,10 @@ describe("Transformer", function() {
       expect(transformer.resultRecordType).toEqual(resultRecordType);
     });
 
+    it('sets the original record data', function() {
+      expect(transformer.originalRecordData).toEqual(recordData);
+    });
+
     it('sets the record data', function() {
       expect(transformer.recordData).toEqual(recordData);
     });
@@ -275,15 +279,15 @@ describe("Transformer", function() {
     });
 
     it('populates the initial record type', function() {
-      expect(this.params['initial_record_type']).toBeDefined();
+      expect(this.params['initial_record_type']).toEqual(transformer.initialRecordType);
     });
 
     it('populates the result record type', function() {
-      expect(this.params['result_record_type']).toBeDefined();
+      expect(this.params['result_record_type']).toEqual(transformer.resultRecordType);
     });
 
     it('populates the record data', function() {
-      expect(this.params['record_data']).toBeDefined();
+      expect(this.params['record_data']).toEqual(transformer.originalRecordData);
     });
 
   });
