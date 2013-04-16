@@ -23,6 +23,7 @@ describe("Transformer", function() {
   }
   var recordData = [
     {
+      'id': '123456',
       'record_data': {
         'custitemcustomdata': "Woo! It's a memo!"
       },
@@ -48,6 +49,10 @@ describe("Transformer", function() {
 
       it("should define RECORD_DATA_KEY", function() {
         expect(transformer.RECORD_DATA_KEY).toBeDefined();
+      });
+
+      it("should define RECORD_INTERNAL_ID_KEY", function() {
+        expect(transformer.RECORD_INTERNAL_ID_KEY).toBeDefined();
       });
 
       it("shuld define SUBLIST_KEY", function() { 
