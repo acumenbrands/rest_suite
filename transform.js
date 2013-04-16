@@ -21,10 +21,18 @@ this.Transformer = (function() {
   }
 
   Transformer.prototype.loadRecordsFromNetsuite = function() {
+    for(index in this.recordData) {
+      data = this.recordData[index];
+      record = this.loadSingleRecord(data[this.RECORD_INTERNAL_ID_KEY]);
+      this.appendRecordToData(data, record);
+    }
   }
 
   Transformer.prototype.loadSingleRecord = function(recordId) {
     nlapiLoadRecord(this.initialRecordType, recordId);
+  }
+
+  Transformer.prototype.appendRecordToData = function(recordData, record) {
   }
 
   Transformer.prototype.transformRecordList = function() {

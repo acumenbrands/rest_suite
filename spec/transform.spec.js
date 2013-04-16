@@ -6,6 +6,8 @@ describe("Transformer", function() {
   var initialRecordType = 'salesorder'
   var resultRecordType = 'invoice'
 
+  var firstId  = '12345';
+  var secondId = '67890';
   var sublistItemToAlter = {
     'match_field': 'item',
     'delete':      'false',
@@ -23,7 +25,7 @@ describe("Transformer", function() {
   }
   var recordData = [
     {
-      'id': '123456',
+      'id': firstId,
       'record_data': {
         'custitemcustomdata': "Woo! It's a memo!"
       },
@@ -32,6 +34,12 @@ describe("Transformer", function() {
           sublistItemToAlter,
           sublistItemToDelete
         ],
+      }
+    },
+    {
+      'id': secondId,
+      'record_data': {
+        'tranid': 'HG12345'
       }
     }
   ];
@@ -112,6 +120,30 @@ describe("Transformer", function() {
   });
 
   describe('#loadRecordsFromNetsuite', function() {
+
+    beforeEach(function() {
+      spyOn(transformer, 'loadSingleRecord').andReturn({});
+      spyOn(transformer, 'appendRecordToData');
+      transformer.loadRecordsFromNetsuite();
+    });
+
+    it('calls loadSingleRecord for each element of record data', function() {
+      expect(transformer.loadSingleRecord.callCount).toEqual(recordData.length);
+    });
+
+    it('calls loadSingleRecord with each id in the record data', function() {
+      expect(transformer.loadSingleRecord.argsForCall).toEqual([[firstId], [secondId]]);
+    });
+
+    it('calls appendRecordToData for each element of record data', function() {
+      expect(transformer.appendRecordToData.callCount).toEqual(recordData.length);
+    });
+
+    it('calls appendRecordToData for each with each record and set of record data', function() {
+      expect(transformer.appendRecordToData.argsForCall).toEqual([[recordData[0], {}],
+                                                                 [recordData[1], {}]]);
+    });
+
   });
 
   describe('#loadSingleRecord(recordId)', function() {
