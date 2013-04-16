@@ -17,9 +17,6 @@ this.Transformer = (function() {
     this.resultRecordType   = resultRecordType;
     this.originalRecordData = recordData;
     this.recordData         = recordData;
-
-    this.loadedRecordList      = [];
-    this.transformedRecordList = [];
   }
 
   Transformer.prototype.loadRecordsFromNetsuite = function() {

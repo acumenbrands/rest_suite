@@ -113,14 +113,6 @@ describe("Transformer", function() {
       expect(transformer.recordData).toEqual(recordData);
     });
 
-    it('sets the loaded record list with a blank array', function() {
-      expect(transformer.loadedRecordList).toEqual([]);
-    });
-
-    it('sets the transformed record list with a blank array', function() {
-      expect(transformer.transformedRecordList).toEqual([]);
-    });
-
   });
 
   describe('#loadRecordsFromNetsuite', function() {
@@ -321,6 +313,16 @@ describe("Transformer", function() {
   });
 
   describe('#setSublistItemFields(record, index, sublistFieldData)', function() {
+
+    beforeEach(function() {
+    });
+
+    it('calls setSingleSublistItemField for each element of sublistFieldData', function() {
+    });
+
+    it('calls setSingleSublistItemField with the correct sequence of arguments', function() {
+    });
+
   });
 
   describe('#setSingleSublistItemField(listName, fieldName, index, value)', function() {
