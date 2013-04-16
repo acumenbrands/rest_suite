@@ -11,6 +11,8 @@ this.Transformer = (function() {
     this.TRANSFORMED_RECORD_KEY = 'transformed_record';
     this.SUCCESS_KEY            = 'success';
 
+    this.common = new CommonObject;
+
     this.initialRecordType  = initialRecordType;
     this.resultRecordType   = resultRecordType;
     this.originalRecordData = recordData;
@@ -18,7 +20,6 @@ this.Transformer = (function() {
 
     this.loadedRecordList      = [];
     this.transformedRecordList = [];
-    this.replyList             = [];
   }
 
   Transformer.prototype.loadRecordsFromNetsuite = function() {
@@ -73,7 +74,7 @@ this.Transformer = (function() {
     record.setFieldValue(fieldName, value);
   }
 
-  Transformer.prototype.filterSublists = function(record, sublistData) {
+  Transformer.prototype.filterSublists = function(record, sublistsData) {
   }
 
   Transformer.prototype.filterSingleSublist = function() {
@@ -96,7 +97,7 @@ this.Transformer = (function() {
     nlapiSubmitRecord(record, false, false);
   }
 
-  Transformer.prototype.appendResults = function() {
+  Transformer.prototype.generateResultList = function() {
   }
 
   Transformer.prototype.getParams = function() {
@@ -108,6 +109,9 @@ this.Transformer = (function() {
   }
 
   Transformer.prototype.reply = function() {
+    results = this.generateResultList();
+    params  = this.getParams();
+    return this.common.formatReply(params, results);
   }
 
   return Transformer;

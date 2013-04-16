@@ -93,6 +93,10 @@ describe("Transformer", function() {
 
     });
 
+    it('sets common to an instance of CommonObject', function() {
+      expect(transformer.common).toEqual(new CommonObject);
+    });
+
     it('sets the initial record type', function() {
       expect(transformer.initialRecordType).toEqual(initialRecordType);
     });
@@ -115,10 +119,6 @@ describe("Transformer", function() {
 
     it('sets the transformed record list with a blank array', function() {
       expect(transformer.transformedRecordList).toEqual([]);
-    });
-
-    it('sets the reply list with a blank array', function() {
-      expect(transformer.replyList).toEqual([]);
     });
 
   });
@@ -344,7 +344,7 @@ describe("Transformer", function() {
 
   });
 
-  describe('#appendResults', function() {
+  describe('#generateResultList', function() {
   });
 
   describe('#getParams', function() {
@@ -368,6 +368,33 @@ describe("Transformer", function() {
   });
 
   describe('#reply', function() {
+
+    beforeEach(function() {
+      this.fakeResults = [];
+      this.fakeParams  = {};
+      this.fakeReply   = { 'result': this.fakeResults, 'params': this.fakeParams };
+      spyOn(transformer, 'generateResultList').andReturn(this.fakeResults);
+      spyOn(transformer, 'getParams').andReturn(this.fakeParams);
+      spyOn(transformer.common, 'formatReply').andReturn(this.fakeReply);
+      this.reply = transformer.reply();
+    });
+
+    it('calls generateResultList', function() {
+      expect(transformer.generateResultList.callCount).toEqual(1);
+    });
+
+    it('calls getParams', function() {
+      expect(transformer.getParams.callCount).toEqual(1);
+    });
+
+    it('calls formatreply on CommonObject', function() {
+      expect(transformer.common.formatReply.callCount).toEqual(1);
+    });
+
+    it('returns a formatted reply containing the result list and params', function() {
+      expect(this.reply).toEqual(this.fakeReply);
+    });
+
   });
 
 });
