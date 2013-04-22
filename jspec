@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 NODE_MODULES_DIRECTORY=node_modules
 
