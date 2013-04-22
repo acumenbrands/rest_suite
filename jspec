@@ -2,7 +2,7 @@
 
 NODE_MODULES_DIRECTORY=node_modules
 
-if [ ! "$(command npm &>/dev/null)" ]; then
+if ! command -v npm &>/dev/null; then
   echo "npm command not found, pleace ensure node package manager is installed and in your path." 1>&2
   exit 1
 fi
