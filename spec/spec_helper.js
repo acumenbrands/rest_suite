@@ -5,5 +5,4 @@ SavedSearch             = require('../saved_search.js').SavedSearch;
 Searcher                = require('../search.js').Searcher;
 Deleter                 = require('../delete.js').Deleter;
 Upserter                = require('../upsert.js').Upserter;
-UpsertRecordListElement = require('../upsert.js').UpsertRecordListElement;
 Transformer             = require('../transform.js').Transformer;
