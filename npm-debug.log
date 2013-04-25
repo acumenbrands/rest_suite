@@ -1,0 +1,1392 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install' ]
+2 info using npm@1.2.18
+3 info using node@v0.10.5
+4 verbose node symlink /usr/bin/node
+5 verbose read json /home/james/src/acumenbrands/rest_suite/package.json
+6 verbose readDependencies using package.json deps
+7 verbose install where, deps [ '/home/james/src/acumenbrands/rest_suite',
+7 verbose install   [ 'jasmine-node', 'jsdoc', 'debugger-node' ] ]
+8 verbose from cache /home/james/src/acumenbrands/rest_suite/package.json
+9 info preinstall rest_suite@1.0.0
+10 verbose read json /home/james/src/acumenbrands/rest_suite/node_modules/jasmine-node/package.json
+11 verbose read json /home/james/src/acumenbrands/rest_suite/node_modules/jsdoc/package.json
+12 verbose from cache /home/james/src/acumenbrands/rest_suite/package.json
+13 verbose readDependencies using package.json deps
+14 verbose from cache /home/james/src/acumenbrands/rest_suite/node_modules/jasmine-node/package.json
+15 verbose from cache /home/james/src/acumenbrands/rest_suite/node_modules/jsdoc/package.json
+16 verbose already installed skipping jasmine-node@1.5.0 /home/james/src/acumenbrands/rest_suite
+17 verbose cache add [ 'jsdoc@git://github.com/jsdoc3/jsdoc.git#v3.1.1', null ]
+18 verbose cache add name=undefined spec="jsdoc@git://github.com/jsdoc3/jsdoc.git#v3.1.1" args=["jsdoc@git://github.com/jsdoc3/jsdoc.git#v3.1.1",null]
+19 verbose parsed url { protocol: null,
+19 verbose parsed url   slashes: null,
+19 verbose parsed url   auth: null,
+19 verbose parsed url   host: null,
+19 verbose parsed url   port: null,
+19 verbose parsed url   hostname: null,
+19 verbose parsed url   hash: '#v3.1.1',
+19 verbose parsed url   search: null,
+19 verbose parsed url   query: null,
+19 verbose parsed url   pathname: 'jsdoc@git://github.com/jsdoc3/jsdoc.git',
+19 verbose parsed url   path: 'jsdoc@git://github.com/jsdoc3/jsdoc.git',
+19 verbose parsed url   href: 'jsdoc@git://github.com/jsdoc3/jsdoc.git#v3.1.1' }
+20 verbose cache add name="jsdoc" spec="git://github.com/jsdoc3/jsdoc.git#v3.1.1" args=["jsdoc","git://github.com/jsdoc3/jsdoc.git#v3.1.1"]
+21 verbose parsed url { protocol: 'git:',
+21 verbose parsed url   slashes: true,
+21 verbose parsed url   auth: null,
+21 verbose parsed url   host: 'github.com',
+21 verbose parsed url   port: null,
+21 verbose parsed url   hostname: 'github.com',
+21 verbose parsed url   hash: '#v3.1.1',
+21 verbose parsed url   search: null,
+21 verbose parsed url   query: null,
+21 verbose parsed url   pathname: '/jsdoc3/jsdoc.git',
+21 verbose parsed url   path: '/jsdoc3/jsdoc.git',
+21 verbose parsed url   href: 'git://github.com/jsdoc3/jsdoc.git#v3.1.1' }
+22 verbose cache add [ 'debugger-node@', null ]
+23 verbose cache add name=undefined spec="debugger-node@" args=["debugger-node@",null]
+24 verbose parsed url { protocol: null,
+24 verbose parsed url   slashes: null,
+24 verbose parsed url   auth: null,
+24 verbose parsed url   host: null,
+24 verbose parsed url   port: null,
+24 verbose parsed url   hostname: null,
+24 verbose parsed url   hash: null,
+24 verbose parsed url   search: null,
+24 verbose parsed url   query: null,
+24 verbose parsed url   pathname: 'debugger-node@',
+24 verbose parsed url   path: 'debugger-node@',
+24 verbose parsed url   href: 'debugger-node@' }
+25 verbose cache add name="debugger-node" spec="" args=["debugger-node",""]
+26 verbose parsed url { protocol: null,
+26 verbose parsed url   slashes: null,
+26 verbose parsed url   auth: null,
+26 verbose parsed url   host: null,
+26 verbose parsed url   port: null,
+26 verbose parsed url   hostname: null,
+26 verbose parsed url   hash: null,
+26 verbose parsed url   search: null,
+26 verbose parsed url   query: null,
+26 verbose parsed url   pathname: null,
+26 verbose parsed url   path: null,
+26 verbose parsed url   href: '' }
+27 verbose addNamed [ 'debugger-node', '' ]
+28 verbose addNamed [ null, '' ]
+29 silly lockFile 2357bfd7-thub-com-jsdoc3-jsdoc-git-v3-1-1 git://github.com/jsdoc3/jsdoc.git#v3.1.1
+30 verbose lock git://github.com/jsdoc3/jsdoc.git#v3.1.1 /home/james/.npm/2357bfd7-thub-com-jsdoc3-jsdoc-git-v3-1-1.lock
+31 silly lockFile ae3b315c-debugger-node debugger-node@
+32 verbose lock debugger-node@ /home/james/.npm/ae3b315c-debugger-node.lock
+33 verbose addRemoteGit [ 'git://github.com/jsdoc3/jsdoc.git', 'v3.1.1' ]
+34 silly addNameRange { name: 'debugger-node', range: '', hasData: false }
+35 silly exec git "config" "--get" "remote.origin.url"
+36 silly git,config,--get,remote.origin.url,/home/james/.npm/_git-remotes/git-github-com-jsdoc3-jsdoc-git-0dba5517 spawning
+37 verbose url raw debugger-node
+38 verbose url resolving [ 'https://registry.npmjs.org/', './debugger-node' ]
+39 verbose url resolved https://registry.npmjs.org/debugger-node
+40 info trying registry request attempt 1 at 15:24:47
+41 http GET https://registry.npmjs.org/debugger-node
+42 verbose git remote.origin.url git://github.com/jsdoc3/jsdoc.git
+43 silly exec git "fetch" "-a" "origin"
+44 silly git,fetch,-a,origin,/home/james/.npm/_git-remotes/git-github-com-jsdoc3-jsdoc-git-0dba5517 spawning
+45 verbose git fetch -a origin (git://github.com/jsdoc3/jsdoc.git)
+46 silly exec git "rev-list" "-n1" "v3.1.1"
+47 silly git,rev-list,-n1,v3.1.1,/home/james/.npm/_git-remotes/git-github-com-jsdoc3-jsdoc-git-0dba5517 spawning
+48 verbose git rev-list -n1 v3.1.1 f110533395f47b2c8e5aa623bd13a0ddc50546c9
+49 verbose resolved git url git://github.com/jsdoc3/jsdoc.git#f110533395f47b2c8e5aa623bd13a0ddc50546c9
+50 verbose tar unpack /home/james/tmp/npm-18889/1366921488422-0.4947990945074707/tmp.tgz
+51 silly lockFile 1b8b851d-88422-0-4947990945074707-package /home/james/tmp/npm-18889/1366921488422-0.4947990945074707/package
+52 verbose lock /home/james/tmp/npm-18889/1366921488422-0.4947990945074707/package /home/james/.npm/1b8b851d-88422-0-4947990945074707-package.lock
+53 silly lockFile ea9c1365-88422-0-4947990945074707-tmp-tgz /home/james/tmp/npm-18889/1366921488422-0.4947990945074707/tmp.tgz
+54 verbose lock /home/james/tmp/npm-18889/1366921488422-0.4947990945074707/tmp.tgz /home/james/.npm/ea9c1365-88422-0-4947990945074707-tmp-tgz.lock
+55 silly gunzTarPerm modes [ '755', '644' ]
+56 silly gunzTarPerm extractEntry
+57 silly gunzTarPerm modified mode [ '', 509, 493 ]
+58 silly gunzTarPerm extractEntry .gitignore
+59 silly gunzTarPerm modified mode [ '.gitignore', 436, 420 ]
+60 silly gunzTarPerm extractEntry .jshintrc
+61 silly gunzTarPerm modified mode [ '.jshintrc', 436, 420 ]
+62 silly gunzTarPerm extractEntry .travis.yml
+63 silly gunzTarPerm modified mode [ '.travis.yml', 436, 420 ]
+64 silly gunzTarPerm extractEntry Apache_License_2.0.txt
+65 silly gunzTarPerm modified mode [ 'Apache_License_2.0.txt', 436, 420 ]
+66 silly gunzTarPerm extractEntry CONTRIBUTING.md
+67 silly gunzTarPerm modified mode [ 'CONTRIBUTING.md', 436, 420 ]
+68 silly gunzTarPerm extractEntry Jake/
+69 silly gunzTarPerm modified mode [ 'Jake/', 509, 493 ]
+70 silly gunzTarPerm extractEntry Jake/lib/
+71 silly gunzTarPerm modified mode [ 'Jake/lib/', 509, 493 ]
+72 silly gunzTarPerm extractEntry Jake/lib/mustache.js
+73 silly gunzTarPerm modified mode [ 'Jake/lib/mustache.js', 436, 420 ]
+74 silly gunzTarPerm extractEntry Jake/templates/
+75 silly gunzTarPerm modified mode [ 'Jake/templates/', 509, 493 ]
+76 silly gunzTarPerm extractEntry Jake/templates/package.json.tmpl
+77 silly gunzTarPerm modified mode [ 'Jake/templates/package.json.tmpl', 436, 420 ]
+78 silly gunzTarPerm extractEntry Jakefile.js
+79 silly gunzTarPerm modified mode [ 'Jakefile.js', 436, 420 ]
+80 silly gunzTarPerm extractEntry LICENSE.md
+81 silly gunzTarPerm modified mode [ 'LICENSE.md', 436, 420 ]
+82 silly gunzTarPerm extractEntry README.md
+83 silly gunzTarPerm modified mode [ 'README.md', 436, 420 ]
+84 silly gunzTarPerm extractEntry changes.md
+85 silly gunzTarPerm modified mode [ 'changes.md', 436, 420 ]
+86 silly gunzTarPerm extractEntry conf.json.EXAMPLE
+87 silly gunzTarPerm modified mode [ 'conf.json.EXAMPLE', 436, 420 ]
+88 silly gunzTarPerm extractEntry jsdoc
+89 silly gunzTarPerm modified mode [ 'jsdoc', 509, 493 ]
+90 silly gunzTarPerm extractEntry jsdoc.cmd
+91 silly gunzTarPerm modified mode [ 'jsdoc.cmd', 436, 420 ]
+92 silly gunzTarPerm extractEntry jsdoc.js
+93 silly gunzTarPerm modified mode [ 'jsdoc.js', 436, 420 ]
+94 silly gunzTarPerm extractEntry lib/
+95 silly gunzTarPerm modified mode [ 'lib/', 509, 493 ]
+96 silly gunzTarPerm extractEntry lib/initialize.js
+97 silly gunzTarPerm modified mode [ 'lib/initialize.js', 436, 420 ]
+98 silly gunzTarPerm extractEntry lib/jsdoc/
+99 silly gunzTarPerm modified mode [ 'lib/jsdoc/', 509, 493 ]
+100 silly gunzTarPerm extractEntry lib/jsdoc/augment.js
+101 silly gunzTarPerm modified mode [ 'lib/jsdoc/augment.js', 436, 420 ]
+102 silly gunzTarPerm extractEntry lib/jsdoc/borrow.js
+103 silly gunzTarPerm modified mode [ 'lib/jsdoc/borrow.js', 436, 420 ]
+104 silly gunzTarPerm extractEntry lib/jsdoc/config.js
+105 silly gunzTarPerm modified mode [ 'lib/jsdoc/config.js', 436, 420 ]
+106 silly gunzTarPerm extractEntry lib/jsdoc/doclet.js
+107 silly gunzTarPerm modified mode [ 'lib/jsdoc/doclet.js', 436, 420 ]
+108 silly gunzTarPerm extractEntry lib/jsdoc/fs.js
+109 silly gunzTarPerm modified mode [ 'lib/jsdoc/fs.js', 436, 420 ]
+110 silly gunzTarPerm extractEntry lib/jsdoc/name.js
+111 silly gunzTarPerm modified mode [ 'lib/jsdoc/name.js', 436, 420 ]
+112 silly gunzTarPerm extractEntry lib/jsdoc/opts/
+113 silly gunzTarPerm modified mode [ 'lib/jsdoc/opts/', 509, 493 ]
+114 silly gunzTarPerm extractEntry lib/jsdoc/opts/argparser.js
+115 silly gunzTarPerm modified mode [ 'lib/jsdoc/opts/argparser.js', 436, 420 ]
+116 silly gunzTarPerm extractEntry lib/jsdoc/opts/args.js
+117 silly gunzTarPerm modified mode [ 'lib/jsdoc/opts/args.js', 436, 420 ]
+118 silly gunzTarPerm extractEntry lib/jsdoc/package.js
+119 silly gunzTarPerm modified mode [ 'lib/jsdoc/package.js', 436, 420 ]
+120 silly gunzTarPerm extractEntry lib/jsdoc/path.js
+121 silly gunzTarPerm modified mode [ 'lib/jsdoc/path.js', 436, 420 ]
+122 silly gunzTarPerm extractEntry lib/jsdoc/plugins.js
+123 silly gunzTarPerm modified mode [ 'lib/jsdoc/plugins.js', 436, 420 ]
+124 silly gunzTarPerm extractEntry lib/jsdoc/readme.js
+125 silly gunzTarPerm modified mode [ 'lib/jsdoc/readme.js', 436, 420 ]
+126 silly gunzTarPerm extractEntry lib/jsdoc/schema.js
+127 silly gunzTarPerm modified mode [ 'lib/jsdoc/schema.js', 436, 420 ]
+128 silly gunzTarPerm extractEntry lib/jsdoc/src/
+129 silly gunzTarPerm modified mode [ 'lib/jsdoc/src/', 509, 493 ]
+130 silly gunzTarPerm extractEntry lib/jsdoc/src/filter.js
+131 silly gunzTarPerm modified mode [ 'lib/jsdoc/src/filter.js', 436, 420 ]
+132 silly gunzTarPerm extractEntry lib/jsdoc/src/handlers.js
+133 silly gunzTarPerm modified mode [ 'lib/jsdoc/src/handlers.js', 436, 420 ]
+134 silly gunzTarPerm extractEntry lib/jsdoc/src/parser.js
+135 silly gunzTarPerm modified mode [ 'lib/jsdoc/src/parser.js', 436, 420 ]
+136 silly gunzTarPerm extractEntry lib/jsdoc/src/scanner.js
+137 silly gunzTarPerm modified mode [ 'lib/jsdoc/src/scanner.js', 436, 420 ]
+138 silly gunzTarPerm extractEntry lib/jsdoc/tag.js
+139 silly gunzTarPerm modified mode [ 'lib/jsdoc/tag.js', 436, 420 ]
+140 silly gunzTarPerm extractEntry lib/jsdoc/tag/
+141 silly gunzTarPerm modified mode [ 'lib/jsdoc/tag/', 509, 493 ]
+142 silly gunzTarPerm extractEntry lib/jsdoc/tag/dictionary.js
+143 silly gunzTarPerm modified mode [ 'lib/jsdoc/tag/dictionary.js', 436, 420 ]
+144 silly gunzTarPerm extractEntry lib/jsdoc/tag/dictionary/
+145 silly gunzTarPerm modified mode [ 'lib/jsdoc/tag/dictionary/', 509, 493 ]
+146 silly gunzTarPerm extractEntry lib/jsdoc/tag/dictionary/definitions.js
+147 silly gunzTarPerm modified mode [ 'lib/jsdoc/tag/dictionary/definitions.js', 436, 420 ]
+148 silly gunzTarPerm extractEntry lib/jsdoc/tag/type.js
+149 silly gunzTarPerm modified mode [ 'lib/jsdoc/tag/type.js', 436, 420 ]
+150 silly gunzTarPerm extractEntry lib/jsdoc/tag/type/
+151 silly gunzTarPerm modified mode [ 'lib/jsdoc/tag/type/', 509, 493 ]
+152 silly gunzTarPerm extractEntry lib/jsdoc/tag/type/closureCompilerType.js
+153 silly gunzTarPerm modified mode [ 'lib/jsdoc/tag/type/closureCompilerType.js', 436, 420 ]
+154 silly gunzTarPerm extractEntry lib/jsdoc/tag/type/jsdocType.js
+155 silly gunzTarPerm modified mode [ 'lib/jsdoc/tag/type/jsdocType.js', 436, 420 ]
+156 silly gunzTarPerm extractEntry lib/jsdoc/tag/validator.js
+157 silly gunzTarPerm modified mode [ 'lib/jsdoc/tag/validator.js', 436, 420 ]
+158 silly gunzTarPerm extractEntry lib/jsdoc/template.js
+159 silly gunzTarPerm modified mode [ 'lib/jsdoc/template.js', 436, 420 ]
+160 silly gunzTarPerm extractEntry lib/jsdoc/tutorial.js
+161 silly gunzTarPerm modified mode [ 'lib/jsdoc/tutorial.js', 436, 420 ]
+162 silly gunzTarPerm extractEntry lib/jsdoc/tutorial/
+163 silly gunzTarPerm modified mode [ 'lib/jsdoc/tutorial/', 509, 493 ]
+164 silly gunzTarPerm extractEntry lib/jsdoc/tutorial/resolver.js
+165 silly gunzTarPerm modified mode [ 'lib/jsdoc/tutorial/resolver.js', 436, 420 ]
+166 silly gunzTarPerm extractEntry lib/jsdoc/util/
+167 silly gunzTarPerm modified mode [ 'lib/jsdoc/util/', 509, 493 ]
+168 silly gunzTarPerm extractEntry lib/jsdoc/util/doop.js
+169 silly gunzTarPerm modified mode [ 'lib/jsdoc/util/doop.js', 436, 420 ]
+170 silly gunzTarPerm extractEntry lib/jsdoc/util/dumper.js
+171 silly gunzTarPerm modified mode [ 'lib/jsdoc/util/dumper.js', 436, 420 ]
+172 silly gunzTarPerm extractEntry lib/jsdoc/util/error.js
+173 silly gunzTarPerm modified mode [ 'lib/jsdoc/util/error.js', 436, 420 ]
+174 silly gunzTarPerm extractEntry lib/jsdoc/util/global.js
+175 silly gunzTarPerm modified mode [ 'lib/jsdoc/util/global.js', 436, 420 ]
+176 silly gunzTarPerm extractEntry lib/jsdoc/util/include.js
+177 silly gunzTarPerm modified mode [ 'lib/jsdoc/util/include.js', 436, 420 ]
+178 silly gunzTarPerm extractEntry lib/jsdoc/util/markdown.js
+179 silly gunzTarPerm modified mode [ 'lib/jsdoc/util/markdown.js', 436, 420 ]
+180 silly gunzTarPerm extractEntry lib/jsdoc/util/templateHelper.js
+181 silly gunzTarPerm modified mode [ 'lib/jsdoc/util/templateHelper.js', 436, 420 ]
+182 silly gunzTarPerm extractEntry lib/jsdoc/util/vm.js
+183 silly gunzTarPerm modified mode [ 'lib/jsdoc/util/vm.js', 436, 420 ]
+184 silly gunzTarPerm extractEntry node_modules/
+185 silly gunzTarPerm modified mode [ 'node_modules/', 509, 493 ]
+186 silly gunzTarPerm extractEntry node_modules/async/
+187 silly gunzTarPerm modified mode [ 'node_modules/async/', 509, 493 ]
+188 silly gunzTarPerm extractEntry node_modules/async/LICENSE
+189 silly gunzTarPerm modified mode [ 'node_modules/async/LICENSE', 436, 420 ]
+190 silly gunzTarPerm extractEntry node_modules/async/index.js
+191 silly gunzTarPerm modified mode [ 'node_modules/async/index.js', 436, 420 ]
+192 silly gunzTarPerm extractEntry node_modules/async/lib/
+193 silly gunzTarPerm modified mode [ 'node_modules/async/lib/', 509, 493 ]
+194 silly gunzTarPerm extractEntry node_modules/async/lib/async.js
+195 silly gunzTarPerm modified mode [ 'node_modules/async/lib/async.js', 436, 420 ]
+196 silly gunzTarPerm extractEntry node_modules/async/package.json
+197 silly gunzTarPerm modified mode [ 'node_modules/async/package.json', 436, 420 ]
+198 silly gunzTarPerm extractEntry node_modules/crypto-browserify/
+199 silly gunzTarPerm modified mode [ 'node_modules/crypto-browserify/', 509, 493 ]
+200 silly gunzTarPerm extractEntry node_modules/crypto-browserify/index.js
+201 silly gunzTarPerm modified mode [ 'node_modules/crypto-browserify/index.js', 436, 420 ]
+202 silly gunzTarPerm extractEntry node_modules/crypto-browserify/package.json
+203 silly gunzTarPerm modified mode [ 'node_modules/crypto-browserify/package.json', 436, 420 ]
+204 silly gunzTarPerm extractEntry node_modules/crypto-browserify/rng.js
+205 silly gunzTarPerm modified mode [ 'node_modules/crypto-browserify/rng.js', 436, 420 ]
+206 silly gunzTarPerm extractEntry node_modules/crypto-browserify/sha.js
+207 silly gunzTarPerm modified mode [ 'node_modules/crypto-browserify/sha.js', 436, 420 ]
+208 silly gunzTarPerm extractEntry node_modules/github-flavored-markdown/
+209 silly gunzTarPerm modified mode [ 'node_modules/github-flavored-markdown/', 509, 493 ]
+210 silly gunzTarPerm extractEntry node_modules/github-flavored-markdown/.npmignore
+211 silly gunzTarPerm modified mode [ 'node_modules/github-flavored-markdown/.npmignore', 436, 420 ]
+212 silly gunzTarPerm extractEntry node_modules/github-flavored-markdown/package.json
+213 silly gunzTarPerm modified mode [ 'node_modules/github-flavored-markdown/package.json',
+213 silly gunzTarPerm   436,
+213 silly gunzTarPerm   420 ]
+214 silly gunzTarPerm extractEntry node_modules/github-flavored-markdown/scripts/
+215 silly gunzTarPerm modified mode [ 'node_modules/github-flavored-markdown/scripts/', 509, 493 ]
+216 silly gunzTarPerm extractEntry node_modules/github-flavored-markdown/scripts/showdown.js
+217 silly gunzTarPerm modified mode [ 'node_modules/github-flavored-markdown/scripts/showdown.js',
+217 silly gunzTarPerm   436,
+217 silly gunzTarPerm   420 ]
+218 silly gunzTarPerm extractEntry node_modules/js2xmlparser/
+219 silly gunzTarPerm modified mode [ 'node_modules/js2xmlparser/', 509, 493 ]
+220 silly gunzTarPerm extractEntry node_modules/js2xmlparser/LICENSE.md
+221 silly gunzTarPerm modified mode [ 'node_modules/js2xmlparser/LICENSE.md', 436, 420 ]
+222 silly gunzTarPerm extractEntry node_modules/js2xmlparser/lib/
+223 silly gunzTarPerm modified mode [ 'node_modules/js2xmlparser/lib/', 509, 493 ]
+224 silly gunzTarPerm extractEntry node_modules/js2xmlparser/lib/js2xmlparser.js
+225 silly gunzTarPerm modified mode [ 'node_modules/js2xmlparser/lib/js2xmlparser.js', 436, 420 ]
+226 silly gunzTarPerm extractEntry node_modules/js2xmlparser/package.json
+227 silly gunzTarPerm modified mode [ 'node_modules/js2xmlparser/package.json', 436, 420 ]
+228 silly gunzTarPerm extractEntry node_modules/jshint/
+229 silly gunzTarPerm modified mode [ 'node_modules/jshint/', 509, 493 ]
+230 silly gunzTarPerm extractEntry node_modules/jshint/LICENSE
+231 silly gunzTarPerm modified mode [ 'node_modules/jshint/LICENSE', 436, 420 ]
+232 silly gunzTarPerm extractEntry node_modules/jshint/package.json
+233 silly gunzTarPerm modified mode [ 'node_modules/jshint/package.json', 436, 420 ]
+234 silly gunzTarPerm extractEntry node_modules/jshint/packages/
+235 silly gunzTarPerm modified mode [ 'node_modules/jshint/packages/', 509, 493 ]
+236 silly gunzTarPerm extractEntry node_modules/jshint/packages/jshint/
+237 silly gunzTarPerm modified mode [ 'node_modules/jshint/packages/jshint/', 509, 493 ]
+238 silly gunzTarPerm extractEntry node_modules/jshint/packages/jshint/jshint.js
+239 silly gunzTarPerm modified mode [ 'node_modules/jshint/packages/jshint/jshint.js', 436, 420 ]
+240 silly gunzTarPerm extractEntry node_modules/markdown/
+241 silly gunzTarPerm modified mode [ 'node_modules/markdown/', 509, 493 ]
+242 silly gunzTarPerm extractEntry node_modules/markdown/README.markdown
+243 silly gunzTarPerm modified mode [ 'node_modules/markdown/README.markdown', 436, 420 ]
+244 silly gunzTarPerm extractEntry node_modules/markdown/lib/
+245 silly gunzTarPerm modified mode [ 'node_modules/markdown/lib/', 509, 493 ]
+246 silly gunzTarPerm extractEntry node_modules/markdown/lib/index.js
+247 silly gunzTarPerm modified mode [ 'node_modules/markdown/lib/index.js', 436, 420 ]
+248 silly gunzTarPerm extractEntry node_modules/markdown/lib/markdown.js
+249 silly gunzTarPerm modified mode [ 'node_modules/markdown/lib/markdown.js', 436, 420 ]
+250 silly gunzTarPerm extractEntry node_modules/markdown/package.json
+251 silly gunzTarPerm modified mode [ 'node_modules/markdown/package.json', 436, 420 ]
+252 silly gunzTarPerm extractEntry node_modules/taffydb/
+253 silly gunzTarPerm modified mode [ 'node_modules/taffydb/', 509, 493 ]
+254 silly gunzTarPerm extractEntry node_modules/taffydb/README.md
+255 silly gunzTarPerm modified mode [ 'node_modules/taffydb/README.md', 436, 420 ]
+256 silly gunzTarPerm extractEntry node_modules/taffydb/package.json
+257 silly gunzTarPerm modified mode [ 'node_modules/taffydb/package.json', 436, 420 ]
+258 silly gunzTarPerm extractEntry node_modules/taffydb/taffy-test.html
+259 silly gunzTarPerm modified mode [ 'node_modules/taffydb/taffy-test.html', 436, 420 ]
+260 silly gunzTarPerm extractEntry node_modules/taffydb/taffy.js
+261 silly gunzTarPerm modified mode [ 'node_modules/taffydb/taffy.js', 436, 420 ]
+262 silly gunzTarPerm extractEntry node_modules/underscore/
+263 silly gunzTarPerm modified mode [ 'node_modules/underscore/', 509, 493 ]
+264 silly gunzTarPerm extractEntry node_modules/underscore/LICENSE
+265 silly gunzTarPerm modified mode [ 'node_modules/underscore/LICENSE', 436, 420 ]
+266 silly gunzTarPerm extractEntry node_modules/underscore/package.json
+267 silly gunzTarPerm modified mode [ 'node_modules/underscore/package.json', 436, 420 ]
+268 silly gunzTarPerm extractEntry node_modules/underscore/underscore.js
+269 silly gunzTarPerm modified mode [ 'node_modules/underscore/underscore.js', 436, 420 ]
+270 silly gunzTarPerm extractEntry node_modules/wrench/
+271 silly gunzTarPerm modified mode [ 'node_modules/wrench/', 509, 493 ]
+272 silly gunzTarPerm extractEntry node_modules/wrench/LICENSE
+273 silly gunzTarPerm modified mode [ 'node_modules/wrench/LICENSE', 436, 420 ]
+274 silly gunzTarPerm extractEntry node_modules/wrench/lib/
+275 silly gunzTarPerm modified mode [ 'node_modules/wrench/lib/', 509, 493 ]
+276 silly gunzTarPerm extractEntry node_modules/wrench/lib/wrench.js
+277 silly gunzTarPerm modified mode [ 'node_modules/wrench/lib/wrench.js', 436, 420 ]
+278 silly gunzTarPerm extractEntry node_modules/wrench/package.json
+279 silly gunzTarPerm modified mode [ 'node_modules/wrench/package.json', 436, 420 ]
+280 silly gunzTarPerm extractEntry nodejs/
+281 silly gunzTarPerm modified mode [ 'nodejs/', 509, 493 ]
+282 silly gunzTarPerm extractEntry nodejs/jsdoc/
+283 silly gunzTarPerm modified mode [ 'nodejs/jsdoc/', 509, 493 ]
+284 silly gunzTarPerm extractEntry nodejs/jsdoc/fs.js
+285 silly gunzTarPerm modified mode [ 'nodejs/jsdoc/fs.js', 436, 420 ]
+286 silly gunzTarPerm extractEntry nodejs/jsdoc/util/
+287 silly gunzTarPerm modified mode [ 'nodejs/jsdoc/util/', 509, 493 ]
+288 silly gunzTarPerm extractEntry nodejs/jsdoc/util/include.js
+289 silly gunzTarPerm modified mode [ 'nodejs/jsdoc/util/include.js', 436, 420 ]
+290 silly gunzTarPerm extractEntry package.json
+291 silly gunzTarPerm modified mode [ 'package.json', 436, 420 ]
+292 silly gunzTarPerm extractEntry plugins/
+293 silly gunzTarPerm modified mode [ 'plugins/', 509, 493 ]
+294 silly gunzTarPerm extractEntry plugins/README.md
+295 silly gunzTarPerm modified mode [ 'plugins/README.md', 436, 420 ]
+296 silly gunzTarPerm extractEntry plugins/commentConvert.js
+297 silly gunzTarPerm modified mode [ 'plugins/commentConvert.js', 436, 420 ]
+298 silly gunzTarPerm extractEntry plugins/commentsOnly.js
+299 silly gunzTarPerm modified mode [ 'plugins/commentsOnly.js', 436, 420 ]
+300 silly gunzTarPerm extractEntry plugins/escapeHtml.js
+301 silly gunzTarPerm modified mode [ 'plugins/escapeHtml.js', 436, 420 ]
+302 silly gunzTarPerm extractEntry plugins/eventDumper.js
+303 silly gunzTarPerm modified mode [ 'plugins/eventDumper.js', 436, 420 ]
+304 silly gunzTarPerm extractEntry plugins/markdown.js
+305 silly gunzTarPerm modified mode [ 'plugins/markdown.js', 436, 420 ]
+306 silly gunzTarPerm extractEntry plugins/markdown.md
+307 silly gunzTarPerm modified mode [ 'plugins/markdown.md', 436, 420 ]
+308 silly gunzTarPerm extractEntry plugins/partial.js
+309 silly gunzTarPerm modified mode [ 'plugins/partial.js', 436, 420 ]
+310 silly gunzTarPerm extractEntry plugins/railsTemplate.js
+311 silly gunzTarPerm modified mode [ 'plugins/railsTemplate.js', 436, 420 ]
+312 silly gunzTarPerm extractEntry plugins/shout.js
+313 silly gunzTarPerm modified mode [ 'plugins/shout.js', 436, 420 ]
+314 silly gunzTarPerm extractEntry plugins/sourcetag.js
+315 silly gunzTarPerm modified mode [ 'plugins/sourcetag.js', 436, 420 ]
+316 silly gunzTarPerm extractEntry plugins/test/
+317 silly gunzTarPerm modified mode [ 'plugins/test/', 509, 493 ]
+318 silly gunzTarPerm extractEntry plugins/test/fixtures/
+319 silly gunzTarPerm modified mode [ 'plugins/test/fixtures/', 509, 493 ]
+320 silly gunzTarPerm extractEntry plugins/test/fixtures/railsTemplate.js.erb
+321 silly gunzTarPerm modified mode [ 'plugins/test/fixtures/railsTemplate.js.erb', 436, 420 ]
+322 silly gunzTarPerm extractEntry plugins/test/specs/
+323 silly gunzTarPerm modified mode [ 'plugins/test/specs/', 509, 493 ]
+324 silly gunzTarPerm extractEntry plugins/test/specs/commentConvert.js
+325 silly gunzTarPerm modified mode [ 'plugins/test/specs/commentConvert.js', 436, 420 ]
+326 silly gunzTarPerm extractEntry plugins/test/specs/escapeHtml.js
+327 silly gunzTarPerm modified mode [ 'plugins/test/specs/escapeHtml.js', 436, 420 ]
+328 silly gunzTarPerm extractEntry plugins/test/specs/markdown.js
+329 silly gunzTarPerm modified mode [ 'plugins/test/specs/markdown.js', 436, 420 ]
+330 silly gunzTarPerm extractEntry plugins/test/specs/railsTemplate.js
+331 silly gunzTarPerm modified mode [ 'plugins/test/specs/railsTemplate.js', 436, 420 ]
+332 silly gunzTarPerm extractEntry plugins/test/specs/shout.js
+333 silly gunzTarPerm modified mode [ 'plugins/test/specs/shout.js', 436, 420 ]
+334 silly gunzTarPerm extractEntry plugins/test/specs/sourcetag.js
+335 silly gunzTarPerm modified mode [ 'plugins/test/specs/sourcetag.js', 436, 420 ]
+336 silly gunzTarPerm extractEntry plugins/test/specs/verboseOutput.js
+337 silly gunzTarPerm modified mode [ 'plugins/test/specs/verboseOutput.js', 436, 420 ]
+338 silly gunzTarPerm extractEntry plugins/verboseOutput.js
+339 silly gunzTarPerm modified mode [ 'plugins/verboseOutput.js', 436, 420 ]
+340 silly gunzTarPerm extractEntry rhino/
+341 silly gunzTarPerm modified mode [ 'rhino/', 509, 493 ]
+342 silly gunzTarPerm extractEntry rhino/MPL_1.1.txt
+343 silly gunzTarPerm modified mode [ 'rhino/MPL_1.1.txt', 436, 420 ]
+344 silly gunzTarPerm extractEntry rhino/crypto.js
+345 silly gunzTarPerm modified mode [ 'rhino/crypto.js', 436, 420 ]
+346 silly gunzTarPerm extractEntry rhino/events.js
+347 silly gunzTarPerm modified mode [ 'rhino/events.js', 436, 420 ]
+348 silly gunzTarPerm extractEntry rhino/fs.js
+349 silly gunzTarPerm modified mode [ 'rhino/fs.js', 436, 420 ]
+350 silly gunzTarPerm extractEntry rhino/js.jar
+351 silly gunzTarPerm modified mode [ 'rhino/js.jar', 436, 420 ]
+352 silly gunzTarPerm extractEntry rhino/jsdoc.js
+353 silly gunzTarPerm modified mode [ 'rhino/jsdoc.js', 436, 420 ]
+354 silly gunzTarPerm extractEntry rhino/jsdoc/
+355 silly gunzTarPerm modified mode [ 'rhino/jsdoc/', 509, 493 ]
+356 silly gunzTarPerm extractEntry rhino/jsdoc/util/
+357 silly gunzTarPerm modified mode [ 'rhino/jsdoc/util/', 509, 493 ]
+358 silly gunzTarPerm extractEntry rhino/jsdoc/util/include.js
+359 silly gunzTarPerm modified mode [ 'rhino/jsdoc/util/include.js', 436, 420 ]
+360 silly gunzTarPerm extractEntry rhino/os.js
+361 silly gunzTarPerm modified mode [ 'rhino/os.js', 436, 420 ]
+362 silly gunzTarPerm extractEntry rhino/path.js
+363 silly gunzTarPerm modified mode [ 'rhino/path.js', 436, 420 ]
+364 silly gunzTarPerm extractEntry rhino/querystring.js
+365 silly gunzTarPerm modified mode [ 'rhino/querystring.js', 436, 420 ]
+366 silly gunzTarPerm extractEntry rhino/rhino-shim.js
+367 silly gunzTarPerm modified mode [ 'rhino/rhino-shim.js', 436, 420 ]
+368 silly gunzTarPerm extractEntry rhino/util.js
+369 silly gunzTarPerm modified mode [ 'rhino/util.js', 436, 420 ]
+370 silly gunzTarPerm extractEntry templates/
+371 silly gunzTarPerm modified mode [ 'templates/', 509, 493 ]
+372 silly gunzTarPerm extractEntry templates/README.md
+373 silly gunzTarPerm modified mode [ 'templates/README.md', 436, 420 ]
+374 silly gunzTarPerm extractEntry templates/default/
+375 silly gunzTarPerm modified mode [ 'templates/default/', 509, 493 ]
+376 silly gunzTarPerm extractEntry templates/default/README.md
+377 silly gunzTarPerm modified mode [ 'templates/default/README.md', 436, 420 ]
+378 silly gunzTarPerm extractEntry templates/default/publish.js
+379 silly gunzTarPerm modified mode [ 'templates/default/publish.js', 436, 420 ]
+380 silly gunzTarPerm extractEntry templates/default/static/
+381 silly gunzTarPerm modified mode [ 'templates/default/static/', 509, 493 ]
+382 silly gunzTarPerm extractEntry templates/default/static/scripts/
+383 silly gunzTarPerm modified mode [ 'templates/default/static/scripts/', 509, 493 ]
+384 silly gunzTarPerm extractEntry templates/default/static/scripts/prettify/
+385 silly gunzTarPerm modified mode [ 'templates/default/static/scripts/prettify/', 509, 493 ]
+386 silly gunzTarPerm extractEntry templates/default/static/scripts/prettify/Apache-License-2.0.txt
+387 silly gunzTarPerm modified mode [ 'templates/default/static/scripts/prettify/Apache-License-2.0.txt',
+387 silly gunzTarPerm   436,
+387 silly gunzTarPerm   420 ]
+388 silly gunzTarPerm extractEntry templates/default/static/scripts/prettify/lang-css.js
+389 silly gunzTarPerm modified mode [ 'templates/default/static/scripts/prettify/lang-css.js',
+389 silly gunzTarPerm   436,
+389 silly gunzTarPerm   420 ]
+390 silly gunzTarPerm extractEntry templates/default/static/scripts/prettify/prettify.js
+391 silly gunzTarPerm modified mode [ 'templates/default/static/scripts/prettify/prettify.js',
+391 silly gunzTarPerm   436,
+391 silly gunzTarPerm   420 ]
+392 silly gunzTarPerm extractEntry templates/default/static/styles/
+393 silly gunzTarPerm modified mode [ 'templates/default/static/styles/', 509, 493 ]
+394 silly gunzTarPerm extractEntry templates/default/static/styles/jsdoc-default.css
+395 silly gunzTarPerm modified mode [ 'templates/default/static/styles/jsdoc-default.css', 436, 420 ]
+396 silly gunzTarPerm extractEntry templates/default/static/styles/prettify-jsdoc.css
+397 silly gunzTarPerm modified mode [ 'templates/default/static/styles/prettify-jsdoc.css',
+397 silly gunzTarPerm   436,
+397 silly gunzTarPerm   420 ]
+398 silly gunzTarPerm extractEntry templates/default/static/styles/prettify-tomorrow.css
+399 silly gunzTarPerm modified mode [ 'templates/default/static/styles/prettify-tomorrow.css',
+399 silly gunzTarPerm   436,
+399 silly gunzTarPerm   420 ]
+400 silly gunzTarPerm extractEntry templates/default/tmpl/
+401 silly gunzTarPerm modified mode [ 'templates/default/tmpl/', 509, 493 ]
+402 silly gunzTarPerm extractEntry templates/default/tmpl/container.tmpl
+403 silly gunzTarPerm modified mode [ 'templates/default/tmpl/container.tmpl', 436, 420 ]
+404 silly gunzTarPerm extractEntry templates/default/tmpl/details.tmpl
+405 silly gunzTarPerm modified mode [ 'templates/default/tmpl/details.tmpl', 436, 420 ]
+406 silly gunzTarPerm extractEntry templates/default/tmpl/example.tmpl
+407 silly gunzTarPerm modified mode [ 'templates/default/tmpl/example.tmpl', 436, 420 ]
+408 silly gunzTarPerm extractEntry templates/default/tmpl/examples.tmpl
+409 silly gunzTarPerm modified mode [ 'templates/default/tmpl/examples.tmpl', 436, 420 ]
+410 silly gunzTarPerm extractEntry templates/default/tmpl/exceptions.tmpl
+411 silly gunzTarPerm modified mode [ 'templates/default/tmpl/exceptions.tmpl', 436, 420 ]
+412 silly gunzTarPerm extractEntry templates/default/tmpl/fires.tmpl
+413 silly gunzTarPerm modified mode [ 'templates/default/tmpl/fires.tmpl', 436, 420 ]
+414 silly gunzTarPerm extractEntry templates/default/tmpl/layout.tmpl
+415 silly gunzTarPerm modified mode [ 'templates/default/tmpl/layout.tmpl', 436, 420 ]
+416 silly gunzTarPerm extractEntry templates/default/tmpl/mainpage.tmpl
+417 silly gunzTarPerm modified mode [ 'templates/default/tmpl/mainpage.tmpl', 436, 420 ]
+418 silly gunzTarPerm extractEntry templates/default/tmpl/members.tmpl
+419 silly gunzTarPerm modified mode [ 'templates/default/tmpl/members.tmpl', 436, 420 ]
+420 silly gunzTarPerm extractEntry templates/default/tmpl/method.tmpl
+421 silly gunzTarPerm modified mode [ 'templates/default/tmpl/method.tmpl', 436, 420 ]
+422 silly gunzTarPerm extractEntry templates/default/tmpl/params.tmpl
+423 silly gunzTarPerm modified mode [ 'templates/default/tmpl/params.tmpl', 436, 420 ]
+424 silly gunzTarPerm extractEntry templates/default/tmpl/properties.tmpl
+425 silly gunzTarPerm modified mode [ 'templates/default/tmpl/properties.tmpl', 436, 420 ]
+426 silly gunzTarPerm extractEntry templates/default/tmpl/returns.tmpl
+427 silly gunzTarPerm modified mode [ 'templates/default/tmpl/returns.tmpl', 436, 420 ]
+428 silly gunzTarPerm extractEntry templates/default/tmpl/source.tmpl
+429 silly gunzTarPerm modified mode [ 'templates/default/tmpl/source.tmpl', 436, 420 ]
+430 silly gunzTarPerm extractEntry templates/default/tmpl/tutorial.tmpl
+431 silly gunzTarPerm modified mode [ 'templates/default/tmpl/tutorial.tmpl', 436, 420 ]
+432 silly gunzTarPerm extractEntry templates/default/tmpl/type.tmpl
+433 silly gunzTarPerm modified mode [ 'templates/default/tmpl/type.tmpl', 436, 420 ]
+434 silly gunzTarPerm extractEntry templates/haruki/
+435 silly gunzTarPerm modified mode [ 'templates/haruki/', 509, 493 ]
+436 silly gunzTarPerm extractEntry templates/haruki/README.md
+437 silly gunzTarPerm modified mode [ 'templates/haruki/README.md', 436, 420 ]
+438 silly gunzTarPerm extractEntry templates/haruki/publish.js
+439 silly gunzTarPerm modified mode [ 'templates/haruki/publish.js', 436, 420 ]
+440 silly gunzTarPerm extractEntry test/
+441 silly gunzTarPerm modified mode [ 'test/', 509, 493 ]
+442 silly gunzTarPerm extractEntry test/README.md
+443 silly gunzTarPerm modified mode [ 'test/README.md', 436, 420 ]
+444 silly gunzTarPerm extractEntry test/async-callback.js
+445 silly gunzTarPerm modified mode [ 'test/async-callback.js', 436, 420 ]
+446 silly gunzTarPerm extractEntry test/fixtures/
+447 silly gunzTarPerm modified mode [ 'test/fixtures/', 509, 493 ]
+448 silly gunzTarPerm extractEntry test/fixtures/abstracttag.js
+449 silly gunzTarPerm modified mode [ 'test/fixtures/abstracttag.js', 436, 420 ]
+450 silly gunzTarPerm extractEntry test/fixtures/accesstag.js
+451 silly gunzTarPerm modified mode [ 'test/fixtures/accesstag.js', 436, 420 ]
+452 silly gunzTarPerm extractEntry test/fixtures/alias.js
+453 silly gunzTarPerm modified mode [ 'test/fixtures/alias.js', 436, 420 ]
+454 silly gunzTarPerm extractEntry test/fixtures/alias2.js
+455 silly gunzTarPerm modified mode [ 'test/fixtures/alias2.js', 436, 420 ]
+456 silly gunzTarPerm extractEntry test/fixtures/alias3.js
+457 silly gunzTarPerm modified mode [ 'test/fixtures/alias3.js', 436, 420 ]
+458 silly gunzTarPerm extractEntry test/fixtures/aliasglobal.js
+459 silly gunzTarPerm modified mode [ 'test/fixtures/aliasglobal.js', 436, 420 ]
+460 silly gunzTarPerm extractEntry test/fixtures/aliasglobal2.js
+461 silly gunzTarPerm modified mode [ 'test/fixtures/aliasglobal2.js', 436, 420 ]
+462 silly gunzTarPerm extractEntry test/fixtures/aliasresolve.js
+463 silly gunzTarPerm modified mode [ 'test/fixtures/aliasresolve.js', 436, 420 ]
+464 silly gunzTarPerm extractEntry test/fixtures/aliasresolve2.js
+465 silly gunzTarPerm modified mode [ 'test/fixtures/aliasresolve2.js', 436, 420 ]
+466 silly gunzTarPerm extractEntry test/fixtures/also.js
+467 silly gunzTarPerm modified mode [ 'test/fixtures/also.js', 436, 420 ]
+468 silly gunzTarPerm extractEntry test/fixtures/augmentstag.js
+469 silly gunzTarPerm modified mode [ 'test/fixtures/augmentstag.js', 436, 420 ]
+470 silly gunzTarPerm extractEntry test/fixtures/augmentstag2.js
+471 silly gunzTarPerm modified mode [ 'test/fixtures/augmentstag2.js', 436, 420 ]
+472 silly gunzTarPerm extractEntry test/fixtures/authortag.js
+473 silly gunzTarPerm modified mode [ 'test/fixtures/authortag.js', 436, 420 ]
+474 silly gunzTarPerm extractEntry test/fixtures/borrowstag.js
+475 silly gunzTarPerm modified mode [ 'test/fixtures/borrowstag.js', 436, 420 ]
+476 silly gunzTarPerm extractEntry test/fixtures/borrowstag2.js
+477 silly gunzTarPerm modified mode [ 'test/fixtures/borrowstag2.js', 436, 420 ]
+478 silly gunzTarPerm extractEntry test/fixtures/callbacktag.js
+479 silly gunzTarPerm modified mode [ 'test/fixtures/callbacktag.js', 436, 420 ]
+480 silly gunzTarPerm extractEntry test/fixtures/classtag.js
+481 silly gunzTarPerm modified mode [ 'test/fixtures/classtag.js', 436, 420 ]
+482 silly gunzTarPerm extractEntry test/fixtures/constructortag.js
+483 silly gunzTarPerm modified mode [ 'test/fixtures/constructortag.js', 436, 420 ]
+484 silly gunzTarPerm extractEntry test/fixtures/constructstag.js
+485 silly gunzTarPerm modified mode [ 'test/fixtures/constructstag.js', 436, 420 ]
+486 silly gunzTarPerm extractEntry test/fixtures/constructstag2.js
+487 silly gunzTarPerm modified mode [ 'test/fixtures/constructstag2.js', 436, 420 ]
+488 silly gunzTarPerm extractEntry test/fixtures/constructstag3.js
+489 silly gunzTarPerm modified mode [ 'test/fixtures/constructstag3.js', 436, 420 ]
+490 silly gunzTarPerm extractEntry test/fixtures/constructstag4.js
+491 silly gunzTarPerm modified mode [ 'test/fixtures/constructstag4.js', 436, 420 ]
+492 silly gunzTarPerm extractEntry test/fixtures/constructstag5.js
+493 silly gunzTarPerm modified mode [ 'test/fixtures/constructstag5.js', 436, 420 ]
+494 silly gunzTarPerm extractEntry test/fixtures/copyrighttag.js
+495 silly gunzTarPerm modified mode [ 'test/fixtures/copyrighttag.js', 436, 420 ]
+496 silly gunzTarPerm extractEntry test/fixtures/defaulttag.js
+497 silly gunzTarPerm modified mode [ 'test/fixtures/defaulttag.js', 436, 420 ]
+498 silly gunzTarPerm extractEntry test/fixtures/deprecatedtag.js
+499 silly gunzTarPerm modified mode [ 'test/fixtures/deprecatedtag.js', 436, 420 ]
+500 silly gunzTarPerm extractEntry test/fixtures/destructuring.js
+501 silly gunzTarPerm modified mode [ 'test/fixtures/destructuring.js', 436, 420 ]
+502 silly gunzTarPerm extractEntry test/fixtures/doclet.js
+503 silly gunzTarPerm modified mode [ 'test/fixtures/doclet.js', 436, 420 ]
+504 silly gunzTarPerm extractEntry test/fixtures/enumtag.js
+505 silly gunzTarPerm modified mode [ 'test/fixtures/enumtag.js', 436, 420 ]
+506 silly gunzTarPerm extractEntry test/fixtures/eventfirestag.js
+507 silly gunzTarPerm modified mode [ 'test/fixtures/eventfirestag.js', 436, 420 ]
+508 silly gunzTarPerm extractEntry test/fixtures/exceptiontag.js
+509 silly gunzTarPerm modified mode [ 'test/fixtures/exceptiontag.js', 436, 420 ]
+510 silly gunzTarPerm extractEntry test/fixtures/exports.js
+511 silly gunzTarPerm modified mode [ 'test/fixtures/exports.js', 436, 420 ]
+512 silly gunzTarPerm extractEntry test/fixtures/exportstag.js
+513 silly gunzTarPerm modified mode [ 'test/fixtures/exportstag.js', 436, 420 ]
+514 silly gunzTarPerm extractEntry test/fixtures/exportstag2.js
+515 silly gunzTarPerm modified mode [ 'test/fixtures/exportstag2.js', 436, 420 ]
+516 silly gunzTarPerm extractEntry test/fixtures/exportstag3.js
+517 silly gunzTarPerm modified mode [ 'test/fixtures/exportstag3.js', 436, 420 ]
+518 silly gunzTarPerm extractEntry test/fixtures/exportstag4.js
+519 silly gunzTarPerm modified mode [ 'test/fixtures/exportstag4.js', 436, 420 ]
+520 silly gunzTarPerm extractEntry test/fixtures/externals.js
+521 silly gunzTarPerm modified mode [ 'test/fixtures/externals.js', 436, 420 ]
+522 silly gunzTarPerm extractEntry test/fixtures/externals2.js
+523 silly gunzTarPerm modified mode [ 'test/fixtures/externals2.js', 436, 420 ]
+524 silly gunzTarPerm extractEntry test/fixtures/file.js
+525 silly gunzTarPerm modified mode [ 'test/fixtures/file.js', 436, 420 ]
+526 silly gunzTarPerm extractEntry test/fixtures/getset.js
+527 silly gunzTarPerm modified mode [ 'test/fixtures/getset.js', 436, 420 ]
+528 silly gunzTarPerm extractEntry test/fixtures/globaltag.js
+529 silly gunzTarPerm modified mode [ 'test/fixtures/globaltag.js', 436, 420 ]
+530 silly gunzTarPerm extractEntry test/fixtures/ignoretag.js
+531 silly gunzTarPerm modified mode [ 'test/fixtures/ignoretag.js', 436, 420 ]
+532 silly gunzTarPerm extractEntry test/fixtures/ignoretag2.js
+533 silly gunzTarPerm modified mode [ 'test/fixtures/ignoretag2.js', 436, 420 ]
+534 silly gunzTarPerm extractEntry test/fixtures/include.js
+535 silly gunzTarPerm modified mode [ 'test/fixtures/include.js', 436, 420 ]
+536 silly gunzTarPerm extractEntry test/fixtures/inlinecomment.js
+537 silly gunzTarPerm modified mode [ 'test/fixtures/inlinecomment.js', 436, 420 ]
+538 silly gunzTarPerm extractEntry test/fixtures/inner.js
+539 silly gunzTarPerm modified mode [ 'test/fixtures/inner.js', 436, 420 ]
+540 silly gunzTarPerm extractEntry test/fixtures/innerscope.js
+541 silly gunzTarPerm modified mode [ 'test/fixtures/innerscope.js', 436, 420 ]
+542 silly gunzTarPerm extractEntry test/fixtures/innerscope2.js
+543 silly gunzTarPerm modified mode [ 'test/fixtures/innerscope2.js', 436, 420 ]
+544 silly gunzTarPerm extractEntry test/fixtures/jshint/
+545 silly gunzTarPerm modified mode [ 'test/fixtures/jshint/', 509, 493 ]
+546 silly gunzTarPerm extractEntry test/fixtures/jshint/badfile.js
+547 silly gunzTarPerm modified mode [ 'test/fixtures/jshint/badfile.js', 436, 420 ]
+548 silly gunzTarPerm extractEntry test/fixtures/jshint/goodfile.js
+549 silly gunzTarPerm modified mode [ 'test/fixtures/jshint/goodfile.js', 436, 420 ]
+550 silly gunzTarPerm extractEntry test/fixtures/jslangnames.js
+551 silly gunzTarPerm modified mode [ 'test/fixtures/jslangnames.js', 436, 420 ]
+552 silly gunzTarPerm extractEntry test/fixtures/lends.js
+553 silly gunzTarPerm modified mode [ 'test/fixtures/lends.js', 436, 420 ]
+554 silly gunzTarPerm extractEntry test/fixtures/lends2.js
+555 silly gunzTarPerm modified mode [ 'test/fixtures/lends2.js', 436, 420 ]
+556 silly gunzTarPerm extractEntry test/fixtures/lends3.js
+557 silly gunzTarPerm modified mode [ 'test/fixtures/lends3.js', 436, 420 ]
+558 silly gunzTarPerm extractEntry test/fixtures/lendsglobal.js
+559 silly gunzTarPerm modified mode [ 'test/fixtures/lendsglobal.js', 436, 420 ]
+560 silly gunzTarPerm extractEntry test/fixtures/linktag.js
+561 silly gunzTarPerm modified mode [ 'test/fixtures/linktag.js', 436, 420 ]
+562 silly gunzTarPerm extractEntry test/fixtures/markdowntest.md
+563 silly gunzTarPerm modified mode [ 'test/fixtures/markdowntest.md', 436, 420 ]
+564 silly gunzTarPerm extractEntry test/fixtures/memberoftag.js
+565 silly gunzTarPerm modified mode [ 'test/fixtures/memberoftag.js', 436, 420 ]
+566 silly gunzTarPerm extractEntry test/fixtures/memberoftag2.js
+567 silly gunzTarPerm modified mode [ 'test/fixtures/memberoftag2.js', 436, 420 ]
+568 silly gunzTarPerm extractEntry test/fixtures/memberoftag3.js
+569 silly gunzTarPerm modified mode [ 'test/fixtures/memberoftag3.js', 436, 420 ]
+570 silly gunzTarPerm extractEntry test/fixtures/memberoftag4.js
+571 silly gunzTarPerm modified mode [ 'test/fixtures/memberoftag4.js', 436, 420 ]
+572 silly gunzTarPerm extractEntry test/fixtures/memberoftagforced.js
+573 silly gunzTarPerm modified mode [ 'test/fixtures/memberoftagforced.js', 436, 420 ]
+574 silly gunzTarPerm extractEntry test/fixtures/moduleinner.js
+575 silly gunzTarPerm modified mode [ 'test/fixtures/moduleinner.js', 436, 420 ]
+576 silly gunzTarPerm extractEntry test/fixtures/moduleisconstructor.js
+577 silly gunzTarPerm modified mode [ 'test/fixtures/moduleisconstructor.js', 436, 420 ]
+578 silly gunzTarPerm extractEntry test/fixtures/modules/
+579 silly gunzTarPerm modified mode [ 'test/fixtures/modules/', 509, 493 ]
+580 silly gunzTarPerm extractEntry test/fixtures/modules/data/
+581 silly gunzTarPerm modified mode [ 'test/fixtures/modules/data/', 509, 493 ]
+582 silly gunzTarPerm extractEntry test/fixtures/modules/data/mod-1.js
+583 silly gunzTarPerm modified mode [ 'test/fixtures/modules/data/mod-1.js', 436, 420 ]
+584 silly gunzTarPerm extractEntry test/fixtures/modules/data/mod-2.js
+585 silly gunzTarPerm modified mode [ 'test/fixtures/modules/data/mod-2.js', 436, 420 ]
+586 silly gunzTarPerm extractEntry test/fixtures/modules/data/mod-3.js
+587 silly gunzTarPerm modified mode [ 'test/fixtures/modules/data/mod-3.js', 436, 420 ]
+588 silly gunzTarPerm extractEntry test/fixtures/moduletag.js
+589 silly gunzTarPerm modified mode [ 'test/fixtures/moduletag.js', 436, 420 ]
+590 silly gunzTarPerm extractEntry test/fixtures/moduletag2.js
+591 silly gunzTarPerm modified mode [ 'test/fixtures/moduletag2.js', 436, 420 ]
+592 silly gunzTarPerm extractEntry test/fixtures/moduletag3.js
+593 silly gunzTarPerm modified mode [ 'test/fixtures/moduletag3.js', 436, 420 ]
+594 silly gunzTarPerm extractEntry test/fixtures/namedFuncStatement.js
+595 silly gunzTarPerm modified mode [ 'test/fixtures/namedFuncStatement.js', 436, 420 ]
+596 silly gunzTarPerm extractEntry test/fixtures/namedFuncStatement2.js
+597 silly gunzTarPerm modified mode [ 'test/fixtures/namedFuncStatement2.js', 436, 420 ]
+598 silly gunzTarPerm extractEntry test/fixtures/namedFuncStatement3.js
+599 silly gunzTarPerm modified mode [ 'test/fixtures/namedFuncStatement3.js', 436, 420 ]
+600 silly gunzTarPerm extractEntry test/fixtures/objectlit.js
+601 silly gunzTarPerm modified mode [ 'test/fixtures/objectlit.js', 436, 420 ]
+602 silly gunzTarPerm extractEntry test/fixtures/objectlit2.js
+603 silly gunzTarPerm modified mode [ 'test/fixtures/objectlit2.js', 436, 420 ]
+604 silly gunzTarPerm extractEntry test/fixtures/objectpropertykeys.js
+605 silly gunzTarPerm modified mode [ 'test/fixtures/objectpropertykeys.js', 436, 420 ]
+606 silly gunzTarPerm extractEntry test/fixtures/paramtag.js
+607 silly gunzTarPerm modified mode [ 'test/fixtures/paramtag.js', 436, 420 ]
+608 silly gunzTarPerm extractEntry test/fixtures/plugins.js
+609 silly gunzTarPerm modified mode [ 'test/fixtures/plugins.js', 436, 420 ]
+610 silly gunzTarPerm extractEntry test/fixtures/privatetag.js
+611 silly gunzTarPerm modified mode [ 'test/fixtures/privatetag.js', 436, 420 ]
+612 silly gunzTarPerm extractEntry test/fixtures/projecttag.js
+613 silly gunzTarPerm modified mode [ 'test/fixtures/projecttag.js', 436, 420 ]
+614 silly gunzTarPerm extractEntry test/fixtures/propertytag.js
+615 silly gunzTarPerm modified mode [ 'test/fixtures/propertytag.js', 436, 420 ]
+616 silly gunzTarPerm extractEntry test/fixtures/quotename.js
+617 silly gunzTarPerm modified mode [ 'test/fixtures/quotename.js', 436, 420 ]
+618 silly gunzTarPerm extractEntry test/fixtures/quotename2.js
+619 silly gunzTarPerm modified mode [ 'test/fixtures/quotename2.js', 436, 420 ]
+620 silly gunzTarPerm extractEntry test/fixtures/readonlytag.js
+621 silly gunzTarPerm modified mode [ 'test/fixtures/readonlytag.js', 436, 420 ]
+622 silly gunzTarPerm extractEntry test/fixtures/requirestag.js
+623 silly gunzTarPerm modified mode [ 'test/fixtures/requirestag.js', 436, 420 ]
+624 silly gunzTarPerm extractEntry test/fixtures/returnstag.js
+625 silly gunzTarPerm modified mode [ 'test/fixtures/returnstag.js', 436, 420 ]
+626 silly gunzTarPerm extractEntry test/fixtures/seetag.js
+627 silly gunzTarPerm modified mode [ 'test/fixtures/seetag.js', 436, 420 ]
+628 silly gunzTarPerm extractEntry test/fixtures/sincetag.js
+629 silly gunzTarPerm modified mode [ 'test/fixtures/sincetag.js', 436, 420 ]
+630 silly gunzTarPerm extractEntry test/fixtures/specialnames.js
+631 silly gunzTarPerm modified mode [ 'test/fixtures/specialnames.js', 436, 420 ]
+632 silly gunzTarPerm extractEntry test/fixtures/src/
+633 silly gunzTarPerm modified mode [ 'test/fixtures/src/', 509, 493 ]
+634 silly gunzTarPerm extractEntry test/fixtures/src/_dir2/
+635 silly gunzTarPerm modified mode [ 'test/fixtures/src/_dir2/', 509, 493 ]
+636 silly gunzTarPerm extractEntry test/fixtures/src/_dir2/four.js
+637 silly gunzTarPerm modified mode [ 'test/fixtures/src/_dir2/four.js', 436, 420 ]
+638 silly gunzTarPerm extractEntry test/fixtures/src/_ignored.js
+639 silly gunzTarPerm modified mode [ 'test/fixtures/src/_ignored.js', 436, 420 ]
+640 silly gunzTarPerm extractEntry test/fixtures/src/dir1/
+641 silly gunzTarPerm modified mode [ 'test/fixtures/src/dir1/', 509, 493 ]
+642 silly gunzTarPerm extractEntry test/fixtures/src/dir1/three.js
+643 silly gunzTarPerm modified mode [ 'test/fixtures/src/dir1/three.js', 436, 420 ]
+644 silly gunzTarPerm extractEntry test/fixtures/src/ignored.txt
+645 silly gunzTarPerm modified mode [ 'test/fixtures/src/ignored.txt', 436, 420 ]
+646 silly gunzTarPerm extractEntry test/fixtures/src/one.js
+647 silly gunzTarPerm modified mode [ 'test/fixtures/src/one.js', 436, 420 ]
+648 silly gunzTarPerm extractEntry test/fixtures/src/two.js
+649 silly gunzTarPerm modified mode [ 'test/fixtures/src/two.js', 436, 420 ]
+650 silly gunzTarPerm extractEntry test/fixtures/starbangstar.js
+651 silly gunzTarPerm modified mode [ 'test/fixtures/starbangstar.js', 436, 420 ]
+652 silly gunzTarPerm extractEntry test/fixtures/testPlugin1.js
+653 silly gunzTarPerm modified mode [ 'test/fixtures/testPlugin1.js', 436, 420 ]
+654 silly gunzTarPerm extractEntry test/fixtures/testPlugin2.js
+655 silly gunzTarPerm modified mode [ 'test/fixtures/testPlugin2.js', 436, 420 ]
+656 silly gunzTarPerm extractEntry test/fixtures/this-and-objectlit.js
+657 silly gunzTarPerm modified mode [ 'test/fixtures/this-and-objectlit.js', 436, 420 ]
+658 silly gunzTarPerm extractEntry test/fixtures/this.js
+659 silly gunzTarPerm modified mode [ 'test/fixtures/this.js', 436, 420 ]
+660 silly gunzTarPerm extractEntry test/fixtures/this2.js
+661 silly gunzTarPerm modified mode [ 'test/fixtures/this2.js', 436, 420 ]
+662 silly gunzTarPerm extractEntry test/fixtures/this3.js
+663 silly gunzTarPerm modified mode [ 'test/fixtures/this3.js', 436, 420 ]
+664 silly gunzTarPerm extractEntry test/fixtures/thistag.js
+665 silly gunzTarPerm modified mode [ 'test/fixtures/thistag.js', 436, 420 ]
+666 silly gunzTarPerm extractEntry test/fixtures/typedeftag.js
+667 silly gunzTarPerm modified mode [ 'test/fixtures/typedeftag.js', 436, 420 ]
+668 silly gunzTarPerm extractEntry test/fixtures/typekind.js
+669 silly gunzTarPerm modified mode [ 'test/fixtures/typekind.js', 436, 420 ]
+670 silly gunzTarPerm extractEntry test/fixtures/typetag.js
+671 silly gunzTarPerm modified mode [ 'test/fixtures/typetag.js', 436, 420 ]
+672 silly gunzTarPerm extractEntry test/fixtures/utf8.js
+673 silly gunzTarPerm modified mode [ 'test/fixtures/utf8.js', 436, 420 ]
+674 silly gunzTarPerm extractEntry test/fixtures/var.js
+675 silly gunzTarPerm modified mode [ 'test/fixtures/var.js', 436, 420 ]
+676 silly gunzTarPerm extractEntry test/fixtures/variations.js
+677 silly gunzTarPerm modified mode [ 'test/fixtures/variations.js', 436, 420 ]
+678 silly gunzTarPerm extractEntry test/fixtures/variations2.js
+679 silly gunzTarPerm modified mode [ 'test/fixtures/variations2.js', 436, 420 ]
+680 silly gunzTarPerm extractEntry test/fixtures/variations3.js
+681 silly gunzTarPerm modified mode [ 'test/fixtures/variations3.js', 436, 420 ]
+682 silly gunzTarPerm extractEntry test/fixtures/versiontag.js
+683 silly gunzTarPerm modified mode [ 'test/fixtures/versiontag.js', 436, 420 ]
+684 silly gunzTarPerm extractEntry test/fixtures/virtual.js
+685 silly gunzTarPerm modified mode [ 'test/fixtures/virtual.js', 436, 420 ]
+686 silly gunzTarPerm extractEntry test/jasmine-jsdoc.js
+687 silly gunzTarPerm modified mode [ 'test/jasmine-jsdoc.js', 436, 420 ]
+688 silly gunzTarPerm extractEntry test/lib/
+689 silly gunzTarPerm modified mode [ 'test/lib/', 509, 493 ]
+690 silly gunzTarPerm extractEntry test/lib/jasmine.js
+691 silly gunzTarPerm modified mode [ 'test/lib/jasmine.js', 436, 420 ]
+692 silly gunzTarPerm extractEntry test/reporter.js
+693 silly gunzTarPerm modified mode [ 'test/reporter.js', 436, 420 ]
+694 silly gunzTarPerm extractEntry test/runner.js
+695 silly gunzTarPerm modified mode [ 'test/runner.js', 436, 420 ]
+696 silly gunzTarPerm extractEntry test/spec-collection.js
+697 silly gunzTarPerm modified mode [ 'test/spec-collection.js', 436, 420 ]
+698 silly gunzTarPerm extractEntry test/specs/
+699 silly gunzTarPerm modified mode [ 'test/specs/', 509, 493 ]
+700 silly gunzTarPerm extractEntry test/specs/documentation/
+701 silly gunzTarPerm modified mode [ 'test/specs/documentation/', 509, 493 ]
+702 silly gunzTarPerm extractEntry test/specs/documentation/alias.js
+703 silly gunzTarPerm modified mode [ 'test/specs/documentation/alias.js', 436, 420 ]
+704 silly gunzTarPerm extractEntry test/specs/documentation/also.js
+705 silly gunzTarPerm modified mode [ 'test/specs/documentation/also.js', 436, 420 ]
+706 silly gunzTarPerm extractEntry test/specs/documentation/callback.js
+707 silly gunzTarPerm modified mode [ 'test/specs/documentation/callback.js', 436, 420 ]
+708 silly gunzTarPerm extractEntry test/specs/documentation/exports.js
+709 silly gunzTarPerm modified mode [ 'test/specs/documentation/exports.js', 436, 420 ]
+710 silly gunzTarPerm extractEntry test/specs/documentation/getset.js
+711 silly gunzTarPerm modified mode [ 'test/specs/documentation/getset.js', 436, 420 ]
+712 silly gunzTarPerm extractEntry test/specs/documentation/inlinecomment.js
+713 silly gunzTarPerm modified mode [ 'test/specs/documentation/inlinecomment.js', 436, 420 ]
+714 silly gunzTarPerm extractEntry test/specs/documentation/inner.js
+715 silly gunzTarPerm modified mode [ 'test/specs/documentation/inner.js', 436, 420 ]
+716 silly gunzTarPerm extractEntry test/specs/documentation/innerscope.js
+717 silly gunzTarPerm modified mode [ 'test/specs/documentation/innerscope.js', 436, 420 ]
+718 silly gunzTarPerm extractEntry test/specs/documentation/lends.js
+719 silly gunzTarPerm modified mode [ 'test/specs/documentation/lends.js', 436, 420 ]
+720 silly gunzTarPerm extractEntry test/specs/documentation/moduleinner.js
+721 silly gunzTarPerm modified mode [ 'test/specs/documentation/moduleinner.js', 436, 420 ]
+722 silly gunzTarPerm extractEntry test/specs/documentation/modules.js
+723 silly gunzTarPerm modified mode [ 'test/specs/documentation/modules.js', 436, 420 ]
+724 silly gunzTarPerm extractEntry test/specs/documentation/namedFuncStatement.js
+725 silly gunzTarPerm modified mode [ 'test/specs/documentation/namedFuncStatement.js', 436, 420 ]
+726 silly gunzTarPerm extractEntry test/specs/documentation/objectlit.js
+727 silly gunzTarPerm modified mode [ 'test/specs/documentation/objectlit.js', 436, 420 ]
+728 silly gunzTarPerm extractEntry test/specs/documentation/objectpropertykeys.js
+729 silly gunzTarPerm modified mode [ 'test/specs/documentation/objectpropertykeys.js', 436, 420 ]
+730 silly gunzTarPerm extractEntry test/specs/documentation/quotename.js
+731 silly gunzTarPerm modified mode [ 'test/specs/documentation/quotename.js', 436, 420 ]
+732 silly gunzTarPerm extractEntry test/specs/documentation/specialnames.js
+733 silly gunzTarPerm modified mode [ 'test/specs/documentation/specialnames.js', 436, 420 ]
+734 silly gunzTarPerm extractEntry test/specs/documentation/starbangstar.js
+735 silly gunzTarPerm modified mode [ 'test/specs/documentation/starbangstar.js', 436, 420 ]
+736 silly gunzTarPerm extractEntry test/specs/documentation/this.js
+737 silly gunzTarPerm modified mode [ 'test/specs/documentation/this.js', 436, 420 ]
+738 silly gunzTarPerm extractEntry test/specs/documentation/var.js
+739 silly gunzTarPerm modified mode [ 'test/specs/documentation/var.js', 436, 420 ]
+740 silly gunzTarPerm extractEntry test/specs/documentation/variations.js
+741 silly gunzTarPerm modified mode [ 'test/specs/documentation/variations.js', 436, 420 ]
+742 silly gunzTarPerm extractEntry test/specs/documentation/virtual.js
+743 silly gunzTarPerm modified mode [ 'test/specs/documentation/virtual.js', 436, 420 ]
+744 silly gunzTarPerm extractEntry test/specs/jsdoc/
+745 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/', 509, 493 ]
+746 silly gunzTarPerm extractEntry test/specs/jsdoc/augment.js
+747 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/augment.js', 436, 420 ]
+748 silly gunzTarPerm extractEntry test/specs/jsdoc/borrow.js
+749 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/borrow.js', 436, 420 ]
+750 silly gunzTarPerm extractEntry test/specs/jsdoc/config.js
+751 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/config.js', 436, 420 ]
+752 silly gunzTarPerm extractEntry test/specs/jsdoc/doclet.js
+753 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/doclet.js', 436, 420 ]
+754 silly gunzTarPerm extractEntry test/specs/jsdoc/name.js
+755 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/name.js', 436, 420 ]
+756 silly gunzTarPerm extractEntry test/specs/jsdoc/opts/
+757 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/opts/', 509, 493 ]
+758 silly gunzTarPerm extractEntry test/specs/jsdoc/opts/argparser.js
+759 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/opts/argparser.js', 436, 420 ]
+760 silly gunzTarPerm extractEntry test/specs/jsdoc/opts/args.js
+761 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/opts/args.js', 436, 420 ]
+762 silly gunzTarPerm extractEntry test/specs/jsdoc/path.js
+763 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/path.js', 436, 420 ]
+764 silly gunzTarPerm extractEntry test/specs/jsdoc/plugins.js
+765 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/plugins.js', 436, 420 ]
+766 silly gunzTarPerm extractEntry test/specs/jsdoc/readme.js
+767 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/readme.js', 436, 420 ]
+768 silly gunzTarPerm extractEntry test/specs/jsdoc/src/
+769 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/src/', 509, 493 ]
+770 silly gunzTarPerm extractEntry test/specs/jsdoc/src/filter.js
+771 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/src/filter.js', 436, 420 ]
+772 silly gunzTarPerm extractEntry test/specs/jsdoc/src/handlers.js
+773 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/src/handlers.js', 436, 420 ]
+774 silly gunzTarPerm extractEntry test/specs/jsdoc/src/parser.js
+775 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/src/parser.js', 436, 420 ]
+776 silly gunzTarPerm extractEntry test/specs/jsdoc/src/scanner.js
+777 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/src/scanner.js', 436, 420 ]
+778 silly gunzTarPerm extractEntry test/specs/jsdoc/tag.js
+779 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/tag.js', 436, 420 ]
+780 silly gunzTarPerm extractEntry test/specs/jsdoc/tag/
+781 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/tag/', 509, 493 ]
+782 silly gunzTarPerm extractEntry test/specs/jsdoc/tag/dictionary.js
+783 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/tag/dictionary.js', 436, 420 ]
+784 silly gunzTarPerm extractEntry test/specs/jsdoc/tag/type.js
+785 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/tag/type.js', 436, 420 ]
+786 silly gunzTarPerm extractEntry test/specs/jsdoc/tag/type/
+787 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/tag/type/', 509, 493 ]
+788 silly gunzTarPerm extractEntry test/specs/jsdoc/tag/type/closureCompilerType.js
+789 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/tag/type/closureCompilerType.js', 436, 420 ]
+790 silly gunzTarPerm extractEntry test/specs/jsdoc/tag/type/jsdocType.js
+791 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/tag/type/jsdocType.js', 436, 420 ]
+792 silly gunzTarPerm extractEntry test/specs/jsdoc/tag/validator.js
+793 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/tag/validator.js', 436, 420 ]
+794 silly gunzTarPerm extractEntry test/specs/jsdoc/tutorial.js
+795 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/tutorial.js', 436, 420 ]
+796 silly gunzTarPerm extractEntry test/specs/jsdoc/tutorial/
+797 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/tutorial/', 509, 493 ]
+798 silly gunzTarPerm extractEntry test/specs/jsdoc/tutorial/resolver.js
+799 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/tutorial/resolver.js', 436, 420 ]
+800 silly gunzTarPerm extractEntry test/specs/jsdoc/util/
+801 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/util/', 509, 493 ]
+802 silly gunzTarPerm extractEntry test/specs/jsdoc/util/doop.js
+803 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/util/doop.js', 436, 420 ]
+804 silly gunzTarPerm extractEntry test/specs/jsdoc/util/dumper.js
+805 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/util/dumper.js', 436, 420 ]
+806 silly gunzTarPerm extractEntry test/specs/jsdoc/util/error.js
+807 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/util/error.js', 436, 420 ]
+808 silly gunzTarPerm extractEntry test/specs/jsdoc/util/include.js
+809 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/util/include.js', 436, 420 ]
+810 silly gunzTarPerm extractEntry test/specs/jsdoc/util/markdown.js
+811 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/util/markdown.js', 436, 420 ]
+812 silly gunzTarPerm extractEntry test/specs/jsdoc/util/templateHelper.js
+813 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/util/templateHelper.js', 436, 420 ]
+814 silly gunzTarPerm extractEntry test/specs/jsdoc/util/vm.js
+815 silly gunzTarPerm modified mode [ 'test/specs/jsdoc/util/vm.js', 436, 420 ]
+816 silly gunzTarPerm extractEntry test/specs/jshint/
+817 silly gunzTarPerm modified mode [ 'test/specs/jshint/', 509, 493 ]
+818 silly gunzTarPerm extractEntry test/specs/jshint/jshint-clean.js
+819 silly gunzTarPerm modified mode [ 'test/specs/jshint/jshint-clean.js', 436, 420 ]
+820 silly gunzTarPerm extractEntry test/specs/plugins/
+821 silly gunzTarPerm modified mode [ 'test/specs/plugins/', 509, 493 ]
+822 silly gunzTarPerm extractEntry test/specs/plugins/plugins.js
+823 silly gunzTarPerm modified mode [ 'test/specs/plugins/plugins.js', 436, 420 ]
+824 silly gunzTarPerm extractEntry test/specs/rhino/
+825 silly gunzTarPerm modified mode [ 'test/specs/rhino/', 509, 493 ]
+826 silly gunzTarPerm extractEntry test/specs/rhino/fs.js
+827 silly gunzTarPerm modified mode [ 'test/specs/rhino/fs.js', 436, 420 ]
+828 silly gunzTarPerm extractEntry test/specs/rhino/os.js
+829 silly gunzTarPerm modified mode [ 'test/specs/rhino/os.js', 436, 420 ]
+830 silly gunzTarPerm extractEntry test/specs/rhino/path.js
+831 silly gunzTarPerm modified mode [ 'test/specs/rhino/path.js', 436, 420 ]
+832 silly gunzTarPerm extractEntry test/specs/tags/
+833 silly gunzTarPerm modified mode [ 'test/specs/tags/', 509, 493 ]
+834 silly gunzTarPerm extractEntry test/specs/tags/abstracttag.js
+835 silly gunzTarPerm modified mode [ 'test/specs/tags/abstracttag.js', 436, 420 ]
+836 silly gunzTarPerm extractEntry test/specs/tags/accesstag.js
+837 silly gunzTarPerm modified mode [ 'test/specs/tags/accesstag.js', 436, 420 ]
+838 silly gunzTarPerm extractEntry test/specs/tags/augmentstag.js
+839 silly gunzTarPerm modified mode [ 'test/specs/tags/augmentstag.js', 436, 420 ]
+840 silly gunzTarPerm extractEntry test/specs/tags/authortag.js
+841 silly gunzTarPerm modified mode [ 'test/specs/tags/authortag.js', 436, 420 ]
+842 silly gunzTarPerm extractEntry test/specs/tags/borrowstag.js
+843 silly gunzTarPerm modified mode [ 'test/specs/tags/borrowstag.js', 436, 420 ]
+844 silly gunzTarPerm extractEntry test/specs/tags/classtag.js
+845 silly gunzTarPerm modified mode [ 'test/specs/tags/classtag.js', 436, 420 ]
+846 silly gunzTarPerm extractEntry test/specs/tags/constructortag.js
+847 silly gunzTarPerm modified mode [ 'test/specs/tags/constructortag.js', 436, 420 ]
+848 silly gunzTarPerm extractEntry test/specs/tags/constructstag.js
+849 silly gunzTarPerm modified mode [ 'test/specs/tags/constructstag.js', 436, 420 ]
+850 silly gunzTarPerm extractEntry test/specs/tags/copyrighttag.js
+851 silly gunzTarPerm modified mode [ 'test/specs/tags/copyrighttag.js', 436, 420 ]
+852 silly gunzTarPerm extractEntry test/specs/tags/defaulttag.js
+853 silly gunzTarPerm modified mode [ 'test/specs/tags/defaulttag.js', 436, 420 ]
+854 silly gunzTarPerm extractEntry test/specs/tags/deprecatedtag.js
+855 silly gunzTarPerm modified mode [ 'test/specs/tags/deprecatedtag.js', 436, 420 ]
+856 silly gunzTarPerm extractEntry test/specs/tags/enumtag.js
+857 silly gunzTarPerm modified mode [ 'test/specs/tags/enumtag.js', 436, 420 ]
+858 silly gunzTarPerm extractEntry test/specs/tags/eventfirestag.js
+859 silly gunzTarPerm modified mode [ 'test/specs/tags/eventfirestag.js', 436, 420 ]
+860 silly gunzTarPerm extractEntry test/specs/tags/exceptiontag.js
+861 silly gunzTarPerm modified mode [ 'test/specs/tags/exceptiontag.js', 436, 420 ]
+862 silly gunzTarPerm extractEntry test/specs/tags/exportstag.js
+863 silly gunzTarPerm modified mode [ 'test/specs/tags/exportstag.js', 436, 420 ]
+864 silly gunzTarPerm extractEntry test/specs/tags/globaltag.js
+865 silly gunzTarPerm modified mode [ 'test/specs/tags/globaltag.js', 436, 420 ]
+866 silly gunzTarPerm extractEntry test/specs/tags/ignoretag.js
+867 silly gunzTarPerm modified mode [ 'test/specs/tags/ignoretag.js', 436, 420 ]
+868 silly gunzTarPerm extractEntry test/specs/tags/memberoftag.js
+869 silly gunzTarPerm modified mode [ 'test/specs/tags/memberoftag.js', 436, 420 ]
+870 silly gunzTarPerm extractEntry test/specs/tags/moduletag.js
+871 silly gunzTarPerm modified mode [ 'test/specs/tags/moduletag.js', 436, 420 ]
+872 silly gunzTarPerm extractEntry test/specs/tags/overviewtag.js
+873 silly gunzTarPerm modified mode [ 'test/specs/tags/overviewtag.js', 436, 420 ]
+874 silly gunzTarPerm extractEntry test/specs/tags/paramtag.js
+875 silly gunzTarPerm modified mode [ 'test/specs/tags/paramtag.js', 436, 420 ]
+876 silly gunzTarPerm extractEntry test/specs/tags/privatetag.js
+877 silly gunzTarPerm modified mode [ 'test/specs/tags/privatetag.js', 436, 420 ]
+878 silly gunzTarPerm extractEntry test/specs/tags/propertytag.js
+879 silly gunzTarPerm modified mode [ 'test/specs/tags/propertytag.js', 436, 420 ]
+880 silly gunzTarPerm extractEntry test/specs/tags/readonlytag.js
+881 silly gunzTarPerm modified mode [ 'test/specs/tags/readonlytag.js', 436, 420 ]
+882 silly gunzTarPerm extractEntry test/specs/tags/requirestag.js
+883 silly gunzTarPerm modified mode [ 'test/specs/tags/requirestag.js', 436, 420 ]
+884 silly gunzTarPerm extractEntry test/specs/tags/returnstag.js
+885 silly gunzTarPerm modified mode [ 'test/specs/tags/returnstag.js', 436, 420 ]
+886 silly gunzTarPerm extractEntry test/specs/tags/seetag.js
+887 silly gunzTarPerm modified mode [ 'test/specs/tags/seetag.js', 436, 420 ]
+888 silly gunzTarPerm extractEntry test/specs/tags/sincetag.js
+889 silly gunzTarPerm modified mode [ 'test/specs/tags/sincetag.js', 436, 420 ]
+890 silly gunzTarPerm extractEntry test/specs/tags/thistag.js
+891 silly gunzTarPerm modified mode [ 'test/specs/tags/thistag.js', 436, 420 ]
+892 silly gunzTarPerm extractEntry test/specs/tags/typedeftag.js
+893 silly gunzTarPerm modified mode [ 'test/specs/tags/typedeftag.js', 436, 420 ]
+894 silly gunzTarPerm extractEntry test/specs/tags/typekind.js
+895 silly gunzTarPerm modified mode [ 'test/specs/tags/typekind.js', 436, 420 ]
+896 silly gunzTarPerm extractEntry test/specs/tags/typetag.js
+897 silly gunzTarPerm modified mode [ 'test/specs/tags/typetag.js', 436, 420 ]
+898 silly gunzTarPerm extractEntry test/specs/tags/versiontag.js
+899 silly gunzTarPerm modified mode [ 'test/specs/tags/versiontag.js', 436, 420 ]
+900 silly gunzTarPerm extractEntry test/tutorials/
+901 silly gunzTarPerm modified mode [ 'test/tutorials/', 509, 493 ]
+902 silly gunzTarPerm extractEntry test/tutorials/build.sh
+903 silly gunzTarPerm modified mode [ 'test/tutorials/build.sh', 509, 493 ]
+904 silly gunzTarPerm extractEntry test/tutorials/incomplete/
+905 silly gunzTarPerm modified mode [ 'test/tutorials/incomplete/', 509, 493 ]
+906 silly gunzTarPerm extractEntry test/tutorials/incomplete/test.html
+907 silly gunzTarPerm modified mode [ 'test/tutorials/incomplete/test.html', 436, 420 ]
+908 silly gunzTarPerm extractEntry test/tutorials/incomplete/test.json
+909 silly gunzTarPerm modified mode [ 'test/tutorials/incomplete/test.json', 436, 420 ]
+910 silly gunzTarPerm extractEntry test/tutorials/src/
+911 silly gunzTarPerm modified mode [ 'test/tutorials/src/', 509, 493 ]
+912 silly gunzTarPerm extractEntry test/tutorials/src/x.js
+913 silly gunzTarPerm modified mode [ 'test/tutorials/src/x.js', 436, 420 ]
+914 silly gunzTarPerm extractEntry test/tutorials/tutorials/
+915 silly gunzTarPerm modified mode [ 'test/tutorials/tutorials/', 509, 493 ]
+916 silly gunzTarPerm extractEntry test/tutorials/tutorials/test.html
+917 silly gunzTarPerm modified mode [ 'test/tutorials/tutorials/test.html', 436, 420 ]
+918 silly gunzTarPerm extractEntry test/tutorials/tutorials/test.json
+919 silly gunzTarPerm modified mode [ 'test/tutorials/tutorials/test.json', 436, 420 ]
+920 silly gunzTarPerm extractEntry test/tutorials/tutorials/test2.json
+921 silly gunzTarPerm modified mode [ 'test/tutorials/tutorials/test2.json', 436, 420 ]
+922 silly gunzTarPerm extractEntry test/tutorials/tutorials/test2.markdown
+923 silly gunzTarPerm modified mode [ 'test/tutorials/tutorials/test2.markdown', 436, 420 ]
+924 verbose read json /home/james/tmp/npm-18889/1366921488422-0.4947990945074707/package/package.json
+925 silly lockFile 1b8b851d-88422-0-4947990945074707-package /home/james/tmp/npm-18889/1366921488422-0.4947990945074707/package
+926 silly lockFile 1b8b851d-88422-0-4947990945074707-package /home/james/tmp/npm-18889/1366921488422-0.4947990945074707/package
+927 silly lockFile ea9c1365-88422-0-4947990945074707-tmp-tgz /home/james/tmp/npm-18889/1366921488422-0.4947990945074707/tmp.tgz
+928 silly lockFile ea9c1365-88422-0-4947990945074707-tmp-tgz /home/james/tmp/npm-18889/1366921488422-0.4947990945074707/tmp.tgz
+929 verbose from cache /home/james/tmp/npm-18889/1366921488422-0.4947990945074707/package/package.json
+930 verbose tar pack [ '/home/james/.npm/jsdoc/3.1.1/package.tgz',
+930 verbose tar pack   '/home/james/tmp/npm-18889/1366921488422-0.4947990945074707/package' ]
+931 verbose tarball /home/james/.npm/jsdoc/3.1.1/package.tgz
+932 verbose folder /home/james/tmp/npm-18889/1366921488422-0.4947990945074707/package
+933 silly lockFile 1b8b851d-88422-0-4947990945074707-package /home/james/tmp/npm-18889/1366921488422-0.4947990945074707/package
+934 verbose lock /home/james/tmp/npm-18889/1366921488422-0.4947990945074707/package /home/james/.npm/1b8b851d-88422-0-4947990945074707-package.lock
+935 silly lockFile 2c7ac4ec-ames-npm-jsdoc-3-1-1-package-tgz /home/james/.npm/jsdoc/3.1.1/package.tgz
+936 verbose lock /home/james/.npm/jsdoc/3.1.1/package.tgz /home/james/.npm/2c7ac4ec-ames-npm-jsdoc-3-1-1-package-tgz.lock
+937 silly lockFile 1b8b851d-88422-0-4947990945074707-package /home/james/tmp/npm-18889/1366921488422-0.4947990945074707/package
+938 silly lockFile 1b8b851d-88422-0-4947990945074707-package /home/james/tmp/npm-18889/1366921488422-0.4947990945074707/package
+939 silly lockFile 2c7ac4ec-ames-npm-jsdoc-3-1-1-package-tgz /home/james/.npm/jsdoc/3.1.1/package.tgz
+940 silly lockFile 2c7ac4ec-ames-npm-jsdoc-3-1-1-package-tgz /home/james/.npm/jsdoc/3.1.1/package.tgz
+941 silly lockFile 5fa61aed-me-james-npm-jsdoc-3-1-1-package /home/james/.npm/jsdoc/3.1.1/package
+942 verbose lock /home/james/.npm/jsdoc/3.1.1/package /home/james/.npm/5fa61aed-me-james-npm-jsdoc-3-1-1-package.lock
+943 silly lockFile 5fa61aed-me-james-npm-jsdoc-3-1-1-package /home/james/.npm/jsdoc/3.1.1/package
+944 silly lockFile 5fa61aed-me-james-npm-jsdoc-3-1-1-package /home/james/.npm/jsdoc/3.1.1/package
+945 verbose tar unpack /home/james/.npm/jsdoc/3.1.1/package.tgz
+946 silly lockFile 5fa61aed-me-james-npm-jsdoc-3-1-1-package /home/james/.npm/jsdoc/3.1.1/package
+947 verbose lock /home/james/.npm/jsdoc/3.1.1/package /home/james/.npm/5fa61aed-me-james-npm-jsdoc-3-1-1-package.lock
+948 silly lockFile 2c7ac4ec-ames-npm-jsdoc-3-1-1-package-tgz /home/james/.npm/jsdoc/3.1.1/package.tgz
+949 verbose lock /home/james/.npm/jsdoc/3.1.1/package.tgz /home/james/.npm/2c7ac4ec-ames-npm-jsdoc-3-1-1-package-tgz.lock
+950 silly gunzTarPerm modes [ '755', '644' ]
+951 silly gunzTarPerm extractEntry package.json
+952 silly gunzTarPerm extractEntry .npmignore
+953 silly gunzTarPerm extractEntry README.md
+954 silly gunzTarPerm extractEntry Jakefile.js
+955 silly gunzTarPerm extractEntry jsdoc.js
+956 silly gunzTarPerm extractEntry Jake/lib/mustache.js
+957 silly gunzTarPerm extractEntry Jake/templates/package.json.tmpl
+958 silly gunzTarPerm extractEntry test/README.md
+959 silly gunzTarPerm extractEntry test/async-callback.js
+960 silly gunzTarPerm extractEntry test/jasmine-jsdoc.js
+961 silly gunzTarPerm extractEntry test/reporter.js
+962 silly gunzTarPerm extractEntry test/runner.js
+963 silly gunzTarPerm extractEntry test/spec-collection.js
+964 silly gunzTarPerm extractEntry test/fixtures/abstracttag.js
+965 silly gunzTarPerm extractEntry test/fixtures/innerscope2.js
+966 silly gunzTarPerm extractEntry test/fixtures/versiontag.js
+967 silly gunzTarPerm extractEntry test/fixtures/jslangnames.js
+968 silly gunzTarPerm extractEntry test/fixtures/innerscope.js
+969 silly gunzTarPerm extractEntry test/fixtures/lends2.js
+970 silly gunzTarPerm extractEntry test/fixtures/accesstag.js
+971 silly gunzTarPerm extractEntry test/fixtures/lendsglobal.js
+972 silly gunzTarPerm extractEntry test/fixtures/linktag.js
+973 silly gunzTarPerm extractEntry test/fixtures/variations3.js
+974 silly gunzTarPerm extractEntry test/fixtures/inner.js
+975 silly gunzTarPerm extractEntry test/fixtures/memberoftag.js
+976 silly gunzTarPerm extractEntry test/fixtures/inlinecomment.js
+977 silly gunzTarPerm extractEntry test/fixtures/memberoftag2.js
+978 silly gunzTarPerm extractEntry test/fixtures/include.js
+979 silly gunzTarPerm extractEntry test/fixtures/memberoftag3.js
+980 silly gunzTarPerm extractEntry test/fixtures/ignoretag2.js
+981 silly gunzTarPerm extractEntry test/fixtures/memberoftag4.js
+982 silly gunzTarPerm extractEntry test/fixtures/ignoretag.js
+983 silly gunzTarPerm extractEntry test/fixtures/memberoftagforced.js
+984 silly gunzTarPerm extractEntry test/fixtures/globaltag.js
+985 silly gunzTarPerm extractEntry test/fixtures/moduleinner.js
+986 silly gunzTarPerm extractEntry test/fixtures/getset.js
+987 silly gunzTarPerm extractEntry test/fixtures/moduleisconstructor.js
+988 silly gunzTarPerm extractEntry test/fixtures/file.js
+989 silly gunzTarPerm extractEntry test/fixtures/variations2.js
+990 silly gunzTarPerm extractEntry test/fixtures/externals2.js
+991 silly gunzTarPerm extractEntry test/fixtures/moduletag.js
+992 silly gunzTarPerm extractEntry test/fixtures/externals.js
+993 silly gunzTarPerm extractEntry test/fixtures/moduletag2.js
+994 silly gunzTarPerm extractEntry test/fixtures/exportstag4.js
+995 silly gunzTarPerm extractEntry test/fixtures/moduletag3.js
+996 silly gunzTarPerm extractEntry test/fixtures/exportstag3.js
+997 silly gunzTarPerm extractEntry test/fixtures/namedFuncStatement.js
+998 silly gunzTarPerm extractEntry test/fixtures/exportstag2.js
+999 silly gunzTarPerm extractEntry test/fixtures/namedFuncStatement2.js
+1000 silly gunzTarPerm extractEntry test/fixtures/exportstag.js
+1001 silly gunzTarPerm extractEntry test/fixtures/namedFuncStatement3.js
+1002 silly gunzTarPerm extractEntry test/fixtures/exports.js
+1003 silly gunzTarPerm extractEntry test/fixtures/objectlit.js
+1004 silly gunzTarPerm extractEntry test/fixtures/exceptiontag.js
+1005 silly gunzTarPerm extractEntry test/fixtures/objectlit2.js
+1006 silly gunzTarPerm extractEntry test/fixtures/eventfirestag.js
+1007 silly gunzTarPerm extractEntry test/fixtures/objectpropertykeys.js
+1008 silly gunzTarPerm extractEntry test/fixtures/enumtag.js
+1009 silly gunzTarPerm extractEntry test/fixtures/paramtag.js
+1010 silly gunzTarPerm extractEntry test/fixtures/doclet.js
+1011 silly gunzTarPerm extractEntry test/fixtures/plugins.js
+1012 silly gunzTarPerm extractEntry test/fixtures/destructuring.js
+1013 silly gunzTarPerm extractEntry test/fixtures/privatetag.js
+1014 silly gunzTarPerm extractEntry test/fixtures/deprecatedtag.js
+1015 silly gunzTarPerm extractEntry test/fixtures/projecttag.js
+1016 silly gunzTarPerm extractEntry test/fixtures/defaulttag.js
+1017 silly gunzTarPerm extractEntry test/fixtures/propertytag.js
+1018 silly gunzTarPerm extractEntry test/fixtures/copyrighttag.js
+1019 silly gunzTarPerm extractEntry test/fixtures/quotename.js
+1020 silly gunzTarPerm extractEntry test/fixtures/constructstag5.js
+1021 silly gunzTarPerm extractEntry test/fixtures/quotename2.js
+1022 silly gunzTarPerm extractEntry test/fixtures/constructstag4.js
+1023 silly gunzTarPerm extractEntry test/fixtures/readonlytag.js
+1024 silly gunzTarPerm extractEntry test/fixtures/constructstag3.js
+1025 silly gunzTarPerm extractEntry test/fixtures/requirestag.js
+1026 silly gunzTarPerm extractEntry test/fixtures/constructstag2.js
+1027 silly gunzTarPerm extractEntry test/fixtures/returnstag.js
+1028 silly gunzTarPerm extractEntry test/fixtures/constructstag.js
+1029 silly gunzTarPerm extractEntry test/fixtures/seetag.js
+1030 silly gunzTarPerm extractEntry test/fixtures/constructortag.js
+1031 silly gunzTarPerm extractEntry test/fixtures/sincetag.js
+1032 silly gunzTarPerm extractEntry test/fixtures/classtag.js
+1033 silly gunzTarPerm extractEntry test/fixtures/specialnames.js
+1034 silly gunzTarPerm extractEntry test/fixtures/callbacktag.js
+1035 silly gunzTarPerm extractEntry test/fixtures/variations.js
+1036 silly gunzTarPerm extractEntry test/fixtures/borrowstag2.js
+1037 silly gunzTarPerm extractEntry test/fixtures/starbangstar.js
+1038 silly gunzTarPerm extractEntry test/fixtures/borrowstag.js
+1039 silly gunzTarPerm extractEntry test/fixtures/testPlugin1.js
+1040 silly gunzTarPerm extractEntry test/fixtures/authortag.js
+1041 silly gunzTarPerm extractEntry test/fixtures/testPlugin2.js
+1042 silly gunzTarPerm extractEntry test/fixtures/augmentstag2.js
+1043 silly gunzTarPerm extractEntry test/fixtures/this-and-objectlit.js
+1044 silly gunzTarPerm extractEntry test/fixtures/augmentstag.js
+1045 silly gunzTarPerm extractEntry test/fixtures/this.js
+1046 silly gunzTarPerm extractEntry test/fixtures/also.js
+1047 silly gunzTarPerm extractEntry test/fixtures/this2.js
+1048 silly gunzTarPerm extractEntry test/fixtures/aliasresolve2.js
+1049 silly gunzTarPerm extractEntry test/fixtures/this3.js
+1050 silly gunzTarPerm extractEntry test/fixtures/aliasresolve.js
+1051 silly gunzTarPerm extractEntry test/fixtures/thistag.js
+1052 silly gunzTarPerm extractEntry test/fixtures/aliasglobal2.js
+1053 silly gunzTarPerm extractEntry test/fixtures/typedeftag.js
+1054 silly gunzTarPerm extractEntry test/fixtures/aliasglobal.js
+1055 silly gunzTarPerm extractEntry test/fixtures/typekind.js
+1056 silly gunzTarPerm extractEntry test/fixtures/alias3.js
+1057 silly gunzTarPerm extractEntry test/fixtures/typetag.js
+1058 silly gunzTarPerm extractEntry test/fixtures/alias2.js
+1059 silly gunzTarPerm extractEntry test/fixtures/utf8.js
+1060 silly gunzTarPerm extractEntry test/fixtures/alias.js
+1061 silly gunzTarPerm extractEntry test/fixtures/var.js
+1062 silly gunzTarPerm extractEntry test/fixtures/lends.js
+1063 silly gunzTarPerm extractEntry test/fixtures/virtual.js
+1064 silly gunzTarPerm extractEntry test/fixtures/lends3.js
+1065 silly gunzTarPerm extractEntry test/fixtures/src/_ignored.js
+1066 silly gunzTarPerm extractEntry test/fixtures/src/one.js
+1067 silly gunzTarPerm extractEntry test/fixtures/src/two.js
+1068 silly gunzTarPerm extractEntry test/fixtures/src/_dir2/four.js
+1069 silly gunzTarPerm extractEntry test/fixtures/src/dir1/three.js
+1070 silly gunzTarPerm extractEntry test/fixtures/src/ignored.txt
+1071 silly gunzTarPerm extractEntry test/fixtures/modules/data/mod-1.js
+1072 silly gunzTarPerm extractEntry test/fixtures/modules/data/mod-2.js
+1073 silly gunzTarPerm extractEntry test/fixtures/modules/data/mod-3.js
+1074 silly gunzTarPerm extractEntry test/fixtures/markdowntest.md
+1075 silly gunzTarPerm extractEntry test/fixtures/jshint/badfile.js
+1076 silly gunzTarPerm extractEntry test/fixtures/jshint/goodfile.js
+1077 silly gunzTarPerm extractEntry test/lib/jasmine.js
+1078 silly gunzTarPerm extractEntry test/specs/documentation/alias.js
+1079 silly gunzTarPerm extractEntry test/specs/documentation/innerscope.js
+1080 silly gunzTarPerm extractEntry test/specs/documentation/lends.js
+1081 silly gunzTarPerm extractEntry test/specs/documentation/moduleinner.js
+1082 silly gunzTarPerm extractEntry test/specs/documentation/inner.js
+1083 silly gunzTarPerm extractEntry test/specs/documentation/namedFuncStatement.js
+1084 silly gunzTarPerm extractEntry test/specs/documentation/objectlit.js
+1085 silly gunzTarPerm extractEntry test/specs/documentation/objectpropertykeys.js
+1086 silly gunzTarPerm extractEntry test/specs/documentation/quotename.js
+1087 silly gunzTarPerm extractEntry test/specs/documentation/specialnames.js
+1088 silly gunzTarPerm extractEntry test/specs/documentation/inlinecomment.js
+1089 silly gunzTarPerm extractEntry test/specs/documentation/starbangstar.js
+1090 silly gunzTarPerm extractEntry test/specs/documentation/getset.js
+1091 silly gunzTarPerm extractEntry test/specs/documentation/this.js
+1092 silly gunzTarPerm extractEntry test/specs/documentation/exports.js
+1093 silly gunzTarPerm extractEntry test/specs/documentation/var.js
+1094 silly gunzTarPerm extractEntry test/specs/documentation/callback.js
+1095 silly gunzTarPerm extractEntry test/specs/documentation/variations.js
+1096 silly gunzTarPerm extractEntry test/specs/documentation/also.js
+1097 silly gunzTarPerm extractEntry test/specs/documentation/virtual.js
+1098 silly gunzTarPerm extractEntry test/specs/documentation/modules.js
+1099 silly gunzTarPerm extractEntry test/specs/jsdoc/augment.js
+1100 silly gunzTarPerm extractEntry test/specs/jsdoc/config.js
+1101 silly gunzTarPerm extractEntry test/specs/jsdoc/doclet.js
+1102 silly gunzTarPerm extractEntry test/specs/jsdoc/name.js
+1103 silly gunzTarPerm extractEntry test/specs/jsdoc/tutorial.js
+1104 silly gunzTarPerm extractEntry test/specs/jsdoc/path.js
+1105 silly gunzTarPerm extractEntry test/specs/jsdoc/borrow.js
+1106 silly gunzTarPerm extractEntry test/specs/jsdoc/readme.js
+1107 silly gunzTarPerm extractEntry test/specs/jsdoc/tag.js
+1108 silly gunzTarPerm extractEntry test/specs/jsdoc/plugins.js
+1109 silly gunzTarPerm extractEntry test/specs/jsdoc/tag/dictionary.js
+1110 silly gunzTarPerm extractEntry test/specs/jsdoc/tag/type.js
+1111 silly gunzTarPerm extractEntry test/specs/jsdoc/tag/validator.js
+1112 silly gunzTarPerm extractEntry test/specs/jsdoc/tag/type/closureCompilerType.js
+1113 silly gunzTarPerm extractEntry test/specs/jsdoc/tag/type/jsdocType.js
+1114 silly gunzTarPerm extractEntry test/specs/jsdoc/src/filter.js
+1115 silly gunzTarPerm extractEntry test/specs/jsdoc/src/handlers.js
+1116 silly gunzTarPerm extractEntry test/specs/jsdoc/src/parser.js
+1117 silly gunzTarPerm extractEntry test/specs/jsdoc/src/scanner.js
+1118 silly gunzTarPerm extractEntry test/specs/jsdoc/tutorial/resolver.js
+1119 silly gunzTarPerm extractEntry test/specs/jsdoc/opts/argparser.js
+1120 silly gunzTarPerm extractEntry test/specs/jsdoc/opts/args.js
+1121 silly gunzTarPerm extractEntry test/specs/jsdoc/util/doop.js
+1122 silly gunzTarPerm extractEntry test/specs/jsdoc/util/dumper.js
+1123 silly gunzTarPerm extractEntry test/specs/jsdoc/util/error.js
+1124 silly gunzTarPerm extractEntry test/specs/jsdoc/util/include.js
+1125 silly gunzTarPerm extractEntry test/specs/jsdoc/util/markdown.js
+1126 silly gunzTarPerm extractEntry test/specs/jsdoc/util/templateHelper.js
+1127 silly gunzTarPerm extractEntry test/specs/jsdoc/util/vm.js
+1128 silly gunzTarPerm extractEntry test/specs/jshint/jshint-clean.js
+1129 silly gunzTarPerm extractEntry test/specs/plugins/plugins.js
+1130 silly gunzTarPerm extractEntry test/specs/rhino/fs.js
+1131 silly gunzTarPerm extractEntry test/specs/rhino/os.js
+1132 silly gunzTarPerm extractEntry test/specs/rhino/path.js
+1133 silly gunzTarPerm extractEntry test/specs/tags/abstracttag.js
+1134 silly gunzTarPerm extractEntry test/specs/tags/exceptiontag.js
+1135 silly gunzTarPerm extractEntry test/specs/tags/exportstag.js
+1136 silly gunzTarPerm extractEntry test/specs/tags/globaltag.js
+1137 silly gunzTarPerm extractEntry test/specs/tags/eventfirestag.js
+1138 silly gunzTarPerm extractEntry test/specs/tags/memberoftag.js
+1139 silly gunzTarPerm extractEntry test/specs/tags/moduletag.js
+1140 silly gunzTarPerm extractEntry test/specs/tags/overviewtag.js
+1141 silly gunzTarPerm extractEntry test/specs/tags/paramtag.js
+1142 silly gunzTarPerm extractEntry test/specs/tags/privatetag.js
+1143 silly gunzTarPerm extractEntry test/specs/tags/enumtag.js
+1144 silly gunzTarPerm extractEntry test/specs/tags/propertytag.js
+1145 silly gunzTarPerm extractEntry test/specs/tags/deprecatedtag.js
+1146 silly gunzTarPerm extractEntry test/specs/tags/readonlytag.js
+1147 silly gunzTarPerm extractEntry test/specs/tags/defaulttag.js
+1148 silly gunzTarPerm extractEntry test/specs/tags/requirestag.js
+1149 silly gunzTarPerm extractEntry test/specs/tags/copyrighttag.js
+1150 silly gunzTarPerm extractEntry test/specs/tags/returnstag.js
+1151 silly gunzTarPerm extractEntry test/specs/tags/constructstag.js
+1152 silly gunzTarPerm extractEntry test/specs/tags/seetag.js
+1153 silly gunzTarPerm extractEntry test/specs/tags/constructortag.js
+1154 silly gunzTarPerm extractEntry test/specs/tags/sincetag.js
+1155 silly gunzTarPerm extractEntry test/specs/tags/classtag.js
+1156 silly gunzTarPerm extractEntry test/specs/tags/thistag.js
+1157 silly gunzTarPerm extractEntry test/specs/tags/borrowstag.js
+1158 silly gunzTarPerm extractEntry test/specs/tags/typedeftag.js
+1159 silly gunzTarPerm extractEntry test/specs/tags/authortag.js
+1160 silly gunzTarPerm extractEntry test/specs/tags/typekind.js
+1161 silly gunzTarPerm extractEntry test/specs/tags/augmentstag.js
+1162 silly gunzTarPerm extractEntry test/specs/tags/typetag.js
+1163 silly gunzTarPerm extractEntry test/specs/tags/accesstag.js
+1164 silly gunzTarPerm extractEntry test/specs/tags/versiontag.js
+1165 silly gunzTarPerm extractEntry test/specs/tags/ignoretag.js
+1166 silly gunzTarPerm extractEntry test/tutorials/build.sh
+1167 silly gunzTarPerm extractEntry test/tutorials/incomplete/test.html
+1168 silly gunzTarPerm extractEntry test/tutorials/incomplete/test.json
+1169 silly gunzTarPerm extractEntry test/tutorials/src/x.js
+1170 silly gunzTarPerm extractEntry test/tutorials/tutorials/test.html
+1171 silly gunzTarPerm extractEntry test/tutorials/tutorials/test.json
+1172 silly gunzTarPerm extractEntry test/tutorials/tutorials/test2.json
+1173 silly gunzTarPerm extractEntry test/tutorials/tutorials/test2.markdown
+1174 silly gunzTarPerm extractEntry LICENSE.md
+1175 silly gunzTarPerm extractEntry .travis.yml
+1176 silly gunzTarPerm extractEntry changes.md
+1177 silly gunzTarPerm extractEntry conf.json.EXAMPLE
+1178 silly gunzTarPerm extractEntry .jshintrc
+1179 silly gunzTarPerm extractEntry jsdoc.cmd
+1180 silly gunzTarPerm extractEntry Apache_License_2.0.txt
+1181 silly gunzTarPerm extractEntry lib/initialize.js
+1182 silly gunzTarPerm extractEntry lib/jsdoc/augment.js
+1183 silly gunzTarPerm extractEntry lib/jsdoc/fs.js
+1184 silly gunzTarPerm extractEntry lib/jsdoc/name.js
+1185 silly gunzTarPerm extractEntry lib/jsdoc/tutorial.js
+1186 silly gunzTarPerm extractEntry lib/jsdoc/doclet.js
+1187 silly gunzTarPerm extractEntry lib/jsdoc/path.js
+1188 silly gunzTarPerm extractEntry lib/jsdoc/borrow.js
+1189 silly gunzTarPerm extractEntry lib/jsdoc/readme.js
+1190 silly gunzTarPerm extractEntry lib/jsdoc/schema.js
+1191 silly gunzTarPerm extractEntry lib/jsdoc/template.js
+1192 silly gunzTarPerm extractEntry lib/jsdoc/config.js
+1193 silly gunzTarPerm extractEntry lib/jsdoc/tag.js
+1194 silly gunzTarPerm extractEntry lib/jsdoc/package.js
+1195 silly gunzTarPerm extractEntry lib/jsdoc/plugins.js
+1196 silly gunzTarPerm extractEntry lib/jsdoc/tag/dictionary.js
+1197 silly gunzTarPerm extractEntry lib/jsdoc/tag/type.js
+1198 silly gunzTarPerm extractEntry lib/jsdoc/tag/validator.js
+1199 silly gunzTarPerm extractEntry lib/jsdoc/tag/dictionary/definitions.js
+1200 silly gunzTarPerm extractEntry lib/jsdoc/tag/type/closureCompilerType.js
+1201 silly gunzTarPerm extractEntry lib/jsdoc/tag/type/jsdocType.js
+1202 silly gunzTarPerm extractEntry lib/jsdoc/src/filter.js
+1203 silly gunzTarPerm extractEntry lib/jsdoc/src/handlers.js
+1204 silly gunzTarPerm extractEntry lib/jsdoc/src/parser.js
+1205 silly gunzTarPerm extractEntry lib/jsdoc/src/scanner.js
+1206 silly gunzTarPerm extractEntry lib/jsdoc/tutorial/resolver.js
+1207 silly gunzTarPerm extractEntry lib/jsdoc/opts/argparser.js
+1208 silly gunzTarPerm extractEntry lib/jsdoc/opts/args.js
+1209 silly gunzTarPerm extractEntry lib/jsdoc/util/doop.js
+1210 silly gunzTarPerm extractEntry lib/jsdoc/util/dumper.js
+1211 silly gunzTarPerm extractEntry lib/jsdoc/util/error.js
+1212 silly gunzTarPerm extractEntry lib/jsdoc/util/global.js
+1213 silly gunzTarPerm extractEntry lib/jsdoc/util/include.js
+1214 silly gunzTarPerm extractEntry lib/jsdoc/util/markdown.js
+1215 silly gunzTarPerm extractEntry lib/jsdoc/util/templateHelper.js
+1216 silly gunzTarPerm extractEntry lib/jsdoc/util/vm.js
+1217 silly gunzTarPerm extractEntry templates/README.md
+1218 silly gunzTarPerm extractEntry templates/default/README.md
+1219 silly gunzTarPerm extractEntry templates/default/publish.js
+1220 silly gunzTarPerm extractEntry templates/default/static/scripts/prettify/lang-css.js
+1221 silly gunzTarPerm extractEntry templates/default/static/scripts/prettify/prettify.js
+1222 silly gunzTarPerm extractEntry templates/default/static/scripts/prettify/Apache-License-2.0.txt
+1223 silly gunzTarPerm extractEntry templates/default/static/styles/jsdoc-default.css
+1224 silly gunzTarPerm extractEntry templates/default/static/styles/prettify-jsdoc.css
+1225 silly gunzTarPerm extractEntry templates/default/static/styles/prettify-tomorrow.css
+1226 silly gunzTarPerm extractEntry templates/default/tmpl/members.tmpl
+1227 silly gunzTarPerm extractEntry templates/default/tmpl/container.tmpl
+1228 silly gunzTarPerm extractEntry templates/default/tmpl/example.tmpl
+1229 silly gunzTarPerm extractEntry templates/default/tmpl/examples.tmpl
+1230 silly gunzTarPerm extractEntry templates/default/tmpl/exceptions.tmpl
+1231 silly gunzTarPerm extractEntry templates/default/tmpl/fires.tmpl
+1232 silly gunzTarPerm extractEntry templates/default/tmpl/layout.tmpl
+1233 silly gunzTarPerm extractEntry templates/default/tmpl/mainpage.tmpl
+1234 silly gunzTarPerm extractEntry templates/default/tmpl/details.tmpl
+1235 silly gunzTarPerm extractEntry templates/default/tmpl/method.tmpl
+1236 silly gunzTarPerm extractEntry templates/default/tmpl/params.tmpl
+1237 silly gunzTarPerm extractEntry templates/default/tmpl/properties.tmpl
+1238 silly gunzTarPerm extractEntry templates/default/tmpl/returns.tmpl
+1239 silly gunzTarPerm extractEntry templates/default/tmpl/source.tmpl
+1240 silly gunzTarPerm extractEntry templates/default/tmpl/tutorial.tmpl
+1241 silly gunzTarPerm extractEntry templates/default/tmpl/type.tmpl
+1242 silly gunzTarPerm extractEntry templates/haruki/README.md
+1243 silly gunzTarPerm extractEntry templates/haruki/publish.js
+1244 silly gunzTarPerm extractEntry nodejs/jsdoc/fs.js
+1245 silly gunzTarPerm extractEntry nodejs/jsdoc/util/include.js
+1246 silly gunzTarPerm extractEntry CONTRIBUTING.md
+1247 silly gunzTarPerm extractEntry plugins/README.md
+1248 silly gunzTarPerm extractEntry plugins/commentsOnly.js
+1249 silly gunzTarPerm extractEntry plugins/escapeHtml.js
+1250 silly gunzTarPerm extractEntry plugins/eventDumper.js
+1251 silly gunzTarPerm extractEntry plugins/markdown.js
+1252 silly gunzTarPerm extractEntry plugins/commentConvert.js
+1253 silly gunzTarPerm extractEntry plugins/partial.js
+1254 silly gunzTarPerm extractEntry plugins/railsTemplate.js
+1255 silly gunzTarPerm extractEntry plugins/shout.js
+1256 silly gunzTarPerm extractEntry plugins/sourcetag.js
+1257 silly gunzTarPerm extractEntry plugins/verboseOutput.js
+1258 silly gunzTarPerm extractEntry plugins/test/fixtures/railsTemplate.js.erb
+1259 silly gunzTarPerm extractEntry plugins/test/specs/commentConvert.js
+1260 silly gunzTarPerm extractEntry plugins/test/specs/escapeHtml.js
+1261 silly gunzTarPerm extractEntry plugins/test/specs/markdown.js
+1262 silly gunzTarPerm extractEntry plugins/test/specs/railsTemplate.js
+1263 silly gunzTarPerm extractEntry plugins/test/specs/shout.js
+1264 silly gunzTarPerm extractEntry plugins/test/specs/sourcetag.js
+1265 silly gunzTarPerm extractEntry plugins/test/specs/verboseOutput.js
+1266 silly gunzTarPerm extractEntry plugins/markdown.md
+1267 silly gunzTarPerm extractEntry rhino/util.js
+1268 silly gunzTarPerm extractEntry rhino/events.js
+1269 silly gunzTarPerm extractEntry rhino/fs.js
+1270 silly gunzTarPerm extractEntry rhino/rhino-shim.js
+1271 silly gunzTarPerm extractEntry rhino/querystring.js
+1272 silly gunzTarPerm extractEntry rhino/crypto.js
+1273 silly gunzTarPerm extractEntry rhino/os.js
+1274 silly gunzTarPerm extractEntry rhino/path.js
+1275 silly gunzTarPerm extractEntry rhino/jsdoc.js
+1276 silly gunzTarPerm extractEntry rhino/jsdoc/util/include.js
+1277 silly gunzTarPerm extractEntry rhino/js.jar
+1278 silly gunzTarPerm extractEntry rhino/MPL_1.1.txt
+1279 silly gunzTarPerm extractEntry jsdoc
+1280 verbose read json /home/james/.npm/jsdoc/3.1.1/package/package.json
+1281 silly lockFile 5fa61aed-me-james-npm-jsdoc-3-1-1-package /home/james/.npm/jsdoc/3.1.1/package
+1282 silly lockFile 5fa61aed-me-james-npm-jsdoc-3-1-1-package /home/james/.npm/jsdoc/3.1.1/package
+1283 silly lockFile 2c7ac4ec-ames-npm-jsdoc-3-1-1-package-tgz /home/james/.npm/jsdoc/3.1.1/package.tgz
+1284 silly lockFile 2c7ac4ec-ames-npm-jsdoc-3-1-1-package-tgz /home/james/.npm/jsdoc/3.1.1/package.tgz
+1285 silly shasum updated bytes 65536
+1286 silly shasum updated bytes 65536
+1287 silly shasum updated bytes 65536
+1288 silly shasum updated bytes 65536
+1289 silly shasum updated bytes 65536
+1290 silly shasum updated bytes 65536
+1291 silly shasum updated bytes 65536
+1292 silly shasum updated bytes 65536
+1293 silly shasum updated bytes 65536
+1294 silly shasum updated bytes 65536
+1295 silly shasum updated bytes 65536
+1296 silly shasum updated bytes 65536
+1297 silly shasum updated bytes 65536
+1298 silly shasum updated bytes 65536
+1299 silly shasum updated bytes 65536
+1300 silly shasum updated bytes 65536
+1301 silly shasum updated bytes 65536
+1302 silly shasum updated bytes 65536
+1303 silly shasum updated bytes 48941
+1304 info shasum f8a120649842937c8038bab7daac362d2bf0060d
+1304 info shasum /home/james/.npm/jsdoc/3.1.1/package.tgz
+1305 verbose from cache /home/james/.npm/jsdoc/3.1.1/package/package.json
+1306 verbose chmod /home/james/.npm/jsdoc/3.1.1/package.tgz 644
+1307 verbose chown /home/james/.npm/jsdoc/3.1.1/package.tgz [ 1000, 1000 ]
+1308 silly lockFile 0dba5517-git-github-com-jsdoc3-jsdoc-git git://github.com/jsdoc3/jsdoc.git
+1309 info already installed jsdoc@3.1.1
+1310 http 404 https://registry.npmjs.org/debugger-node
+1311 silly registry.get cb [ 404,
+1311 silly registry.get   { server: 'CouchDB/1.3.0 (Erlang OTP/R15B03)',
+1311 silly registry.get     date: 'Thu, 25 Apr 2013 20:24:52 GMT',
+1311 silly registry.get     'content-type': 'application/json',
+1311 silly registry.get     'content-length': '52',
+1311 silly registry.get     'cache-control': 'must-revalidate' } ]
+1312 silly lockFile ae3b315c-debugger-node debugger-node@
+1313 silly lockFile ae3b315c-debugger-node debugger-node@
+1314 error 404 'debugger-node' is not in the npm registry.
+1314 error 404 You should bug the author to publish it
+1314 error 404
+1314 error 404 Note that you can also install from a
+1314 error 404 tarball, folder, or http url, or git url.
+1315 error System Linux 3.5.0-19-generic
+1316 error command "/usr/bin/node" "/usr/bin/npm" "install"
+1317 error cwd /home/james/src/acumenbrands/rest_suite
+1318 error node -v v0.10.5
+1319 error npm -v 1.2.18
+1320 error code E404
+1321 verbose exit [ 1, true ]

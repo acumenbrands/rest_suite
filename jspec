@@ -1,6 +1,23 @@
 #!/bin/bash
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 NODE_MODULES_DIRECTORY=node_modules
+
+if [[ $@ =~ "--help" ]]; then
+  echo "sources say no"
+  exit
+fi
+
+if [[ $@ =~ "--doc"  ]]; then
+  echo "Generating documentation..."
+  node_modules/jsdoc/./jsdoc -l -d doc/ ./lib/*.js README.md
+  exit
+fi
+
+if [[ $@ =~ "--reset" ]]; then
+  echo "Removing installed node moldules from "$DIR"/node_modules..."
+  rm -r $DIR"/node_modules"
+fi
 
 if ! command -v npm &>/dev/null; then
   echo "npm command not found, pleace ensure node package manager is installed and in your path." 1>&2
@@ -12,4 +29,8 @@ if [ ! -d "${NODE_MODULES_DIRECTORY}" ]; then
   npm install
 fi
 
-./node_modules/jasmine-node/bin/jasmine-node --forceexit spec
+if [[ $@ =~ "--debug" ]]; then
+  node debug ./node_modules/jasmine-node/bin/jasmine-node --forceexit spec
+else
+  ./node_modules/jasmine-node/bin/jasmine-node --forceexit spec
+fi
