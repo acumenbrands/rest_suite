@@ -3,6 +3,6 @@
   "version":  "1.0.0",
   "dependencies": {
     "jasmine-node":   "1.5.0",
-    "jsdoc":          "git://github.com/jsdoc3/jsdoc.git#v3.1.1",
+    "jsdoc":          "git://github.com/jsdoc3/jsdoc.git#v3.1.1"
   }
 }

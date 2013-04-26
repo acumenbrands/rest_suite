@@ -1,9 +1,6 @@
 require('./spec_helper.js');
 
 describe("NetsuiteToolkit", function() {
-  var params    = ['12345', '67890'];
-  var result    = { 'schwa': 'foo' };
-  var exception = new Error("This is an error.");
 
   beforeEach(function() {
     global.nlapiInitializeRecord = function() {};
@@ -185,52 +182,81 @@ describe("NetsuiteToolkit", function() {
 
   });
 
-  describe('#formatReply', function() {
+  describe('formatReply()', function() {
 
     beforeEach(function() {
-      this.formattedException = NetsuiteToolkit.formatException(exception);
-      this.replyWithoutError  = NetsuiteToolkit.formatReply(params, result);
-      this.replyWithError     = NetsuiteToolkit.formatReply(params, result,
-                                                            this.formattedException);
+      this.params             = {'dosomething': 'please'};
+      this.result             = {'imanobject': 'withdata'};
+      this.formattedException = {'exception': 'something broke'};
+      spyOn(NetsuiteToolkit, 'formatException').andReturn(this.formattedException);
     });
 
-    it("should set the params", function() {
-      expect(this.replyWithoutError['params']).toEqual(params);
-      expect(this.replyWithError['params']).toEqual(params);
+    describe('no exception is passed', function() {
+
+      beforeEach(function() {
+        this.replyWithoutError = NetsuiteToolkit.formatReply(this.params, this.result);
+      });
+
+      it("should set the params", function() {
+        expect(this.replyWithoutError['params']).toEqual(this.params);
+      });
+
+      it("should set the result", function() {
+        expect(this.replyWithoutError['result']).toEqual(this.result);
+      });
+
+      it("should set success to true", function() {
+        expect(this.replyWithoutError['success']).toEqual(true);
+      });
+
+
     });
 
-    it("should correctly set the result", function() {
-      expect(this.replyWithoutError['result']).toEqual(result);
-      expect(this.replyWithError['result']).toEqual(result);
+    describe('an exception is passed', function() {
+
+      beforeEach(function() {
+        this.exception = new Error('zomg');
+        this.replyWithError = NetsuiteToolkit.formatReply(this.params, this.result, this.exception);
+      });
+
+      it('should call formatException()', function() {
+        expect(NetsuiteToolkit.formatException).toHaveBeenCalledWith(this.exception);
+      })
+
+      it("should set the params", function() {
+        expect(this.replyWithError['params']).toEqual(this.params);
+      });
+
+      it("should set the result", function() {
+        expect(this.replyWithError['result']).toEqual(this.result);
+      });
+
+      it("should set success to false" ,function() {
+        expect(this.replyWithError['success']).toEqual(false);
+      });
+
+      it("should set the exception", function() {
+        expect(this.replyWithError['exception']).toEqual(this.formattedException);
+      });
+
     });
 
-    it("should set success to true if there is no exception", function() {
-      expect(this.replyWithoutError['success']).toEqual(true);
-    });
-
-    it("should set success to false if there is an exception" ,function() {
-      expect(this.replyWithError['success']).toEqual(false);
-    });
-
-    it("should set the exception if there is an exception", function() {
-      expect(this.replyWithError['exception']).toEqual(this.formattedException);
-    });
   });
 
-  describe('#formatException', function() {
+  describe('formatException()', function() {
     beforeEach(function() {
+      this.exception = new Error('holy crap');
       Error.prototype.getStackTrace = function() {};
       spyOn(Error.prototype, 'getStackTrace').andReturn("This is a stack trace.");
-
-      this.formattedException = NetsuiteToolkit.formatException(exception)
+      this.formattedException = NetsuiteToolkit.formatException(this.exception)
     });
 
     it("should populate the message field", function() {
-      expect(this.formattedException['message']).toEqual(exception.message);
+      expect(this.formattedException['message']).toEqual(this.exception.message);
     });
 
     it("should populate the trace field", function() {
-      expect(this.formattedException['trace']).toEqual(exception.getStackTrace());
+      expect(this.formattedException['trace']).toEqual(this.exception.getStackTrace());
     });
   });
 });

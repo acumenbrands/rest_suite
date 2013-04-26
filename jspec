@@ -29,6 +29,10 @@ if [ ! -d "${NODE_MODULES_DIRECTORY}" ]; then
   npm install
 fi
 
+if [[ $@ =~ "--mono" ]]; then
+  ./node_modules/jasmine-node/bin/jasmine-node --forceexit --noColor spec
+fi
+
 if [[ $@ =~ "--debug" ]]; then
   node debug ./node_modules/jasmine-node/bin/jasmine-node --forceexit spec
 else

@@ -19,3 +19,5 @@ db/*.sqlite3
 log/*.log
 tags
 tmp
+doc/
+npm-debug.log
