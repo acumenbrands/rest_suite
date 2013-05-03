@@ -11,6 +11,8 @@ note
  - every object within the scrips are private
  - every endpoint is a post
  - actions are taken based on the request body of the post
+ - netsuite documentation is provided in doc/netsuite/index.html
+ - project documentation is provided at doc/index.html
 
 data-struct reference
 ---------------------

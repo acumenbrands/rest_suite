@@ -11,6 +11,7 @@ fi
 if [[ $@ =~ "--doc"  ]]; then
   echo "Generating documentation..."
   node_modules/jsdoc/./jsdoc -l -d doc/ ./lib/*.js README.md
+  node_modules/jsdoc/./jsdoc -l -d doc/netsuite ./doc/netsuite/*.js ./doc/netsuite/README.md
   exit
 fi
 

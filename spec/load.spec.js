@@ -58,7 +58,7 @@ describe('Loader', function() {
     describe('no error is thrown', function() {
 
       beforeEach(function() {
-        this.calls        = [[this.first_param], [this.second_param], [this.third_param]];
+        this.calls = [[this.first_param], [this.second_param], [this.third_param]];
         spyOn(loader, 'executeLoadRequest');
         loader.loadRecords();
       });
@@ -239,7 +239,7 @@ describe('LoadRequest', function() {
       expect(this.result).toEqual(this.params_hash);
     });
 
-  })
+  });
 
   describe('generateReply()', function() {
 

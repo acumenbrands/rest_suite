@@ -165,6 +165,23 @@ describe("NetsuiteToolkit", function() {
 
   });
 
+  describe('insertLineItem()', function() {
+
+    beforeEach(function() {
+      this.index  = 16;
+      this.field_name = 'somefield';
+      this.record = {};
+      this.record.insertLineItem = function() {}
+      spyOn(this.record, 'insertLineItem');
+      NetsuiteToolkit.insertLineItem(this.record, this.field_name, this.index);
+    });
+
+    it('should call insertLineItem on a given record', function() {
+      expect(this.record.insertLineItem).toHaveBeenCalledWith(this.field_name, this.index);
+    });
+
+  });
+
   describe('removeLineItem()', function() {
 
     beforeEach(function() {
@@ -259,4 +276,520 @@ describe("NetsuiteToolkit", function() {
       expect(this.formattedException['trace']).toEqual(this.exception.getStackTrace());
     });
   });
+
+  describe('RecordProcessor', function() {
+
+    describe('updateLiterals(fieldData)', function() {
+
+      beforeEach(function() {
+        this.record    = {};
+        this.fieldData = {
+          'custfield': 'somevalue',
+          'foo':       'bar'
+        };
+        this.call_count = Object.keys(this.fieldData).length;
+        this.first_call = ['custfield', 'somevalue'];
+        this.last_call  = ['foo', 'bar'];
+        this.args = [[this.record, 'custfield', 'somevalue'], [this.record, 'foo', 'bar']];
+        spyOn(NetsuiteToolkit, 'setFieldValue');
+        NetsuiteToolkit.RecordProcessor.updateLiterals(this.record, this.fieldData);
+      });
+
+      it('should call setLiteral for each element of fieldData', function() {
+        expect(NetsuiteToolkit.setFieldValue.callCount).toEqual(this.call_count);
+      });
+
+      // NOTE (JamesChristie+nilmethod) This test assumes order of object fields is
+      //   enforced by nodejs. There is no gurantee that Netsuite does this.
+      it('should call setLiteral with the data for custfield', function() {
+        expect(NetsuiteToolkit.setFieldValue.argsForCall).toEqual(this.args);
+      });
+
+    });
+
+  });
+
+  describe('SublistProcessor', function() {
+
+    beforeEach(function() {
+      this.record           = {'stuff': 'junk'};
+      this.name             = 'arbitrary_sublist';
+      this.indexed_create   = {'index': '42', 'data': {}};
+      this.unindexed_create = {'data': {}};
+      this.indexed_update   = {'index': '42', 'data': {}};
+      this.matched_update   = {'match': 'item', 'data': {}};
+      this.invalid_update   = {'data': {}};
+      this.indexed_excise   = {'index': '42', 'data': {}};
+      this.matched_excise   = {'match': 'item', 'data': {}};
+      this.invalid_excise   = {};
+
+      this.sublist_data = {
+        'name': this.name,
+        'create': [
+          this.indexed_create,
+          this.unindexed_create
+        ],
+        'update': [
+          this.indexed_update,
+          this.matched_update,
+          this.invalid_update
+        ],
+        'excise': [
+          this.indexed_excise,
+          this.matched_excise,
+          this.invalid_excise
+        ]
+      };
+
+      this.processor = new NetsuiteToolkit.SublistProcessor(this.record, this.sublist_data);
+    });
+
+    describe('exceptions', function() {
+
+      it('should define an exception for line items not matched', function() {
+        expect(NetsuiteToolkit.SublistProcessor.UnableToMatch instanceof Error).toEqual(true);
+      });
+
+      it('should define an exception for malformed request data', function() {
+        expect(NetsuiteToolkit.SublistProcessor.MalformedData instanceof Error).toEqual(true);
+      });
+
+    });
+
+    describe('constructor', function() {
+
+      describe('valid data is given', function() {
+
+        it('should populate the record', function() {
+          expect(this.processor.record).toEqual(this.record);
+        });
+
+        it('should populate the create_list', function() {
+          expect(this.processor.create_list).toEqual(this.sublist_data['create'])
+        });
+
+        it('should populate the update_list', function() {
+          expect(this.processor.update_list).toEqual(this.sublist_data['update'])
+        });
+
+        it('should populate the excision_list', function() {
+          expect(this.processor.excise_list).toEqual(this.sublist_data['excise'])
+        });
+
+        it('should populate the sublist_name' , function() {
+          expect(this.processor.sublist_name).toEqual(this.sublist_data['name']);
+        });
+
+      });
+
+      describe('no data is given', function() {
+
+        beforeEach(function() {
+          this.blank_sublist_data = {};
+          this.blank_processor    = new NetsuiteToolkit.SublistProcessor(this.record,
+                                                                         this.blank_sublist_data);
+        });
+
+        it('should provide an empty create_list', function() {
+          expect(this.blank_processor.create_list).toEqual([]);
+        });
+
+        it('should provide an empty update_list', function() {
+          expect(this.blank_processor.update_list).toEqual([]);
+        });
+
+        it('should provide an empty excision_list', function() {
+          expect(this.blank_processor.excise_list).toEqual([]);
+        });
+
+      });
+
+    });
+
+    describe('execute()', function() {
+
+      beforeEach(function() {
+        spyOn(this.processor, 'processCreations');
+        spyOn(this.processor, 'processUpdates');
+        spyOn(this.processor, 'processExcisions');
+        this.processor.execute();
+      });
+
+      it('should call processCreations', function() {
+        expect(this.processor.processCreations).toHaveBeenCalled();
+      });
+
+      it('should call processUpdates',function() {
+        expect(this.processor.processUpdates).toHaveBeenCalled();
+      });
+
+      it('should call processExcisions', function() {
+        expect(this.processor.processExcisions).toHaveBeenCalled();
+      });
+
+    });
+
+    describe('processCreations()', function() {
+      beforeEach(function() {
+        this.calls = [[this.indexed_create], [this.unindexed_create]];
+        spyOn(this.processor, 'createLineItem');
+        this.processor.processCreations();
+      });
+
+      it('should call createLineItem for each element of create_list', function() {
+        expect(this.processor.createLineItem.argsForCall).toEqual(this.calls);
+      });
+    });
+
+    describe('processUpdates()', function() {
+
+      beforeEach(function() {
+        this.calls = [[this.indexed_update], [this.matched_update], [this.invalid_update]];
+        spyOn(this.processor, 'updateLineItem');
+        this.processor.processUpdates();
+      });
+
+      it('should call updateLineItem for each element of update_list', function() {
+       expect(this.processor.updateLineItem.argsForCall).toEqual(this.calls);
+      }); 
+
+    });
+
+    describe('processExcisions()', function() {
+
+      beforeEach(function() {
+        this.calls = [[this.indexed_excise], [this.matched_excise], [this.invalid_excise]];
+        spyOn(this.processor, 'exciseLineItem');
+        this.processor.processExcisions();
+      });
+
+      it('should call exciseLineItem for each element of excise_list', function() {
+       expect(this.processor.exciseLineItem.argsForCall).toEqual(this.calls);
+      }); 
+
+    });
+
+    describe('createLineItem()', function() {
+
+      beforeEach(function() {
+        spyOn(NetsuiteToolkit, 'insertLineItem');
+        spyOn(this.processor, 'updateLineItemFields');
+      });
+
+      describe('an index is given', function() {
+
+        beforeEach(function() {
+          this.index = this.indexed_create['index'];
+          this.data  = this.indexed_create['data'];
+          this.processor.createLineItem(this.indexed_create);
+        });
+
+        it('should call insertLineItem with the given index', function() {
+          expect(NetsuiteToolkit.insertLineItem).toHaveBeenCalledWith(this.record, this.name,
+                                                                      this.index);
+        });
+
+        it('should call updateLineItemFields with the name, index, and data', function() {
+          expect(this.processor.updateLineItemFields).toHaveBeenCalledWith(this.index, this.data);
+        });
+
+      });
+
+      describe('no index is given', function() {
+
+        beforeEach(function() {
+          this.index = 14;
+          this.data  = this.unindexed_create['data'];
+          spyOn(NetsuiteToolkit, 'getLineItemCount').andReturn(this.index);
+          this.processor.createLineItem(this.unindexed_create);
+        })
+
+        it('should call getLineItemCount with sublist_name', function() {
+          expect(NetsuiteToolkit.getLineItemCount).toHaveBeenCalledWith(this.record, this.name);
+        });
+
+        it('should call insertLineItem with the returned index', function() {
+          expect(NetsuiteToolkit.insertLineItem).toHaveBeenCalledWith(this.record, this.name,
+                                                                      this.index);
+        });
+
+        it('should call updateLineItemFields with the name, index, and data', function() {
+          expect(this.processor.updateLineItemFields).toHaveBeenCalledWith(this.index, this.data);
+        });
+
+      });
+
+    });
+
+    describe('updateLineItem()', function() {
+
+      beforeEach(function() {
+        this.index = 42;
+        this.data  = {'foo': 'bar'};
+        this.match = 'matchdata';
+        spyOn(this.processor, 'updateLineItemFields');
+      });
+
+      describe('an index is given', function() {
+
+        beforeEach(function() {
+          this.update_request = {'index': this.index, 'data': this.data};
+          this.processor.updateLineItem(this.update_request);
+        });
+
+        it('should call updateLineItemFields with a given index and data', function() {
+          expect(this.processor.updateLineItemFields).toHaveBeenCalledWith(this.index, this.data);
+        });
+
+      });
+
+      describe('a match field is given', function() {
+
+        beforeEach(function() {
+          this.found_index = 24;
+          spyOn(this.processor, 'matchLineItemByField').andReturn(this.found_index);
+          this.found_update_request = {'data': this.data, 'match': this.match};
+          this.processor.updateLineItem(this.found_update_request);
+        });
+
+        it('should call matchLineItemByField with a given match field and data', function() {
+          expect(this.processor.matchLineItemByField).toHaveBeenCalledWith(this.match, this.data);
+        });
+
+        it('should call updateLineItemFields with a given index and data', function() {
+          expect(this.processor.updateLineItemFields).toHaveBeenCalledWith(this.found_index, 
+                                                                           this.data);
+        });
+
+      });
+
+      describe('both an index and match field are given', function() {
+
+        beforeEach(function() {
+          this.match_index_request = {
+            'index': this.index, 
+            'match': this.match, 
+            'data': this.data
+          };
+
+          spyOn(this.processor, 'matchLineItemByField');
+          this.processor.updateLineItem(this.match_index_request);
+        });
+
+        it('should not call matchLineItemByField', function() {
+          expect(this.processor.matchLineItemByField).not.toHaveBeenCalled();
+        });
+
+        it('should call updateLineItemFields with a given index and data', function() {
+          expect(this.processor.updateLineItemFields).toHaveBeenCalledWith(this.index, this.data);
+        });
+
+      });
+
+      describe('neither an index or match field are given', function() {
+
+        beforeEach(function() {
+          this.broken_request = {'foo': 'bar'}
+          this.update_call = function() {
+            this.processor.updateLineItem(this.broken_request);
+          }.bind(this);
+        });
+
+        it('should throw NetsuiteToolkit.SublistProcessor.UnableToMatch', function() {
+          expect(this.update_call).toThrow(NetsuiteToolkit.SublistProcessor.UnableToMatch);
+        });
+
+      });
+
+    });
+
+    describe('exciseLineItem()', function() {
+
+      beforeEach(function() {
+        this.index = 42;
+        this.data  = {'foo': 'bar'};
+        this.match = 'matchdata';
+        spyOn(NetsuiteToolkit, 'removeLineItem');
+      });
+
+      describe('an index is given', function() {
+
+        beforeEach(function() {
+          this.excise_request = {'index': this.index, 'data': this.data};
+          this.processor.exciseLineItem(this.excise_request);
+        });
+
+        it('should call removeLineItem with a given index and data', function() {
+          expect(NetsuiteToolkit.removeLineItem).toHaveBeenCalledWith(this.processor.record,
+                                                                      this.processor.sublist_name,
+                                                                      this.index);
+        });
+
+      });
+
+      describe('a match field is given', function() {
+
+        beforeEach(function() {
+          this.found_index = 24;
+          spyOn(this.processor, 'matchLineItemByField').andReturn(this.found_index);
+          this.found_excise_request = {'data': this.data, 'match': this.match};
+          this.processor.exciseLineItem(this.found_excise_request);
+        });
+
+        it('should call matchLineItemByField with a given match field and data', function() {
+          expect(this.processor.matchLineItemByField).toHaveBeenCalledWith(this.match, this.data);
+        });
+
+        it('should call removeLineItem with a given index and data', function() {
+          expect(NetsuiteToolkit.removeLineItem).toHaveBeenCalledWith(this.processor.record,
+                                                                      this.processor.sublist_name,
+                                                                      this.found_index);
+        });
+
+      });
+
+      describe('both an index and match field are given', function() {
+
+        beforeEach(function() {
+          this.match_index_request = {
+            'index': this.index, 
+            'match': this.match, 
+            'data': this.data
+          };
+
+          spyOn(this.processor, 'matchLineItemByField');
+          this.processor.exciseLineItem(this.match_index_request);
+        });
+
+        it('should not call matchLineItemByField', function() {
+          expect(this.processor.matchLineItemByField).not.toHaveBeenCalled();
+        });
+
+        it('should call removeLineItem with a given index and data', function() {
+          expect(NetsuiteToolkit.removeLineItem).toHaveBeenCalledWith(this.processor.record,
+                                                                      this.processor.sublist_name,
+                                                                      this.index);
+        });
+
+      });
+
+      describe('neither an index or match field are given', function() {
+
+        beforeEach(function() {
+          this.broken_request = {'foo': 'bar'}
+          this.update_call = function() {
+            this.processor.exciseLineItem(this.broken_request);
+          }.bind(this);
+        });
+
+        it('should throw NetsuiteToolkit.SublistProcessor.UnableToMatch', function() {
+          expect(this.update_call).toThrow(NetsuiteToolkit.SublistProcessor.UnableToMatch);
+        });
+
+      });
+
+    });
+
+    describe('updateLineItemFields()', function() {
+
+      beforeEach(function() {
+        this.index = 7;
+        this.data  = {
+          'field1': 'value1',
+          'field2': 'value2'
+        };
+        this.calls = [
+          [this.record, this.name, this.index, 'field1', 'value1'],
+          [this.record, this.name, this.index, 'field2', 'value2']
+        ];
+        spyOn(NetsuiteToolkit, 'setLineItemValue');
+        this.processor.updateLineItemFields(this.index, this.data);
+      });
+
+      it('should call NetsuiteToolkit.setLineItemValue for each element of the data', function() {
+        expect(NetsuiteToolkit.setLineItemValue.argsForCall).toEqual(this.calls);
+      });
+
+    });
+
+    describe('matchLineItemByField()', function() {
+
+      beforeEach(function() {
+        this.match_field = 'jedi';
+        this.data        = {'jedi': 'Yoda'};
+        spyOn(NetsuiteToolkit, 'getLineItemCount').andReturn(16);
+      });
+
+      describe('when the field data is matched', function() {
+
+        beforeEach(function() {
+          this.index = 1;
+          spyOn(this.processor, 'compareLineItemValue').andReturn(true);
+          this.result = this.processor.matchLineItemByField(this.match_field, this.data);
+        });
+
+        it('should return the index based on the field matched', function() {
+          expect(this.result).toEqual(this.index);
+        });
+
+      });
+
+      describe('when the field data is not matched', function() {
+
+        beforeEach(function() {
+          this.call = function() {
+            this.processor.matchLineItemByField(this.match_field, this.data);
+          }.bind(this);
+          spyOn(this.processor, 'compareLineItemValue').andReturn(false);
+        });
+
+        it('should throw NetsuiteToolkit.SublistProcessor.UnableToMatch error', function() {
+          expect(this.call).toThrow(NetsuiteToolkit.SublistProcessor.UnableToMatch);
+        });
+
+      });
+    });
+
+    describe('compareLineItemValue()', function() {
+
+      beforeEach(function() {
+        this.index = 1;
+        this.match_field = 'planet';
+        this.match_value = 'venus';
+      });
+      
+      describe('when the field has a matching value', function() {
+
+        beforeEach(function() {
+          spyOn(NetsuiteToolkit, 'getLineItemValue').andReturn(this.match_value);
+          this.result = this.processor.compareLineItemValue(this.index, this.match_field,
+                                                            this.match_value);
+        });
+
+        it('returns a true value', function() {
+          expect(this.result).toEqual(true);
+        });
+
+      });
+
+
+      describe('when the field does not have a matching value', function() {
+
+        beforeEach(function() {
+          this.non_matching_value = 'not venus';
+          spyOn(NetsuiteToolkit, 'getLineItemValue').andReturn(this.non_matching_value);
+          this.result = this.processor.compareLineItemValue(this.index, this.match_field,
+                                                            this.match_value);
+        });
+
+        it('returns a false value', function() {
+          expect(this.result).toEqual(false);
+        });
+
+      });
+
+    });
+
+  });
+
 });
