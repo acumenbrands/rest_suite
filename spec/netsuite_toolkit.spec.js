@@ -52,11 +52,24 @@ describe("NetsuiteToolkit", function() {
 
   });
 
-  describe('deleteRecord()', function() {
-
-  });
+  describe('deleteRecord()', function() {});
 
   describe('transformRecord()', function() {
+
+    beforeEach(function() {
+      this.source_type = 'salesorder';
+      this.result_type = 'invoice';
+      this.internalid  = '12345';
+      this.values      = {'stuff': 'junk'};
+      spyOn(global, 'nlapiTransformRecord');
+      NetsuiteToolkit.transformRecord(this.source_type, this.internalid,
+                                      this.result_type, this.values);
+    });
+  
+    it('should call nlapiTransformRecord', function() {
+      expect(global.nlapiTransformRecord).toHaveBeenCalledWith(this.source_type, this.internalid,
+                                                               this.result_type, this.values);
+    });
 
   });
 

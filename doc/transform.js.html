@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: upsert.js</title>
+    <title>JSDoc: Source: transform.js</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Source: upsert.js</h1>
+    <h1 class="page-title">Source: transform.js</h1>
     
     
 
@@ -27,133 +27,128 @@
         <article>
             <pre class="prettyprint source"><code>//NOTE (nilmethod) document the glue method that NetSuite will host
 
+var no_internalid_given_error = "No internal id was supplied, cannot source " +
+                                "record for transformation";
+
 /**
- * Upserter Class
- * @class Upserter
+ * Transformer Class
+ * @class Transformer
  * @param {object} request The body of the HTTP Post request from the client
- * @return {Upserter} A new instance of Upserter
+ * @return {Transformer} A new instance of Transformer
  */
-this.Upserter = (function() {
+this.Transformer = (function() {
 
   /** @constructor */
-  // FIXME (JamesChristie+nilmethod) document post body input
-  function Upserter(request) {
+  function Transformer(request) {
     this.params      = request;
     this.record_data = request['record_data'];
     this.reply_list  = [];
     this.exception   = null;
   }
 
-  /**
-   * Iterates over `record_data` calling `executeUpsertRequest` on each item
-   *
+  /** 
+   * Iterates over each record calling `executeTransformRequest()`
+   * 
    * @method
-   * @memberof Upserter
+   * @memberof Transformer
    * @return {null}
    */
-  Upserter.prototype.upsertRecords = function() {
+  Transformer.prototype.transformRecords = function() {
     for(index in this.record_data) {
       request_data = this.record_data[index];
-      this.executeUpsertRequest(request_data);
+      this.executeTransformRequest(request_data);
     }
   }
 
-  /**
-   * Initializes and executes an `UpsertRequest` calling `accumulateResult()`
-   *
-   * @method
-   * @memberof Upserter
-   * @param {object} An individual item's records
+  /** 
+   * Executes a new TransformRequest, accumulating the result
+   * 
+   * @method 
+   * @memberof Transformer
+   * @param {object} The request data
    * @return {null}
    */
-  Upserter.prototype.executeUpsertRequest = function(request_data) {
-    upsert_request = new UpsertRequest(request_data);
-    upsert_request.execute();
-    this.accumulateResult(upsert_request.generateReply());
+  Transformer.prototype.executeTransformRequest = function(request_data) {
+    transform_request = new TransformRequest(request_data);
+    transform_request.execute();
+    this.accumulateResult(transform_request.generateReply());
   }
 
-  /**
-   * Pushes the result onto the `reply_list` array
-   *
-   * @method
-   * @memberof Upserter
+  /** 
+   * Adds a result to the `reply_list`
+   * 
+   * @method 
+   * @memberof Transformer
+   * @param {object} The result
    * @return {null}
    */
-  Upserter.prototype.accumulateResult = function(result) {
+  Transformer.prototype.accumulateResult = function(result) {
     this.reply_list.push(result);
   }
 
-  /**
-   * Generate a body for the reply to the client's request.
-   *
-   * @method
-   * @memberof Upserter
-   * @return {object} The object containing a formatted summary of the results of the request
+  /** 
+   * Wrapper for `NetsuiteToolkit.formatReply()`
+   * 
+   * @method 
+   * @memberof Transformer
+   * @return {object} The formatted reply from Netsuite
    */
-  Upserter.prototype.generateReply = function() {
+  Transformer.prototype.generateReply = function() {
     return NetsuiteToolkit.formatReply(this.params, this.replyList);
   }
 
-  return Upserter;
+  return Transformer;
 })();
 
 /**
- * UpsertRequest Class
- * @class UpsertRequest
- * @param {object} record_data The data from a client request
- * @return {Loader} A new instance of UpsertRequest
+ * TransformRequest Class
+ * @class TransformRequest
+ * @param {object} the required information to transform a record
+ * @return {TransformRequest} A new instance of TransformRequest
  */
-this.UpsertRequest = (function() {
+this.TransformRequest = (function() {
 
   /** @constructor */
-  function UpsertRequest(record_data) {
+  function TransformRequest(record_data) {
     this.params     = record_data;
     this.record     = null;
     this.written_id = null;
 
     this.internalid         = record_data['internalid'] || null;
-    this.record_type        = record_data['record_type'];
+    this.source_type        = record_data['source_type'];
+    this.result_type        = record_data['result_type'];
+    this.transform_values   = record_data['transform_values'];
     this.literal_field_data = record_data['literal_fields'];
     this.sublist_data       = record_data['sublists'];
   }
 
-  /**
-   * Performs the UpsertRequest
-   *
-   * @method
-   * @memberof UpsertRequest
+  /** 
+   * Transform a record for TransformRequest, alters its data
+   * using the given data and submits it for writing.
+   * 
+   * @method 
+   * @memberof TransformRequest
    * @return {null}
    */
-  UpsertRequest.prototype.execute = function() {
-    this.record = this.loadOrInitializeRecord();
+  TransformRequest.prototype.execute = function() {
+    if(!this.internalid) { throw TransformRequest.NoInternalIdGiven; }
+
+    this.record = NetsuiteToolkit.transformRecord(this.source_type, this.internalid,
+                                                  this.result_type, this.transform_values);
     NetsuiteToolkit.RecordProcessor.updateLiterals(this.record, this.literal_field_data);
     this.processSublists();
     this.written_id = NetsuiteToolkit.submitRecord(this.record);
   }
 
   /**
-   * Finds or creates a new record based on the presence of `internalid`
+   * Iterate over the list of sublist operations and call `executeSublistProcessor()`
+   * for each
    * 
-   * @method
-   * @memberof UpsertRequest
+   * @method 
+   * @memberof TransformRequest
    * @return {null}
    */
-  UpsertRequest.prototype.loadOrInitializeRecord = function() {
-    if(this.internalid) {
-      this.record = NetsuiteToolkit.loadRecord(this.record_type, this.internalid);
-    } else {
-      this.record = NetsuiteToolkit.initializeRecord(this.record_type);
-    }
-  }
-
-  /**
-   * Iterates through given sublists calling `executeSublistProcessor()`
-   * 
-   * @method
-   * @memberof UpsertRequest
-   * @return {null}
-   */
-  UpsertRequest.prototype.processSublists = function() {
+  TransformRequest.prototype.processSublists = function() {
     for(index in this.sublist_data) {
       sublist = this.sublist_data[index];
       this.executeSublistProcessor(sublist);
@@ -161,35 +156,38 @@ this.UpsertRequest = (function() {
   }
 
   /**
-   * Initializes and calls `execute()` on the `NetsuiteToolkit.SublistProcessor()`
+   * Initialize a new `NetsuiteToolkit.SublistProcessor` using the given
+   * sublist data and execute it
    * 
-   * @method
-   * @memberof UpsertRequest
+   * @method 
+   * @memberof TransformRequest
    * @return {null}
    */
-  UpsertRequest.prototype.executeSublistProcessor = function(sublist_data) {
+  TransformRequest.prototype.executeSublistProcessor = function(sublist_data) {
     sublist_processor = new NetsuiteToolkit.SublistProcessor(this.record, sublist_data);
     sublist_processor.execute();
   }
 
-  /**
-   * Calls `NetsuiteToolkit.formatReply()` passing it `params` and `written_id`
+  /** 
+   * Wrapper for `NetsuiteToolkit.formatReply()`
    * 
-   * @method
-   * @memberof UpsertRequest
-   * @return {object} Formatted reply
+   * @method 
+   * @memberof Transformer
+   * @return {object} The formatted reply from Netsuite
    */
-  UpsertRequest.prototype.generateReply = function() {
+  TransformRequest.prototype.generateReply = function() {
     return NetsuiteToolkit.formatReply(this.params, this.written_id);
   }
 
-  return UpsertRequest;
+  return TransformRequest;
 })();
+
+this.TransformRequest.NoInternalIdGiven = new Error(no_internalid_given_error);
 
 /** @namespace global */
 
 /**
- * The script function that Netsuite will call to execute the Upserter process
+ * The script function that Netsuite will call to execute the Transformer process
  * 
  * @method
  * @memberof global

@@ -1,437 +1,314 @@
 require('./spec_helper.js');
 
-describe("Transformer", function() {
+describe('Transformer', function() {
 
   var transformer;
-  var initialRecordType = 'salesorder'
-  var resultRecordType = 'invoice'
-
-  var firstId  = '12345';
-  var secondId = '67890';
-  var sublistItemToAlter = {
-    'match_field': 'item',
-    'delete':      'false',
-    'item_data': {
-      'item':     '12345678',
-      'quantity': '7'
-    }
-  } 
-  var sublistItemToDelete = {
-    'match_field': 'item',
-    'delete':      'true',
-    'item_data': {
-      'item': '0987654321'
-    }
-  }
-  var recordData = [
-    {
-      'id': firstId,
-      'record_data': {
-        'custitemcustomdata': "Woo! It's a memo!"
-      },
-      'sublist_data': {
-        'item': [
-          sublistItemToAlter,
-          sublistItemToDelete
-        ],
-      }
-    },
-    {
-      'id': secondId,
-      'record_data': {
-        'tranid': 'HG12345'
-      }
-    }
+  var record_with_sublists = {};
+  var record_without_sublists = {};
+  var record_data = [
+    record_without_sublists,
+    record_with_sublists
   ];
+  var request = {
+    'record_data': record_data
+  };
 
   beforeEach(function() {
-    transformer = new Transformer(initialRecordType, resultRecordType, recordData);
-    global.nlapiLoadRecord = function() {}
-    global.nlapiTransformRecord = function() {}
-    global.nlapiSubmitRecord = function() {}
+    transformer = new Transformer(request);
   });
 
-  describe('#init(initialRecordType, resultRecordType, recordData)', function() {
+  // constructor
+  describe('Transformer(request)', function() {
 
-    describe('Constants', function() {
-
-      it("should define RECORD_INTERNAL_ID_KEY", function() {
-        expect(transformer.RECORD_INTERNAL_ID_KEY).toBeDefined();
-      });
-
-      it("should define RECORD_DATA_KEY", function() {
-        expect(transformer.RECORD_DATA_KEY).toBeDefined();
-      });
-
-      it("should define RECORD_OBJECT_KEY", function() {
-        expect(transformer.RECORD_OBJECT_KEY).toBeDefined();
-      });
-
-      it("shuld define SUBLIST_KEY", function() { 
-        expect(transformer.SUBLIST_KEY).toBeDefined();
-      });
-
-      it("should define SUBLIST_MATCH_KEY", function() {
-        expect(transformer.SUBLIST_MATCH_KEY).toBeDefined();
-      });
-
-      it("should define SUBLIST_DELETE_KEY", function() {
-        expect(transformer.SUBLIST_DELETE_KEY).toBeDefined();
-      });
-
-      it("should define SUBLIST_DATA_KEY", function() {
-        expect(transformer.SUBLIST_DATA_KEY).toBeDefined();
-      });
-
-      it("should define TRANSFORMED_RECORD_KEY", function() {
-        expect(transformer.TRANSFORMED_RECORD_KEY).toBeDefined();
-      });
-
-      it("should define SUCCESS_KEY", function() {
-        expect(transformer.SUCCESS_KEY).toBeDefined();
-      });
-
+    it('should set the params', function() {
+      expect(transformer.params).toEqual(request);
     });
 
-    it('sets common to an instance of CommonObject', function() {
-      expect(transformer.common).toEqual(new CommonObject);
+    it('should set the record_data', function() {
+      expect(transformer.record_data).toEqual(request['record_data']);
     });
 
-    it('sets the initial record type', function() {
-      expect(transformer.initialRecordType).toEqual(initialRecordType);
+    it('should initialize the reply_list as an empty Array', function() {
+      expect(transformer.reply_list).toEqual([]); 
     });
 
-    it('sets the result record type', function() {
-      expect(transformer.resultRecordType).toEqual(resultRecordType);
-    });
-
-    it('sets the original record data', function() {
-      expect(transformer.originalRecordData).toEqual(recordData);
-    });
-
-    it('sets the record data', function() {
-      expect(transformer.recordData).toEqual(recordData);
+    it('should initialize the exception to null', function() {
+      expect(transformer.exception).toEqual(null);
     });
 
   });
 
-  describe('#loadRecordsFromNetsuite', function() {
+  describe('transformRecords()', function() {
 
     beforeEach(function() {
-      spyOn(transformer, 'loadSingleRecord').andReturn({});
-      spyOn(transformer, 'appendRecordToData');
-      transformer.loadRecordsFromNetsuite();
+      this.transform_one = {'upsert': 'one'};
+      this.transform_two = {'upsert': 'two'};
+      transformer.record_data = [this.transform_one, this.transform_two];
+      this.calls = [[this.transform_one], [this.transform_two]];
+      spyOn(transformer, 'executeTransformRequest');
+      transformer.transformRecords();
     });
 
-    it('calls loadSingleRecord for each element of record data', function() {
-      expect(transformer.loadSingleRecord.callCount).toEqual(recordData.length);
-    });
-
-    it('calls loadSingleRecord with each id in the record data', function() {
-      expect(transformer.loadSingleRecord.argsForCall).toEqual([[firstId], [secondId]]);
-    });
-
-    it('calls appendRecordToData for each element of record data', function() {
-      expect(transformer.appendRecordToData.callCount).toEqual(recordData.length);
-    });
-
-    it('calls appendRecordToData for each with each record and set of record data', function() {
-      expect(transformer.appendRecordToData.argsForCall).toEqual([[recordData[0], {}],
-                                                                 [recordData[1], {}]]);
+    it('should call executeTransformRequest for each element of record_data', function() {
+      expect(transformer.executeTransformRequest.argsForCall).toEqual(this.calls);
     });
 
   });
 
-  describe('#loadSingleRecord(recordId)', function() {
+  describe('executeTransformRequest()', function() {
 
     beforeEach(function() {
-      this.id = '12345';
-      spyOn(global, 'nlapiLoadRecord');
-      transformer.loadSingleRecord(this.id);
+      this.request_data   = {'request': 'stuff'};
+      this.reply          = {'it': 'worked'};
+      this.transform_request = {};
+      this.transform_request.execute       = function() {}
+      this.transform_request.generateReply = function() {}
+      spyOn(global, 'TransformRequest').andReturn(this.transform_request);
+      spyOn(this.transform_request, 'execute');
+      spyOn(this.transform_request, 'generateReply').andReturn(this.reply);
+      spyOn(transformer, 'accumulateResult');
+      transformer.executeTransformRequest(this.request_data);
     });
 
-    it('calls nlapiLoadRecord with the initial record type and id', function() {
-      expect(global.nlapiLoadRecord).toHaveBeenCalledWith(transformer.initialRecordType, this.id);
+    it('should call the constructor on TransformRequest', function() {
+      expect(global.TransformRequest).toHaveBeenCalledWith(this.request_data);
+    });
+
+    it('should call execute on the newly created instance of TransformRequest', function() {
+      expect(this.transform_request.execute).toHaveBeenCalled();
+    });
+
+    it('should call generateReply on the TransformRequest instance', function() {
+      expect(this.transform_request.generateReply).toHaveBeenCalled();
+    });
+
+    it('should call accumulateResult with the results of generateReply', function() {
+      expect(transformer.accumulateResult).toHaveBeenCalledWith(this.reply);
     });
 
   });
 
-  describe('#appendRecordToData', function() {
+  describe('accumulateResult()', function() {
 
     beforeEach(function() {
-      this.record = {};
-      transformer.appendRecordToData(recordData[0], this.record);
+      this.formatted_reply = {'reply': 'body'};
+      spyOn(transformer.reply_list, 'push');
+      transformer.accumulateResult(this.formatted_reply);
     });
 
-    it('sets the record object field equal to the given record', function() {
-      expect(recordData[0][transformer.RECORD_OBJECT_KEY]).toEqual(this.record);
+    it('should call concat on reply_list', function() {
+      expect(transformer.reply_list.push).toHaveBeenCalledWith(this.formatted_reply);
     });
 
   });
 
-  describe('#transformRecordList', function() {
+  describe('generateReply()', function() {
 
     beforeEach(function() {
-      spyOn(transformer, 'transformSingleRecord');
-      spyOn(transformer, 'appendTransformedRecordToData');
-      transformer.transformRecordList();
+      this.fake_reply = {};
+      spyOn(NetsuiteToolkit, 'formatReply').andReturn(this.fake_reply);
+      this.result = transformer.generateReply();
     });
 
-    it('calls transformSingleRecord for each element of record data', function() {
-      expect(transformer.transformSingleRecord.callCount).toEqual(recordData.length);
+    it('should call formatReply on NetsuiteToolkit', function() {
+      expect(NetsuiteToolkit.formatReply).toHaveBeenCalledWith(transformer.params,
+                                                               transformer.replyList);
     });
 
-    it('calls transformSingleRecord with each record object in record data', function() {
-      expect(transformer.transformSingleRecord.argsForCall).toEqual([[firstId],
-                                                                    [secondId]]);
-    });
-
-    it('calls appendTransformedRecordToData for each element of recordData', function() {
-      expect(transformer.appendTransformedRecordToData.callCount).toEqual(recordData.length);
-    });
-
-  });
-
-  describe('#appendTransformedRecordToData', function() {
-
-    beforeEach(function() {
-      this.transformedRecord = {};
-      transformer.appendTransformedRecordToData(recordData[0], this.transformedRecord);
-    });
-
-    it('sets the record object field equal to the given record', function() {
-      expect(recordData[0][transformer.TRANSFORMED_RECORD_KEY]).toEqual(this.transformedRecord);
-    });
-
-  });
-
-  describe('#transformSingleRecord(recordId)', function() {
-
-    beforeEach(function() {
-      this.id = '12345';
-      spyOn(global, 'nlapiTransformRecord');
-      transformer.transformSingleRecord(this.id);
-    });
-
-    it('calls nlapiTransformRecord with the initial type, result type and given id', function() {
-      expect(global.nlapiTransformRecord).toHaveBeenCalledWith(transformer.initialRecordType,
-                                                               this.id,
-                                                               transformer.resultRecordType);
-    });
-
-  });
-
-  describe('#updateTransformedRecord(record)', function() {
-
-    beforeEach(function() {
-      this.record = {};
-      this.recordData = recordData[0];
-      this.recordData[transformer.RECORD_OBJECT_KEY] = this.record;
-      this.literalData = this.recordData[transformer.RECORD_DATA_KEY];
-      this.sublistData = this.recordData[transformer.SUBLIST_KEY];
-      spyOn(transformer, 'updateLiteralFields');
-      spyOn(transformer, 'filterSublists');
-      transformer.updateTransformedRecord(this.recordData);
-    });
-
-    it('calls updateLiteralFields with the record and its matching record data', function() {
-      expect(transformer.updateLiteralFields).toHaveBeenCalledWith(this.record, this.literalData);
-    });
-
-    it('calls filterSublists with the record and its matching sublist data', function() {
-      expect(transformer.filterSublists).toHaveBeenCalledWith(this.record, this.sublistData);
-    });
-
-  });
-
-  describe('#updateLiteralFields(record, fieldData)', function() {
-
-    beforeEach(function() {
-      this.record = {};
-      this.fieldData = {
-        'quantity': '17',
-        'custitemnote': 'WOO! NOTES!'
-      }
-      this.firstCall = [this.record, 'quantity', '17'];
-      this.secondCall = [this.record, 'custitemnote', 'WOO! NOTES'];
-      spyOn(transformer, 'setSingleLiteralField');
-      transformer.updateLiteralFields(this.record, this.fieldData);
-    });
-
-    it('calls setSingleLiteralField for each element of fieldData', function() {
-      expect(transformer.setSingleLiteralField.callCount).toEqual(2);
-    });
-
-    it('calls setSingleLiteralField with the correct sequence of arguments', function() {
-      expect(transformer.setSingleLiteralField.argsForCall).toContain(this.firstCall,
-                                                                      this.secondCall);
-    });
-
-  });
-
-  describe('#setSingleLiteralField(record, fieldName, value)', function() {
-
-    beforeEach(function() {
-      this.record = {};
-      this.fieldName = 'custitem22';
-      this.value = '9001';
-      this.record.setFieldValue = function() {}
-      spyOn(this.record, 'setFieldValue');
-      transformer.setSingleLiteralField(this.record, this.fieldName, this.value);
-    });
-
-    it('calls setFieldValue with the given values', function() {
-      expect(this.record.setFieldValue).toHaveBeenCalledWith(this.fieldName, this.value);
-    });
-
-  });
-
-  describe('#filterSublists(record, sublistsData)', function() {
-
-    beforeEach(function() {
-    });
-
-    it('calls filterSingleSublist for each element of sublistData', function() {
-    });
-
-    it('calls filterSingleSublist with the correct sequence of arguments', function() {
-    });
-
-  });
-
-  describe('#filterSingleSublist(record, sublistData)', function() {
-
-    beforeEach(function() {
-    });
-
-    it('calls matchLineItemToSublistData for each line item in the sublist', function() {
-    });
-
-    it('calls removeSingleSublistItems with the record, sublist name and indeces', function() {
-    });
-
-  });
-
-  describe('#setSublistItemFields(record, index, sublistFieldData)', function() {
-
-    beforeEach(function() {
-    });
-
-    it('calls setSingleSublistItemField for each element of sublistFieldData', function() {
-    });
-
-    it('calls setSingleSublistItemField with the correct sequence of arguments', function() {
-    });
-
-  });
-
-  describe('#setSingleSublistItemField(listName, fieldName, index, value)', function() {
-
-    beforeEach(function() {
-      this.record = {};
-      this.list = 'items';
-      this.field = 'quantity';
-      this.index = 7;
-      this.value = '17';
-      this.record.setLineItemValue = function() {}
-      spyOn(this.record, 'setLineItemValue');
-      transformer.setSingleSublistItemField(this.record, this.list, this.field,
-                                            this.index, this.value);
-    });
-
-    it('calls setLineItemValue with the given arguments', function() {
-      expect(this.record.setLineItemValue).toHaveBeenCalledWith(this.list, this.field,
-                                                                this.index, this.value);
-    });
-
-  });
-
-  describe('#removeSublistItems(record, sublistName, indeces)', function() {
-  });
-
-  describe('#removeSingleSublistItem(record, sublistName, index)', function() {
-
-    beforeEach(function() {
-      this.sublistName = 'foo';
-      this.index = 13;
-      this.record = {}
-      this.record.removeLineItem = function() {}
-      spyOn(this.record, 'removeLineItem');
-      transformer.removeSingleSublistItem(this.record, this.sublistName, this.index);
-    });
-
-    it('calls removeLineItem on the given record with the sublist name and index', function() {
-      expect(this.record.removeLineItem).toHaveBeenCalledWith(this.sublistName, this.index);
-    });
-
-  });
-
-  describe('#writeTransformedRecord', function() {
-
-    beforeEach(function() {
-      this.record = {};
-      spyOn(global, 'nlapiSubmitRecord');
-      transformer.writeTransformedRecord(this.record);
-    });
-
-    it('calls nlapiSubmitRecord with the given record', function() {
-      expect(global.nlapiSubmitRecord).toHaveBeenCalledWith(this.record, false, false);
-    });
-
-  });
-
-  describe('#generateResultList', function() {
-  });
-
-  describe('#getParams', function() {
-
-    beforeEach(function() {
-      this.params = transformer.getParams();
-    });
-
-    it('populates the initial record type', function() {
-      expect(this.params['initial_record_type']).toEqual(transformer.initialRecordType);
-    });
-
-    it('populates the result record type', function() {
-      expect(this.params['result_record_type']).toEqual(transformer.resultRecordType);
-    });
-
-    it('populates the record data', function() {
-      expect(this.params['record_data']).toEqual(transformer.originalRecordData);
-    });
-
-  });
-
-  describe('#reply', function() {
-
-    beforeEach(function() {
-      this.fakeResults = [];
-      this.fakeParams  = {};
-      this.fakeReply   = { 'result': this.fakeResults, 'params': this.fakeParams };
-      spyOn(transformer, 'generateResultList').andReturn(this.fakeResults);
-      spyOn(transformer, 'getParams').andReturn(this.fakeParams);
-      spyOn(transformer.common, 'formatReply').andReturn(this.fakeReply);
-      this.reply = transformer.reply();
-    });
-
-    it('calls generateResultList', function() {
-      expect(transformer.generateResultList.callCount).toEqual(1);
-    });
-
-    it('calls getParams', function() {
-      expect(transformer.getParams.callCount).toEqual(1);
-    });
-
-    it('calls formatreply on CommonObject', function() {
-      expect(transformer.common.formatReply.callCount).toEqual(1);
-    });
-
-    it('returns a formatted reply containing the result list and params', function() {
-      expect(this.reply).toEqual(this.fakeReply);
+    it('should return the output of formatreply', function() {
+      expect(this.result).toEqual(this.fake_reply);
     });
 
   });
 
 });
 
+describe('TransformRequest', function() {
+
+  var transform_request;
+  var internalid       = '123456789';
+  var source_type      = 'salesorder';
+  var result_type      = 'invoice';
+  var transform_values = {'fields': 'values'};
+  var literal_fields   = {
+    'email': 'name@domain.suffix',
+    'total': '19.99'
+  };
+  var sublist_one = { 'stuff': 'junk' };
+  var sublist_two = { 'thing': 'sundries' };
+  var sublists = [
+    sublist_one,
+    sublist_two
+  ];
+  var record_data = {
+    'internalid':       internalid,
+    'source_type':      source_type,
+    'result_type':      result_type,
+    'transform_values': transform_values,
+    'literal_fields':   literal_fields,
+    'sublists':         sublists
+  };
+
+  beforeEach(function() {
+    transform_request = new TransformRequest(record_data);
+  });
+
+  it('should define a NoInternalIdGiven exception', function() {
+    expect(TransformRequest.NoInternalIdGiven instanceof Error).toEqual(true);
+  });
+
+  describe('constructor()', function() {
+
+    it('should populate the params with the record_data', function() {
+      expect(transform_request.params).toEqual(record_data);
+    });
+
+    it('should populate the record_id', function() {
+      expect(transform_request.internalid).toEqual(internalid);
+    });
+
+    it('should populate the source_type', function() {
+      expect(transform_request.source_type).toEqual(source_type);
+    });
+
+    it('should populate the result_type', function() {
+      expect(transform_request.result_type).toEqual(result_type);
+    });
+
+    it('should populate the transform_values', function() {
+      expect(transform_request.transform_values).toEqual(transform_values);
+    });
+
+    it('should populate the literal_field_data', function() {
+      expect(transform_request.literal_field_data).toEqual(literal_fields);
+    });
+
+    it('should populate the sublist_data', function() {
+      expect(transform_request.sublist_data).toEqual(sublists);
+    });
+
+    it('should initialize record to null', function() {
+      expect(transform_request.record).toEqual(null);
+    });
+
+    it('should initialize written_id to null', function() {
+      expect(transform_request.written_id).toEqual(null);
+    });
+
+  });
+
+  describe('execute()', function() {
+
+    beforeEach(function() {
+      this.new_id = 17;
+      this.record = {'this is': 'a record'};
+      spyOn(NetsuiteToolkit, 'transformRecord').andReturn(this.record);
+      spyOn(NetsuiteToolkit.RecordProcessor, 'updateLiterals');
+      spyOn(transform_request, 'processSublists');
+      spyOn(NetsuiteToolkit, 'submitRecord').andReturn(this.new_id);
+      transform_request.execute();
+    });
+
+    it('should call NetsuiteToolkit.transformRecord', function() {
+      expect(NetsuiteToolkit.transformRecord).toHaveBeenCalledWith(
+        transform_request.source_type,
+        transform_request.internalid,
+        transform_request.result_type,
+        transform_request.transform_values
+      );
+    });
+
+    it('should call NetsuiteToolkit.RecordProcessor.updateLiterals', function() {
+      expect(NetsuiteToolkit.RecordProcessor.updateLiterals).toHaveBeenCalledWith(
+        transform_request.record,
+        transform_request.literal_field_data
+      );
+    });
+
+    it('should call processSublists', function() {
+      expect(transform_request.processSublists).toHaveBeenCalled();
+    });
+
+    it('should call NetsuiteToolkit.submitRecord with the now mutated record', function() {
+      expect(NetsuiteToolkit.submitRecord).toHaveBeenCalledWith(transform_request.record);
+    });
+
+    it('should set written_id to the return value of NetsuiteToolkit.submitRecord', function() {
+      expect(transform_request.written_id).toEqual(this.new_id);
+    });
+
+    describe('no internalid is present', function() {
+
+      beforeEach(function() {
+        transform_request.internalid = null;
+        this.call = function() {
+          transform_request.execute();
+        }
+      });
+
+      it('should throw a NoInternalIdGiven exception', function() {
+        expect(this.call).toThrow(TransformRequest.NoInternalIdGiven);
+      });
+
+    });
+
+  });
+
+  describe('processSublists()', function() {
+
+    beforeEach(function() {
+      this.calls = [
+        [sublist_one],
+        [sublist_two]
+      ];
+      spyOn(transform_request, 'executeSublistProcessor');
+      transform_request.processSublists();
+    });
+
+    it('should call executeSublistProcessor for each element of sublist_data', function() {
+      expect(transform_request.executeSublistProcessor.argsForCall).toEqual(this.calls);
+    });
+
+  });
+
+  describe('executeSublistProcessor()', function() {
+
+    beforeEach(function() {
+      this.fake_processor = {};
+      this.fake_processor.execute = function() {}
+      spyOn(NetsuiteToolkit, 'SublistProcessor').andReturn(this.fake_processor);
+      spyOn(this.fake_processor, 'execute');
+      transform_request.executeSublistProcessor(sublist_one);
+    });
+  
+    it('should call the constructor of NetsuiteToolkit.SublistProcessor', function() {
+      expect(NetsuiteToolkit.SublistProcessor).toHaveBeenCalledWith(transform_request.record,
+                                                                    sublist_one);
+    });
+
+    it('should call execute on the newly initialized SublistProcessor instance', function() {
+      expect(this.fake_processor.execute).toHaveBeenCalled();
+    });
+
+  });
+
+  describe('generateReply()', function() {
+
+    beforeEach(function() {
+      this.fake_reply = {};
+      spyOn(NetsuiteToolkit, 'formatReply').andReturn(this.fake_reply);
+      this.result = transform_request.generateReply();
+    });
+
+    it('should call formatReply on NetsuiteToolkit', function() {
+      expect(NetsuiteToolkit.formatReply).toHaveBeenCalledWith(transform_request.params,
+                                                               transform_request.written_id);
+    });
+
+    it('should return the output of formatreply', function() {
+      expect(this.result).toEqual(this.fake_reply);
+    });
+
+  });
+
+});

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Loader</title>
+    <title>JSDoc: Class: Transformer</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Class: Loader</h1>
+    <h1 class="page-title">Class: Transformer</h1>
     
     
 
@@ -27,7 +27,7 @@
     
 <header>
     <h2>
-    Loader
+    Transformer
     </h2>
     
 </header>  
@@ -39,7 +39,7 @@
     
         
 <dt>
-    <h4 class="name" id="Loader"><span class="type-signature"></span>new Loader<span class="signature">(request)</span><span class="type-signature"> &rarr; {<a href="Loader.html">Loader</a>}</span></h4>
+    <h4 class="name" id="Transformer"><span class="type-signature"></span>new Transformer<span class="signature">(request)</span><span class="type-signature"> &rarr; {<a href="Transformer.html">Transformer</a>}</span></h4>
     
     
 </dt>
@@ -47,7 +47,7 @@
     
     
     <div class="description">
-        Loader Class
+        Transformer Class
     </div>
     
 
@@ -128,7 +128,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="load.js.html">load.js</a>, line 1
+        <a href="transform.js.html">transform.js</a>, line 6
     </li></ul></dd>
     
     
@@ -149,7 +149,7 @@
     
             
 <div class="param-desc">
-    A new instance of Loader
+    A new instance of Transformer
 </div>
 
 
@@ -160,7 +160,7 @@
 	</dt>
 	<dd>
 		
-<span class="param-type"><a href="Loader.html">Loader</a></span>
+<span class="param-type"><a href="Transformer.html">Transformer</a></span>
 
 
 	</dd>
@@ -192,7 +192,7 @@
         <dl>
             
 <dt>
-    <h4 class="name" id="accumulateResult"><span class="type-signature"></span>accumulateResult<span class="signature">()</span><span class="type-signature"> &rarr; {null}</span></h4>
+    <h4 class="name" id="generateReply"><span class="type-signature">&lt;static> </span>TransformRequest#generateReply<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h4>
     
     
 </dt>
@@ -200,7 +200,7 @@
     
     
     <div class="description">
-        Push a result onto the result_list.
+        Wrapper for `NetsuiteToolkit.formatReply()`
     </div>
     
 
@@ -233,7 +233,142 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="load.js.html">load.js</a>, line 57
+        <a href="transform.js.html">transform.js</a>, line 151
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    The formatted reply from Netsuite
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">object</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="accumulateResult"><span class="type-signature"></span>accumulateResult<span class="signature">(The)</span><span class="type-signature"> &rarr; {null}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Adds a result to the `reply_list`
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>The</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">result</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="transform.js.html">transform.js</a>, line 58
     </li></ul></dd>
     
     
@@ -275,7 +410,7 @@
         
             
 <dt>
-    <h4 class="name" id="executeLoadRequest"><span class="type-signature"></span>executeLoadRequest<span class="signature">(Data)</span><span class="type-signature"> &rarr; {null}</span></h4>
+    <h4 class="name" id="executeTransformRequest"><span class="type-signature"></span>executeTransformRequest<span class="signature">(The)</span><span class="type-signature"> &rarr; {null}</span></h4>
     
     
 </dt>
@@ -283,8 +418,7 @@
     
     
     <div class="description">
-        Instantiate a new LoadRequest given load parameters and accumulate its result
-on result_list.
+        Executes a new TransformRequest, accumulating the result
     </div>
     
 
@@ -318,7 +452,7 @@ on result_list.
 	
         <tr>
             
-                <td class="name"><code>Data</code></td>
+                <td class="name"><code>The</code></td>
             
             
             <td class="type">
@@ -334,7 +468,7 @@ on result_list.
             
             
             
-            <td class="description last">representing load request parameters</td>
+            <td class="description last">request data</td>
         </tr>
 	
 	
@@ -365,7 +499,7 @@ on result_list.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="load.js.html">load.js</a>, line 45
+        <a href="transform.js.html">transform.js</a>, line 44
     </li></ul></dd>
     
     
@@ -415,7 +549,7 @@ on result_list.
     
     
     <div class="description">
-        Generate and return Loader reply for the requestor.
+        Wrapper for `NetsuiteToolkit.formatReply()`
     </div>
     
 
@@ -448,7 +582,7 @@ on result_list.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="load.js.html">load.js</a>, line 68
+        <a href="transform.js.html">transform.js</a>, line 69
     </li></ul></dd>
     
     
@@ -469,7 +603,7 @@ on result_list.
     
             
 <div class="param-desc">
-    A formatted reply object from NetsuiteToolkit
+    The formatted reply from Netsuite
 </div>
 
 
@@ -494,7 +628,7 @@ on result_list.
         
             
 <dt>
-    <h4 class="name" id="loadRecords"><span class="type-signature"></span>loadRecords<span class="signature">()</span><span class="type-signature"> &rarr; {null}</span></h4>
+    <h4 class="name" id="transformRecords"><span class="type-signature"></span>transformRecords<span class="signature">()</span><span class="type-signature"> &rarr; {null}</span></h4>
     
     
 </dt>
@@ -502,8 +636,7 @@ on result_list.
     
     
     <div class="description">
-        Iterate through the supplied parameters and load their related 
-records from NetSuite. Populate result_list or exception accordingly.
+        Iterates over each record calling `executeTransformRequest()`
     </div>
     
 
@@ -536,7 +669,7 @@ records from NetSuite. Populate result_list or exception accordingly.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="load.js.html">load.js</a>, line 25
+        <a href="transform.js.html">transform.js</a>, line 29
     </li></ul></dd>
     
     

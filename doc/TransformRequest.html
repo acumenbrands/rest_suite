@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Loader</title>
+    <title>JSDoc: Class: TransformRequest</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Class: Loader</h1>
+    <h1 class="page-title">Class: TransformRequest</h1>
     
     
 
@@ -27,7 +27,7 @@
     
 <header>
     <h2>
-    Loader
+    TransformRequest
     </h2>
     
 </header>  
@@ -39,7 +39,7 @@
     
         
 <dt>
-    <h4 class="name" id="Loader"><span class="type-signature"></span>new Loader<span class="signature">(request)</span><span class="type-signature"> &rarr; {<a href="Loader.html">Loader</a>}</span></h4>
+    <h4 class="name" id="TransformRequest"><span class="type-signature"></span>new TransformRequest<span class="signature">(the)</span><span class="type-signature"> &rarr; {<a href="TransformRequest.html">TransformRequest</a>}</span></h4>
     
     
 </dt>
@@ -47,7 +47,7 @@
     
     
     <div class="description">
-        Loader Class
+        TransformRequest Class
     </div>
     
 
@@ -81,7 +81,7 @@
 	
         <tr>
             
-                <td class="name"><code>request</code></td>
+                <td class="name"><code>the</code></td>
             
             
             <td class="type">
@@ -97,7 +97,7 @@
             
             
             
-            <td class="description last">The body of the HTTP Post request from the client</td>
+            <td class="description last">required information to transform a record</td>
         </tr>
 	
 	
@@ -128,7 +128,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="load.js.html">load.js</a>, line 1
+        <a href="transform.js.html">transform.js</a>, line 76
     </li></ul></dd>
     
     
@@ -149,7 +149,7 @@
     
             
 <div class="param-desc">
-    A new instance of Loader
+    A new instance of TransformRequest
 </div>
 
 
@@ -160,7 +160,7 @@
 	</dt>
 	<dd>
 		
-<span class="param-type"><a href="Loader.html">Loader</a></span>
+<span class="param-type"><a href="TransformRequest.html">TransformRequest</a></span>
 
 
 	</dd>
@@ -192,7 +192,7 @@
         <dl>
             
 <dt>
-    <h4 class="name" id="accumulateResult"><span class="type-signature"></span>accumulateResult<span class="signature">()</span><span class="type-signature"> &rarr; {null}</span></h4>
+    <h4 class="name" id="execute"><span class="type-signature"></span>execute<span class="signature">()</span><span class="type-signature"> &rarr; {null}</span></h4>
     
     
 </dt>
@@ -200,7 +200,8 @@
     
     
     <div class="description">
-        Push a result onto the result_list.
+        Transform a record for TransformRequest, alters its data
+using the given data and submits it for writing.
     </div>
     
 
@@ -233,7 +234,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="load.js.html">load.js</a>, line 57
+        <a href="transform.js.html">transform.js</a>, line 106
     </li></ul></dd>
     
     
@@ -275,7 +276,7 @@
         
             
 <dt>
-    <h4 class="name" id="executeLoadRequest"><span class="type-signature"></span>executeLoadRequest<span class="signature">(Data)</span><span class="type-signature"> &rarr; {null}</span></h4>
+    <h4 class="name" id="executeSublistProcessor"><span class="type-signature"></span>executeSublistProcessor<span class="signature">()</span><span class="type-signature"> &rarr; {null}</span></h4>
     
     
 </dt>
@@ -283,8 +284,8 @@
     
     
     <div class="description">
-        Instantiate a new LoadRequest given load parameters and accumulate its result
-on result_list.
+        Initialize a new `NetsuiteToolkit.SublistProcessor` using the given
+sublist data and execute it
     </div>
     
 
@@ -292,54 +293,6 @@ on result_list.
     
     
     
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>Data</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">representing load request parameters</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
     
     
     
@@ -365,7 +318,7 @@ on result_list.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="load.js.html">load.js</a>, line 45
+        <a href="transform.js.html">transform.js</a>, line 139
     </li></ul></dd>
     
     
@@ -407,7 +360,7 @@ on result_list.
         
             
 <dt>
-    <h4 class="name" id="generateReply"><span class="type-signature"></span>generateReply<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h4>
+    <h4 class="name" id="processSublists"><span class="type-signature"></span>processSublists<span class="signature">()</span><span class="type-signature"> &rarr; {null}</span></h4>
     
     
 </dt>
@@ -415,7 +368,8 @@ on result_list.
     
     
     <div class="description">
-        Generate and return Loader reply for the requestor.
+        Iterate over the list of sublist operations and call `executeSublistProcessor()`
+for each
     </div>
     
 
@@ -448,95 +402,7 @@ on result_list.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="load.js.html">load.js</a>, line 68
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    A formatted reply object from NetsuiteToolkit
-</div>
-
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type">object</span>
-
-
-	</dd>
-</dl>
-
-        
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="loadRecords"><span class="type-signature"></span>loadRecords<span class="signature">()</span><span class="type-signature"> &rarr; {null}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Iterate through the supplied parameters and load their related 
-records from NetSuite. Populate result_list or exception accordingly.
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="load.js.html">load.js</a>, line 25
+        <a href="transform.js.html">transform.js</a>, line 124
     </li></ul></dd>
     
     

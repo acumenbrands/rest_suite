@@ -8,3 +8,4 @@ Deleter                 = require('../lib/delete.js').Deleter;
 Upserter                = require('../lib/upsert.js').Upserter;
 UpsertRequest           = require('../lib/upsert.js').UpsertRequest;
 Transformer             = require('../lib/transform.js').Transformer;
+TransformRequest        = require('../lib/transform.js').TransformRequest;
