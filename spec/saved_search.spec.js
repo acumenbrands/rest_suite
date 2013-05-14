@@ -29,10 +29,6 @@ describe("SavedSearch", function() {
       this.newSavedSearch = new SavedSearch(recordType, searchId, lowerBound, batchSize);
     });
     
-    it("should populate the common object", function() {
-      expect(this.newSavedSearch.common).toEqual(new CommonObject());
-    });
-
     it("should set the record type", function() {
       expect(this.newSavedSearch.recordType).toEqual(recordType);
     });

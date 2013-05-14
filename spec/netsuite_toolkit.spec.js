@@ -3,11 +3,14 @@ require('./spec_helper.js');
 describe("NetsuiteToolkit", function() {
 
   beforeEach(function() {
-    global.nlapiInitializeRecord = function() {};
-    global.nlapiLoadRecord       = function() {};
-    global.nlapiDeleteRecord     = function() {};
-    global.nlapiTransformRecord  = function() {};
-    global.nlapiSubmitRecord     = function() {};
+    global.nlapiInitializeRecord = function() {}
+    global.nlapiLoadRecord       = function() {}
+    global.nlapiDeleteRecord     = function() {}
+    global.nlapiTransformRecord  = function() {}
+    global.nlapiSubmitRecord     = function() {}
+    global.nlapiSearchRecord     = function() {}
+    global.nlobjSearchFilter     = function() {}
+    global.nlobjSearchColumn     = function() {}
   });
 
   describe('initializeRecord()', function() {
@@ -209,6 +212,65 @@ describe("NetsuiteToolkit", function() {
     it('should call removeLineItem on record', function() {
       expect(this.record.removeLineItem).toHaveBeenCalledWith(this.sublist_name, this.index);
     });
+
+  });
+
+  describe('searchFilter()', function() {
+
+    beforeEach(function() {
+      this.field  = 'fieldname';
+      this.join   = 'anotherrecord';
+      this.value1 = 'comparison!';
+      this.value2 = 'somethingelse';
+      this.search_filter = {};
+      spyOn(global, 'nlobjSearchFilter').andReturn(this.search_filter);
+      this.result = NetsuiteToolkit.searchFilter(this.field, this.join,
+                                                 this.value1, this.value2);
+    });
+
+    it('should call nlobjSearchFilter', function() {
+      expect(global.nlobjSearchFilter).toHaveBeenCalledWith(this.field, this.join,
+                                                           this.value1, this.value2);
+    });
+
+    it('should return the object returned by nlobjSearchFilter', function() {
+      expect(this.result).toEqual(this.search_filter);
+    });
+
+  });
+
+  describe('searchColumn()', function() {
+
+    beforeEach(function() {
+      this.name          = 'fieldname';
+      this.join          = 'anotherrecord';
+      this.summary       = 'This is the summary';
+      this.search_column = {};
+      spyOn(global, 'nlobjSearchColumn').andReturn(this.search_column);
+      this.result = NetsuiteToolkit.searchColumn(this.name, this.join, this.summary);
+    });
+
+    it('should call nlobjSearchColumn', function() {
+      expect(global.nlobjSearchColumn).toHaveBeenCalledWith(this.name, this.join, this.summary);
+    });
+
+    it('should return the object returned by nlobjSearchColumn', function() {
+      expect(this.result).toEqual(this.search_column);
+    });
+
+  });
+
+  describe('searchRecords()', function() {
+
+    it('should call nlapiSearchRecord', function() {});
+    it('should return the object returned by nlapiSearchRecord', function() {});
+
+  });
+
+  describe('getIdFromRecord()', function() {
+
+    it('should call getId() on the given record', function() {});
+    it('should return the value returned by getId()', function() {});
 
   });
 
