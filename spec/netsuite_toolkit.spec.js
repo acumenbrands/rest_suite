@@ -55,7 +55,24 @@ describe("NetsuiteToolkit", function() {
 
   });
 
-  describe('deleteRecord()', function() {});
+  describe('deleteRecord()', function() {
+
+    beforeEach(function() {
+      this.record_type = 'salesorder';
+      this.internalid  = '12345';
+      spyOn(global, 'nlapiDeleteRecord').andReturn(this.internalid);
+      this.result = NetsuiteToolkit.deleteRecord(this.record_type, this.internalid);
+    });
+
+    it('should call nlapiDeleteRecord', function() {
+      expect(global.nlapiDeleteRecord).toHaveBeenCalledWith(this.record_type, this.internalid);
+    });
+
+    it('should return the results of nlapiDeleteRecord', function() {
+      expect(this.result).toEqual(this.internalid);
+    });
+
+  });
 
   describe('transformRecord()', function() {
 
