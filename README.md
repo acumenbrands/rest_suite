@@ -7,7 +7,7 @@ simultaneous connections per set of login credentials.  Note that NetSuite's poi
 system is seemingly arbitrary and we've tried to provide better error handling 
 wherever possible.
 
-## Contributing to netsuite-rest-client
+## Contributing to rest_suite
 
 rest_suite is built on vanilla JavaScript, using node and jasmine to provide a testing environment.  We
 suspect that NetSuite is using a version of Mozilla's JavaScript interpreter, but we can't be entirely sure.
