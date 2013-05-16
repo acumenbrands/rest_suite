@@ -52,8 +52,9 @@ In the NetSuite web interface, go to the documents dropdown and select:
 
  - Documents->Files->SuiteScripts
 
-Upload all .js files in lib here. Then proceed to the list of `Script` records. Create a new
-Script record using each operation file. List netsuite_toolkit.js as an included library on each.
+Upload all .js files in lib here.  Now go to Setup -> Customization -> Scripts -> New.
+
+Create a new Script record using each operation file. List netsuite_toolkit.js as an included library on each.
 The script record also assigns each HTTP function to a provided function name. In each Script,
 reference the appropriate post handler function in the "POST" text box. The function names should
 be provided without parentheses: `deletePostHandler()` just becomes `deletePostHandler`.
