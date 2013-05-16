@@ -5,6 +5,7 @@ LoadRequest             = require('../lib/load.js').LoadRequest;
 SavedSearch             = require('../lib/saved_search.js').SavedSearch;
 Searcher                = require('../lib/search.js').Searcher;
 Deleter                 = require('../lib/delete.js').Deleter;
+DeleteRequest           = require('../lib/delete.js').DeleteRequest;
 Upserter                = require('../lib/upsert.js').Upserter;
 UpsertRequest           = require('../lib/upsert.js').UpsertRequest;
 Transformer             = require('../lib/transform.js').Transformer;
