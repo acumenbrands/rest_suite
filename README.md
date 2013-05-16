@@ -41,7 +41,27 @@ exposed.  These functions are documented throughout the project and should be re
 
 ### Uploading to NetSuite
 
-We would appreciate it if someone with solid NetSuite understanding could fill this section in.
+The process of deployment is a somewhat involved manual process at the moment. It is possible
+to wrap all files into a zip and automate the process via a manifest, but this has not yet been
+implemented. Many files contain multiple classes that would normally exist in their own files
+specifically for this reason. The deploy process is painful enough as it is.
+
+In the NetSuite web interface, go to the documents dropdown and select:
+
+ - Documents->Files->SuiteScripts
+
+Upload all .js files in lib here. Then proceed to the list of `Script` records. Create a new
+Script record using each operation file. List netsuite_toolkit.js as an included library on each.
+The script record also assigns each HTTP function to a provided function name. In each Script,
+reference the appropriate post handler function in the "POST" text box. The function names should
+be provided without parentheses: `deletePostHandler()` just becomes `deletePostHandler`.
+
+From each Script record, generate a Script Deployment with an appropriate role/employee/account
+access for the credentials your client will be using. NetSuite calculates these permissions
+inclusively, so if one criteria out of any of them matches your credentials, it will provide access.
+
+The Script Deployment will list the endpoint URL to which you will send requests with the JSON body
+for the script's parameters.
 
 ### jspec
 
