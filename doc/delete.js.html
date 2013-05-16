@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: load.js</title>
+    <title>JSDoc: Source: delete.js</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Source: load.js</h1>
+    <h1 class="page-title">Source: delete.js</h1>
     
     
 
@@ -26,15 +26,15 @@
     <section>
         <article>
             <pre class="prettyprint source"><code>/**
- * Loader Class
- * @class Loader
+ * Deleter Class
+ * @class Deleter
  * @param {object} request The body of the HTTP Post request from the client
- * @return {Loader} A new instance of Loader
+ * @return {Deleter} A new instance of Deleter
  */
-this.Loader = (function() {
+this.Deleter = (function() {
   
   /** @constructor */
-  function Loader(request) {
+  function Deleter(request) {
     this.params      = request;
     this.result_list = [];
     this.exception   = null;
@@ -45,14 +45,14 @@ this.Loader = (function() {
    * records from NetSuite. Populate result_list or exception accordingly.
    * 
    * @method
-   * @memberof Loader
+   * @memberof Deleter
    * @return {null}
    */
-  Loader.prototype.loadRecords = function() {
+  Deleter.prototype.deleteRecords = function() {
     try {
       for(index in this.params) {
-        load_params = this.params[index];
-        this.executeLoadRequest(load_params);
+        delete_params = this.params[index];
+        this.executeDeleteRequest(delete_params);
       }
     } catch(exception) {
       this.exception = exception;
@@ -60,97 +60,97 @@ this.Loader = (function() {
   }
 
   /**
-   * Instantiate a new LoadRequest given load parameters and accumulate its result
+   * Instantiate a new DeleteRequest given load parameters and accumulate its result
    * on result_list.
    * 
    * @method
-   * @memberof Loader
+   * @memberof Deleter
    * @param {object} Data representing load request parameters
    * @return {null}
    */
-  Loader.prototype.executeLoadRequest = function(load_params) {
-    load_request = new LoadRequest(load_params['record_type'], load_params['internalid']);
-    this.accumulateResult(load_request.execute());
+  Deleter.prototype.executeDeleteRequest = function(delete_params) {
+    delete_request = new DeleteRequest(delete_params['record_type'], delete_params['internalid']);
+    this.accumulateResult(delete_request.execute());
   }
 
   /**
    * Push a result onto the result_list.
    * 
    * @method
-   * @memberof Loader
+   * @memberof Deleter
    * @return {null}
    */
-  Loader.prototype.accumulateResult = function(result) {
+  Deleter.prototype.accumulateResult = function(result) {
     this.result_list.push(result);
   }
   
   /**
-   * Generate and return Loader reply for the requestor.
+   * Generate and return Deleter reply for the requestor.
    * 
    * @method
-   * @memberof Loader
+   * @memberof Deleter
    * @return {object} A formatted reply object from NetsuiteToolkit
    */
-  Loader.prototype.generateReply = function() {
+  Deleter.prototype.generateReply = function() {
     return NetsuiteToolkit.formatReply(this.params, this.result_list, this.exception);
   }
 
-  return Loader;
+  return Deleter;
 })();
 
 /**
- * LoadRequest Class
- * @class LoadRequest
+ * DeleteRequest Class
+ * @class DeleteRequest
  * @param {string} record_type the String representing a NetSuite record type
  * @param {string} internalid the String representing a NetSuite internal id
- * @return {LoadRequest} A new instance of LoadRequest
+ * @return {DeleteRequest} A new instance of DeleteRequest
  */
-this.LoadRequest = (function() {
+this.DeleteRequest = (function() {
 
   /** @constructor */
-  function LoadRequest(record_type, internalid) {
+  function DeleteRequest(record_type, internalid) {
     this.record_type = record_type;
     this.internalid  = internalid;
-    this.record      = null;
+    this.result      = null;
     this.exception   = null;
   }
 
   /**
-   * Load a record for a LoadRequest and generate a reply for it.
+   * Load a record for a DeleteRequest and generate a reply for it.
    *
    * @method
-   * @memberof LoadRequest
+   * @memberof DeleteRequest
    * @return {null}
    */
-  LoadRequest.prototype.execute = function() {
-    this.loadRecord();
+  DeleteRequest.prototype.execute = function() {
+    this.deleteRecord();
     return this.generateReply();
   }
 
 
   /**
-   * Load a record for a LoadRequest and catch any exceptions.
+   * Load a record for a DeleteRequest and catch any exceptions.
    * 
    * @method
-   * @memberof LoadRequest
+   * @memberof DeleteRequest
    * @return {null}
    */
-  LoadRequest.prototype.loadRecord = function() {
+  DeleteRequest.prototype.deleteRecord = function() {
     try {
-      this.record = NetsuiteToolkit.loadRecord(this.record_type, this.internalid);
+      this.result = NetsuiteToolkit.deleteRecord(this.record_type, this.internalid);
     } catch(exception) {
       this.exception = exception;
     }
   }
   
   /**
-   * Set parameters for a LoadRequest.
+   * Set parameters for a DeleteRequest.
    * 
    * @method
-   * @memberof LoadRequest
+   * @memberof DeleteRequest
    * @return {object} The parameter object
    */
-  LoadRequest.prototype.generateParams = function() {
+  DeleteRequest.prototype.generateParams = function() {
     params = {
       'internalid':  this.internalid,
       'record_type': this.record_type
@@ -159,34 +159,34 @@ this.LoadRequest = (function() {
   }
 
   /**
-   * Generate a LoadRequest reply for the requestor.
+   * Generate a DeleteRequest reply for the requestor.
    * 
    * @method
-   * @memberof LoadRequest
+   * @memberof DeleteRequest
    * @return {object} A formatted reply object from NetsuiteToolkit
    */
-  LoadRequest.prototype.generateReply = function() {
+  DeleteRequest.prototype.generateReply = function() {
     params = this.generateParams();
-    return NetsuiteToolkit.formatReply(params, this.record, this.exception);
+    return NetsuiteToolkit.formatReply(params, this.result, this.exception);
   }
 
-  return LoadRequest;
+  return DeleteRequest;
 })();
 
 /** @namespace global */
 
 /**
- * The script function that Netsuite will call to execute the Loader process
+ * The script function that Netsuite will call to execute the Deleter process
  * 
  * @method
- * @param {object} request The HTTP request body
+ * @param {object} request The object representing the HTTP request body
  * @memberof global
  * @return {object} The formatted results of the request
  */
-var loadPostHandler = function(request) {
-  loader = new Loader(request);
-  loader.loadRecords();
-  return loader.generateReply();
+var deletePostHandler = function(request) {
+  deleter = new Deleter(request);
+  deleter.deleteRecords();
+  return deleter.generateReply();
 }
 </code></pre>
         </article>

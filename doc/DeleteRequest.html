@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: LoadRequest</title>
+    <title>JSDoc: Class: DeleteRequest</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Class: LoadRequest</h1>
+    <h1 class="page-title">Class: DeleteRequest</h1>
     
     
 
@@ -27,7 +27,7 @@
     
 <header>
     <h2>
-    LoadRequest
+    DeleteRequest
     </h2>
     
 </header>  
@@ -39,7 +39,7 @@
     
         
 <dt>
-    <h4 class="name" id="LoadRequest"><span class="type-signature"></span>new LoadRequest<span class="signature">(record_type, internalid)</span><span class="type-signature"> &rarr; {<a href="LoadRequest.html">LoadRequest</a>}</span></h4>
+    <h4 class="name" id="DeleteRequest"><span class="type-signature"></span>new DeleteRequest<span class="signature">(record_type, internalid)</span><span class="type-signature"> &rarr; {<a href="DeleteRequest.html">DeleteRequest</a>}</span></h4>
     
     
 </dt>
@@ -47,7 +47,7 @@
     
     
     <div class="description">
-        LoadRequest Class
+        DeleteRequest Class
     </div>
     
 
@@ -151,7 +151,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="load.js.html">load.js</a>, line 74
+        <a href="delete.js.html">delete.js</a>, line 74
     </li></ul></dd>
     
     
@@ -172,7 +172,7 @@
     
             
 <div class="param-desc">
-    A new instance of LoadRequest
+    A new instance of DeleteRequest
 </div>
 
 
@@ -183,7 +183,7 @@
 	</dt>
 	<dd>
 		
-<span class="param-type"><a href="LoadRequest.html">LoadRequest</a></span>
+<span class="param-type"><a href="DeleteRequest.html">DeleteRequest</a></span>
 
 
 	</dd>
@@ -215,7 +215,7 @@
         <dl>
             
 <dt>
-    <h4 class="name" id="execute"><span class="type-signature"></span>execute<span class="signature">()</span><span class="type-signature"> &rarr; {null}</span></h4>
+    <h4 class="name" id="deleteRecord"><span class="type-signature"></span>deleteRecord<span class="signature">()</span><span class="type-signature"> &rarr; {null}</span></h4>
     
     
 </dt>
@@ -223,7 +223,7 @@
     
     
     <div class="description">
-        Load a record for a LoadRequest and generate a reply for it.
+        Load a record for a DeleteRequest and catch any exceptions.
     </div>
     
 
@@ -256,7 +256,90 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="load.js.html">load.js</a>, line 98
+        <a href="delete.js.html">delete.js</a>, line 111
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">null</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="execute"><span class="type-signature"></span>execute<span class="signature">()</span><span class="type-signature"> &rarr; {null}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Load a record for a DeleteRequest and generate a reply for it.
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="delete.js.html">delete.js</a>, line 98
     </li></ul></dd>
     
     
@@ -306,7 +389,7 @@
     
     
     <div class="description">
-        Set parameters for a LoadRequest.
+        Set parameters for a DeleteRequest.
     </div>
     
 
@@ -339,7 +422,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="load.js.html">load.js</a>, line 126
+        <a href="delete.js.html">delete.js</a>, line 126
     </li></ul></dd>
     
     
@@ -393,7 +476,7 @@
     
     
     <div class="description">
-        Generate a LoadRequest reply for the requestor.
+        Generate a DeleteRequest reply for the requestor.
     </div>
     
 
@@ -426,7 +509,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="load.js.html">load.js</a>, line 141
+        <a href="delete.js.html">delete.js</a>, line 141
     </li></ul></dd>
     
     
@@ -459,89 +542,6 @@
 	<dd>
 		
 <span class="param-type">object</span>
-
-
-	</dd>
-</dl>
-
-        
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="loadRecord"><span class="type-signature"></span>loadRecord<span class="signature">()</span><span class="type-signature"> &rarr; {null}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Load a record for a LoadRequest and catch any exceptions.
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="load.js.html">load.js</a>, line 111
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type">null</span>
 
 
 	</dd>

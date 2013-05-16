@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: LoadRequest</title>
+    <title>JSDoc: Class: Deleter</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Class: LoadRequest</h1>
+    <h1 class="page-title">Class: Deleter</h1>
     
     
 
@@ -27,7 +27,7 @@
     
 <header>
     <h2>
-    LoadRequest
+    Deleter
     </h2>
     
 </header>  
@@ -39,7 +39,7 @@
     
         
 <dt>
-    <h4 class="name" id="LoadRequest"><span class="type-signature"></span>new LoadRequest<span class="signature">(record_type, internalid)</span><span class="type-signature"> &rarr; {<a href="LoadRequest.html">LoadRequest</a>}</span></h4>
+    <h4 class="name" id="Deleter"><span class="type-signature"></span>new Deleter<span class="signature">(request)</span><span class="type-signature"> &rarr; {<a href="Deleter.html">Deleter</a>}</span></h4>
     
     
 </dt>
@@ -47,7 +47,7 @@
     
     
     <div class="description">
-        LoadRequest Class
+        Deleter Class
     </div>
     
 
@@ -81,13 +81,13 @@
 	
         <tr>
             
-                <td class="name"><code>record_type</code></td>
+                <td class="name"><code>request</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">object</span>
 
 
             
@@ -97,30 +97,7 @@
             
             
             
-            <td class="description last">the String representing a NetSuite record type</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>internalid</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">the String representing a NetSuite internal id</td>
+            <td class="description last">The body of the HTTP Post request from the client</td>
         </tr>
 	
 	
@@ -151,7 +128,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="load.js.html">load.js</a>, line 74
+        <a href="delete.js.html">delete.js</a>, line 1
     </li></ul></dd>
     
     
@@ -172,7 +149,7 @@
     
             
 <div class="param-desc">
-    A new instance of LoadRequest
+    A new instance of Deleter
 </div>
 
 
@@ -183,7 +160,7 @@
 	</dt>
 	<dd>
 		
-<span class="param-type"><a href="LoadRequest.html">LoadRequest</a></span>
+<span class="param-type"><a href="Deleter.html">Deleter</a></span>
 
 
 	</dd>
@@ -215,7 +192,7 @@
         <dl>
             
 <dt>
-    <h4 class="name" id="execute"><span class="type-signature"></span>execute<span class="signature">()</span><span class="type-signature"> &rarr; {null}</span></h4>
+    <h4 class="name" id="accumulateResult"><span class="type-signature"></span>accumulateResult<span class="signature">()</span><span class="type-signature"> &rarr; {null}</span></h4>
     
     
 </dt>
@@ -223,7 +200,7 @@
     
     
     <div class="description">
-        Load a record for a LoadRequest and generate a reply for it.
+        Push a result onto the result_list.
     </div>
     
 
@@ -256,7 +233,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="load.js.html">load.js</a>, line 98
+        <a href="delete.js.html">delete.js</a>, line 56
     </li></ul></dd>
     
     
@@ -298,7 +275,7 @@
         
             
 <dt>
-    <h4 class="name" id="generateParams"><span class="type-signature"></span>generateParams<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h4>
+    <h4 class="name" id="deleteRecords"><span class="type-signature"></span>deleteRecords<span class="signature">()</span><span class="type-signature"> &rarr; {null}</span></h4>
     
     
 </dt>
@@ -306,7 +283,8 @@
     
     
     <div class="description">
-        Set parameters for a LoadRequest.
+        Iterate through the supplied parameters and load their related 
+records from NetSuite. Populate result_list or exception accordingly.
     </div>
     
 
@@ -339,7 +317,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="load.js.html">load.js</a>, line 126
+        <a href="delete.js.html">delete.js</a>, line 24
     </li></ul></dd>
     
     
@@ -359,10 +337,6 @@
     <h5>Returns:</h5>
     
             
-<div class="param-desc">
-    The parameter object
-</div>
-
 
 
 <dl>
@@ -371,7 +345,139 @@
 	</dt>
 	<dd>
 		
+<span class="param-type">null</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="executeDeleteRequest"><span class="type-signature"></span>executeDeleteRequest<span class="signature">(Data)</span><span class="type-signature"> &rarr; {null}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Instantiate a new DeleteRequest given load parameters and accumulate its result
+on result_list.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>Data</code></td>
+            
+            
+            <td class="type">
+            
+                
 <span class="param-type">object</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">representing load request parameters</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="delete.js.html">delete.js</a>, line 44
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">null</span>
 
 
 	</dd>
@@ -393,7 +499,7 @@
     
     
     <div class="description">
-        Generate a LoadRequest reply for the requestor.
+        Generate and return Deleter reply for the requestor.
     </div>
     
 
@@ -426,7 +532,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="load.js.html">load.js</a>, line 141
+        <a href="delete.js.html">delete.js</a>, line 67
     </li></ul></dd>
     
     
@@ -459,89 +565,6 @@
 	<dd>
 		
 <span class="param-type">object</span>
-
-
-	</dd>
-</dl>
-
-        
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="loadRecord"><span class="type-signature"></span>loadRecord<span class="signature">()</span><span class="type-signature"> &rarr; {null}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Load a record for a LoadRequest and catch any exceptions.
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="load.js.html">load.js</a>, line 111
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type">null</span>
 
 
 	</dd>

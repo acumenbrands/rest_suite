@@ -113,6 +113,164 @@
         <dl>
             
 <dt>
+    <h4 class="name" id="deleteRecord"><span class="type-signature">&lt;static> </span>deleteRecord<span class="signature">(record_type, interalid)</span><span class="type-signature"> &rarr; {number}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Requests a record be deleted from NetSuite's database by id (internal_id in NetSuite parlance)
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>record_type</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The String representing a record type</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>interalid</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The String representing a NetSuite internal_id</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 43
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    The number representing the internalid of the record deleted
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">number</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
     <h4 class="name" id="formatException"><span class="type-signature">&lt;static> </span>formatException<span class="signature">(exception)</span><span class="type-signature"> &rarr; {object}</span></h4>
     
     
@@ -202,7 +360,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 176
+        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 259
     </li></ul></dd>
     
     
@@ -383,7 +541,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 152
+        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 235
     </li></ul></dd>
     
     
@@ -416,6 +574,159 @@
 	<dd>
 		
 <span class="param-type">object</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="getIdFromRecord"><span class="type-signature">&lt;static> </span>getIdFromRecord<span class="signature">(record)</span><span class="type-signature"> &rarr; {number}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Removes a line item at a given index for a given sublist field.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>record</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">nlobjRecord</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">An instance of nlobjRecord</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code></code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 221
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    The number representing the record id
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">number</span>
 
 
 	</dd>
@@ -541,7 +852,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 79
+        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 102
     </li></ul></dd>
     
     
@@ -745,7 +1056,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 94
+        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 117
     </li></ul></dd>
     
     
@@ -1057,7 +1368,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 124
+        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 147
     </li></ul></dd>
     
     
@@ -1388,7 +1699,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 138
+        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 161
     </li></ul></dd>
     
     
@@ -1417,6 +1728,649 @@
 	<dd>
 		
 <span class="param-type">null</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="searchColumn"><span class="type-signature">&lt;static> </span>searchColumn<span class="signature">(field, join, summary)</span><span class="type-signature"> &rarr; {nlobjSearchColumn}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Removes a line item at a given index for a given sublist field.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>field</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The string representing the name of the record field</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>join</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The name of a field to join</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>summary</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The summary of the column</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code></code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 192
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    A new instance of nlobjSearchColumn
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">nlobjSearchColumn</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="searchFilter"><span class="type-signature">&lt;static> </span>searchFilter<span class="signature">(field, join, value1, value2)</span><span class="type-signature"> &rarr; {nlobjSearchFilter}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Removes a line item at a given index for a given sublist field.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>field</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The string representing the name of the record field</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>join</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The name of a field to join</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>value1</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The string representing the value for comparison</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>value2</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The string representing the second value for comparison</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code></code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 177
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    A new instance of nlobjSearchFilter
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">nlobjSearchFilter</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="searchRecord"><span class="type-signature">&lt;static> </span>searchRecord<span class="signature">(record_type, search_id, search_filters, search_columns)</span><span class="type-signature"> &rarr; {array}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Removes a line item at a given index for a given sublist field.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>record_type</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The string representing the record type</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>search_id</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The string representing the search id</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>search_filters</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">array</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The array containing a set on nlobjSearchFilter objects</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>search_columns</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">array</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The array containing a set on nlobjSearchColumn objects</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code></code></td>
+            
+            
+            <td class="type">
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 208
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    The array containing the results of the search
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">array</span>
 
 
 	</dd>
@@ -1565,7 +2519,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 66
+        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 89
     </li></ul></dd>
     
     
@@ -1788,7 +2742,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 110
+        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 133
     </li></ul></dd>
     
     
@@ -1965,7 +2919,208 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 50
+        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 73
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">null</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="transformRecord"><span class="type-signature">&lt;static> </span>transformRecord<span class="signature">(source_type, internalid, result_type, values)</span><span class="type-signature"> &rarr; {null}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Requests a record from NetSuite's database by id (internal_id in NetSuite parlance)
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>source_type</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The String representing a source record type</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>internalid</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The String representing the internalid of the source record</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>result_type</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The String representing a result record type</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>values</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The object containing set of values to be populated onto the
+                            transformed record</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="netsuite_toolkit.js.html">netsuite_toolkit.js</a>, line 59
     </li></ul></dd>
     
     
@@ -2020,13 +3175,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="Initializer.html">Initializer</a></li><li><a href="Loader.html">Loader</a></li><li><a href="LoadRequest.html">LoadRequest</a></li><li><a href="NetsuiteToolkit.SublistProcessor.html">SublistProcessor</a></li><li><a href="Transformer.html">Transformer</a></li><li><a href="TransformRequest.html">TransformRequest</a></li><li><a href="Upserter.html">Upserter</a></li><li><a href="UpsertRequest.html">UpsertRequest</a></li></ul><h3>Namespaces</h3><ul><li><a href="global.html">global</a></li><li><a href="NetsuiteToolkit.html">NetsuiteToolkit</a></li><li><a href="NetsuiteToolkit.RecordProcessor.html">RecordProcessor</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="Deleter.html">Deleter</a></li><li><a href="DeleteRequest.html">DeleteRequest</a></li><li><a href="Initializer.html">Initializer</a></li><li><a href="Loader.html">Loader</a></li><li><a href="LoadRequest.html">LoadRequest</a></li><li><a href="NetsuiteToolkit.SublistProcessor.html">SublistProcessor</a></li><li><a href="SavedSearch.html">SavedSearch</a></li><li><a href="Searcher.html">Searcher</a></li><li><a href="Transformer.html">Transformer</a></li><li><a href="TransformRequest.html">TransformRequest</a></li><li><a href="Upserter.html">Upserter</a></li><li><a href="UpsertRequest.html">UpsertRequest</a></li></ul><h3>Namespaces</h3><ul><li><a href="global.html">global</a></li><li><a href="NetsuiteToolkit.html">NetsuiteToolkit</a></li><li><a href="NetsuiteToolkit.RecordProcessor.html">RecordProcessor</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.1.1</a> on Tue May 14 2013 09:45:47 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.1.1</a> on Thu May 16 2013 11:13:41 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

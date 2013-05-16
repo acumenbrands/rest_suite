@@ -43,15 +43,128 @@
     <section>
         <article><h1>rest_suite</h1>
 
-<p>Server-side Javascript library that wraps parts of the Netsuite SuiteScript API</p>
+<p>Server-side Javascript library that wraps parts of the Netsuite SuiteScript API (v2010.1).  This
+interface should be more performant than the SOAP based interface as it allows 50
+simultaneous connections per set of login credentials.  Note that NetSuite&#39;s point
+system is seemingly arbitrary and we&#39;ve tried to provide better error handling 
+wherever possible.</p>
 
-<h2>note</h2>
+<h2>Contributing to netsuite-rest-client</h2>
 
-<ul><li>when <code>id</code> is seen, it can generally be assumed to be <code>internal_id</code> in netsuite</li><li>each script is its own endpoint</li><li>every object within the scrips are private</li><li>every endpoint is a post</li><li>actions are taken based on the request body of the post</li><li>netsuite documentation is provided in doc/netsuite/index.html</li><li>project documentation is provided at doc/index.html</li></ul>
+<p>rest_suite is built on vanilla JavaScript, using node and jasmine to provide a testing environment.  We
+suspect that NetSuite is using a version of Mozilla&#39;s JavaScript interpreter, but we can&#39;t be entirely sure.
+This is the reason that we chose vanilla JavaScript over an alternative like CoffeeScript.  Cross compliation
+issues could be a nightmare as NetSuite is not to be trusted.  Where possible, be explicit and direct with 
+your code.</p>
 
-<h2>data-struct reference</h2>
+<h3>Getting Up and Running</h3>
 
-<p>Build out README sections to explain each key.</p>
+<ul><li>Install node.js and npm</li><li>Run <code>./jspec</code></li></ul>
+
+<h3>General Contribution Process</h3>
+
+<ul><li>Check out the latest master to make sure the feature hasn&#39;t been implemented or the bug hasn&#39;t been fixed yet</li><li>Check out the issue tracker to make sure someone already hasn&#39;t requested it and/or contributed it</li><li>Fork the project</li><li>Start a feature/bugfix branch and commit atomically</li><li>Commit and push until you are happy with your contribution</li><li>Be sure to test your code and make sure that all tests pass before submitting a pullrequest.</li></ul>
+
+<h2>Copyright</h2>
+
+<p>Copyright (c) 2012 Acumen Brands, Inc. See LICENSE.txt for
+further details.</p>
+
+<h2>Usage</h2>
+
+<p>Generally, each individual script is to be uploaded to NetSuite as a single endpoint with a single function being
+exposed.  These functions are documented throughout the project and should be relatively easy to ferret out.</p>
+
+<h3>Uploading to NetSuite</h3>
+
+<p>The process of deployment is a somewhat involved manual process at the moment. It is possible
+to wrap all files into a zip and automate the process via a manifest, but this has not yet been
+implemented. Many files contain multiple classes that would normally exist in their own files
+specifically for this reason. The deploy process is painful enough as it is.</p>
+
+<p>In the NetSuite web interface, go to the documents dropdown and select:</p>
+
+<ul><li>Documents-&gt;Files-&gt;SuiteScripts</li></ul>
+
+<p>Upload all .js files in lib here. Then proceed to the list of <code>Script</code> records. Create a new
+Script record using each operation file. List netsuite_toolkit.js as an included library on each.
+The script record also assigns each HTTP function to a provided function name. In each Script,
+reference the appropriate post handler function in the &quot;POST&quot; text box. The function names should
+be provided without parentheses: <code>deletePostHandler()</code> just becomes <code>deletePostHandler</code>.</p>
+
+<p>From each Script record, generate a Script Deployment with an appropriate role/employee/account
+access for the credentials your client will be using. NetSuite calculates these permissions
+inclusively, so if one criteria out of any of them matches your credentials, it will provide access.</p>
+
+<p>The Script Deployment will list the endpoint URL to which you will send requests with the JSON body
+for the script&#39;s parameters.</p>
+
+<h3>jspec</h3>
+
+<p>We&#39;ve added some handy tools in <code>jspec</code> to perform most of the mundane tasks associated with the project.
+Here&#39;s a quick reference:</p>
+
+<ul><li><code>./jspec</code> Set up your environment and run all tests</li><li><code>./jspec --doc</code> Generate HTML documentation in <code>doc/</code> with JSDoc3</li><li><code>./jspec --reset</code> Glear out installed node modules</li><li><code>./jspec --mono</code>  Run tests without color</li><li><code>./jspec --debug</code> Fire up a node debugger with jasmine</li></ul>
+
+<h2>Documentation</h2>
+
+<p>HTML formatted documentation can be found in <code>doc</code>.  This has been generated with JSDoc3 and
+includes documentation provided by NetSuite for SuiteScript v2010.1 for easy reference.  Documentation
+is re-generated for each tagged release.  If you&#39;d like to generate docs on the fly, simply run <code>./jspec --doc</code></p>
+
+<ul><li>Generally, anywhere you see <code>id</code> mentioed, it can safely be assumed to be <code>internal_id</code> in netsuite</li><li>Each script has one endpoint and only one endpoint.  This is due to the nature of NetSuite&#39;s RESTlet interface.</li><li>Furthermore, each endpoint should respond to a POST request</li><li>All actions for a given endpoint are taken based on the request body of the POST</li></ul>
+
+<h1>Basic Input Reference</h1>
+
+<p>This is a basic overview of the JSON object payload for each request. A &#39;+&#39; next to a row
+indicates an array; a &#39;-&#39; indicates a key in a hash.
+## Initialize</p>
+
+<h3>Description</h3>
+
+<p>Initialize returns a blank record of the given type with all mandatory keys pre-populated with null or default values. This does not expose non-mandatory fields in the returned hash, those must be filled in manually client-side.</p>
+
+<h3>Request Structure</h3>
+
+<pre><code>-record_type</code></pre>
+
+<h2>Load</h2>
+
+<h3>Description</h3>
+
+<p>Load will request a given record from the Netsuite database by internalid. It will return the
+requested record will all mandatory and populated schema. Non-mandatory and custom fields with
+blank values will not be populated in the returned hash.</p>
+
+<h3>Request Structure</h3>
+
+<pre><code>+ single record action
+  - id
+  - record_type</code></pre>
+
+<h2>Delete</h2>
+
+<h3>Description</h3>
+
+<p>Delete will destroy records in Netsuite&#39;s database. If successful, the id of the removed record
+will be returned. Otherwise, an exception will be raised.</p>
+
+<h3>Request Structure</h3>
+
+<pre><code>+ single record action
+  - id
+  - record_type</code></pre>
+
+<h2>Upsert</h2>
+
+<h3>Description</h3>
+
+<p>Upsert requests a new records be written to the database or an existing record be altered.
+If an internalid is present id the &#39;id&#39; field, then it will attempt to update a record
+loaded using the type and id, otherwise throwing an exception if it does not exists. If no
+id is present, it will attempt to create a new record using the values given.</p>
+
+<h3>Request Structure</h3>
 
 <pre><code>+ single record action
   - id
@@ -65,7 +178,88 @@
           - literals
         + excise
           - match_field (unique field to search against)
-          - value</code></pre></article>
+          - value</code></pre>
+
+<h2>Transform</h2>
+
+<h3>Description</h3>
+
+<p>Transform initializes a new transaction from another transaction record in a workflow. In this case
+sublist items can be filtered (altered somewhat or removed if need be) but cannot be added if they
+do not exist on the original transaction. A record is is mandatory for transform.</p>
+
+<h3>Request Structure</h3>
+
+<pre><code>+ single record action
+  - id
+  - source_type
+  - result_type
+  + literals
+    + sublists
+      - name
+      + line_items
+        + create_or_update
+          - match_field
+          - literals
+        + excise
+          - match_field (unique field to search against)
+          - value</code></pre>
+
+<h2>Saved Search</h2>
+
+<h3>Description</h3>
+
+<p>Saved search will request the results of an already created saved search from Netsuite. Results
+<em>must</em> be sorted by internalid of the records returned in order to properly paginate the results.
+This is a limitation of the SuiteScript environment that we have not yet found a workaround for.</p>
+
+<h3>Request Structure</h3>
+
+<pre><code>- record_type
+- search_id
+- lower_bound
+- batch_size</code></pre>
+
+<h2>Search (Ad-Hoc)</h2>
+
+<h3>Description</h3>
+
+<p>Search allows you to build a search on the fly. As with saved searches, results generally should
+be filtered by internalid, however with ad-hoc search this is not mandatory. If another criteria
+could reasonably be used to sort, the sort boolean is exposed for the client to use. If multiple
+result columns have this set to true, only the last column in the list will be processed. A column
+to sort by internalid is always added, so if no sort is provided the search will always be sorted
+by internalid.</p>
+
+<p>Formula filtering is also exposed and is a required alternative to explicit string matching in
+RESTlet operation to avoid hitting the execution limit. It produces a SQL function that results
+in 1 or 0. In the event a formula search is used, the name of the filter must be &#39;formulanumeric&#39;,
+the value must be &#39;IS&#39;, and the value will be 1 or 0.</p>
+
+<p>For the formula:
+  - name:       The field on which the script is filtering
+  - values:     An array of possible values, the comparison is
+  - comparison: A valid SQL comparison or equality operator
+  - join:       &#39;AND&#39; or &#39;OR&#39; to join all comparisons of &#39;field&#39; to a single value</p>
+
+<h3>Request Structure</h3>
+
+<pre><code>- record_type
+- batch_size
+- lower_bound
++ search_filters
+  - name
+  - operator
+  - value
+  - formula (optional)
+    - field
+    + values
+    - comparison
+    - join
++ search_columns
+  - name
+  - join
+  - sort (boolean)</code></pre></article>
     </section>
 
 
@@ -76,13 +270,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="Initializer.html">Initializer</a></li><li><a href="Loader.html">Loader</a></li><li><a href="LoadRequest.html">LoadRequest</a></li><li><a href="NetsuiteToolkit.SublistProcessor.html">SublistProcessor</a></li><li><a href="Transformer.html">Transformer</a></li><li><a href="TransformRequest.html">TransformRequest</a></li><li><a href="Upserter.html">Upserter</a></li><li><a href="UpsertRequest.html">UpsertRequest</a></li></ul><h3>Namespaces</h3><ul><li><a href="global.html">global</a></li><li><a href="NetsuiteToolkit.html">NetsuiteToolkit</a></li><li><a href="NetsuiteToolkit.RecordProcessor.html">RecordProcessor</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="Deleter.html">Deleter</a></li><li><a href="DeleteRequest.html">DeleteRequest</a></li><li><a href="Initializer.html">Initializer</a></li><li><a href="Loader.html">Loader</a></li><li><a href="LoadRequest.html">LoadRequest</a></li><li><a href="NetsuiteToolkit.SublistProcessor.html">SublistProcessor</a></li><li><a href="SavedSearch.html">SavedSearch</a></li><li><a href="Searcher.html">Searcher</a></li><li><a href="Transformer.html">Transformer</a></li><li><a href="TransformRequest.html">TransformRequest</a></li><li><a href="Upserter.html">Upserter</a></li><li><a href="UpsertRequest.html">UpsertRequest</a></li></ul><h3>Namespaces</h3><ul><li><a href="global.html">global</a></li><li><a href="NetsuiteToolkit.html">NetsuiteToolkit</a></li><li><a href="NetsuiteToolkit.RecordProcessor.html">RecordProcessor</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.1.1</a> on Tue May 14 2013 09:45:47 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.1.1</a> on Thu May 16 2013 11:13:41 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>
