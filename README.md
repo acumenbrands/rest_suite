@@ -72,7 +72,7 @@ The Script Deployment records will list endpoint URLs that you POST your JSON ob
 object and include it as the request body. The authentication header must include your account credentials
 assigned to the following variables in a string assigned to 'authorization' in your request header.
 
-  - "NLAuth nlauth_account=<business account id>,nlauth_email=<login email>,nlauth_signature=<password>,nlauth_role=<role_id>"
+    "NLAuth nlauth_account=<business account id>,nlauth_email=<login email>,nlauth_signature=<password>,nlauth_role=<role_id>"
 
 ### jspec
 
