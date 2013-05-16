@@ -66,6 +66,14 @@ inclusively, so if one criteria out of any of them matches your credentials, it 
 The Script Deployment will list the endpoint URL to which you will send requests with the JSON body
 for the script's parameters.
 
+## Usage
+
+The Script Deployment records will list endpoint URLs that you POST your JSON objects to. Simply build the JSON
+object and include it as the request body. The authentication header must include your account credentials
+assigned to the following variables in a string assigned to 'authorization' in your request header.
+
+  - "NLAuth nlauth_account=<business account id>,nlauth_email=<login email>,nlauth_signature=<password>,nlauth_role=<role_id>"
+
 ### jspec
 
 We've added some handy tools in `jspec` to perform most of the mundane tasks associated with the project.
@@ -92,6 +100,7 @@ is re-generated for each tagged release.  If you'd like to generate docs on the 
 
 This is a basic overview of the JSON object payload for each request. A '+' next to a row
 indicates an array; a '-' indicates a key in a hash.
+
 ## Initialize
 
 ### Description
