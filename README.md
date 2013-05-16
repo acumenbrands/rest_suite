@@ -192,7 +192,9 @@ This is a limitation of the SuiteScript environment that we have not yet found a
 Search allows you to build a search on the fly. As with saved searches, results generally should
 be filtered by internalid, however with ad-hoc search this is not mandatory. If another criteria
 could reasonably be used to sort, the sort boolean is exposed for the client to use. If multiple
-result columns have this set to true, only the last column in the list will be processed.
+result columns have this set to true, only the last column in the list will be processed. A column
+to sort by internalid is always added, so if no sort is provided the search will always be sorted
+by internalid.
 
 Formula filtering is also exposed and is a required alternative to explicit string matching in
 RESTlet operation to avoid hitting the execution limit. It produces a SQL function that results
