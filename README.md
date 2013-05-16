@@ -69,6 +69,9 @@ is re-generated for each tagged release.  If you'd like to generate docs on the 
 
 This needs a lot of explanation, but the basic structure of data coming into rest_suite should look something like this:
 
+## Initialize
+## Load/Delete
+## Upsert/Transform
     + single record action
       - id
       - record_type
@@ -82,3 +85,6 @@ This needs a lot of explanation, but the basic structure of data coming into res
             + excise
               - match_field (unique field to search against)
               - value
+
+## Saved Search
+## Search (Ad-Hoc)
