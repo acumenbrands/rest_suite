@@ -67,11 +67,27 @@ is re-generated for each tagged release.  If you'd like to generate docs on the 
 
 ### Basic Input Reference
 
-This needs a lot of explanation, but the basic structure of data coming into rest_suite should look something like this:
+This is a basic overview of the JSON object payload for each request. A '+' next to a row
+indicates an array; a '-' indicates a key in a hash.
 
 ## Initialize
+
+# Description
+# Request Structure
+    -record_type
+
 ## Load/Delete
+
+# Description
+# Request Structure
+    + single record action
+      - id
+      - record_type
+
 ## Upsert/Transform
+
+# Description
+# Request Structure
     + single record action
       - id
       - record_type
@@ -87,4 +103,31 @@ This needs a lot of explanation, but the basic structure of data coming into res
               - value
 
 ## Saved Search
+
+# Description
+# Request Structure
+    - record_type
+    - search_id
+    - lower_bound
+    - batch_size
+
 ## Search (Ad-Hoc)
+
+# Description
+# Request Structure
+    - record_type
+    - batch_size
+    - lower_bound
+    + search_filters
+      - name
+      - operator
+      - value
+      - formula (optional)
+        - field
+        + values
+        - comparison
+        - join
+    + search_columns
+      - name
+      - join
+      - sort (boolean)
