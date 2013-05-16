@@ -4,10 +4,11 @@ describe("Searcher", function() {
 
   var searcher;
   var netsuiteSearchColumnObject;
-  var recordType    = 'inventoryitem';
-  var batchSize     = '5000';
-  var lowerBound    = '17384';
-  var searchFilters = [
+  var recordType     = 'inventoryitem';
+  var batchSize      = '5000';
+  var lowerBound     = '17384';
+  var search_results = [{}, {}];
+  var searchFilters  = [
     {
       'name':     'displayname',
       'value':    'VENDOR-STYLE-SIZE',
@@ -32,12 +33,9 @@ describe("Searcher", function() {
   beforeEach(function() {
     netsuiteSearchFilterObject = jasmine.createSpyObj('filter', ['setFormula']);
     netsuiteSearchColumnObject = jasmine.createSpyObj('column', ['setSort']);
-    global.nlobjSearchFilter = function() {};
-    spyOn(global, 'nlobjSearchFilter').andReturn(netsuiteSearchFilterObject);
-    global.nlobjSearchColumn = function() {};
-    spyOn(global, 'nlobjSearchColumn').andReturn(netsuiteSearchColumnObject);
-    global.nlapiSearchRecord = function() {};
-    spyOn(global, 'nlapiSearchRecord').andReturn([{}]);
+    spyOn(NetsuiteToolkit, 'searchFilter').andReturn(netsuiteSearchFilterObject);
+    spyOn(NetsuiteToolkit, 'searchColumn').andReturn(netsuiteSearchColumnObject);
+    spyOn(NetsuiteToolkit, 'searchRecord').andReturn(search_results);
     searcher   = new Searcher(recordType, batchSize, lowerBound, searchFilters, searchColumns);
     sortColumn = searchColumns[0];
   });
@@ -95,10 +93,6 @@ describe("Searcher", function() {
 
     it("should set the SEARCH_FORMULA_JOIN_KEY", function() {
       expect(searcher.SEARCH_FORMULA_JOIN_KEY).toBeDefined();
-    });
-
-    it("should set the common object", function() {
-      expect(this.newSearcher.common).toEqual(new CommonObject());
     });
 
     it("should set the recordType", function() {
@@ -332,11 +326,11 @@ describe("Searcher", function() {
       searcher.getSearchFilterObject(this.searchFilterData);
     });
 
-    it("should call nlobjSearchFilter", function() {
+    it("should call NetsuiteToolkit.searchFilter", function() {
       name     = this.searchFilterData[searcher.SEARCH_FILTER_NAME_KEY];
       operator = this.searchFilterData[searcher.SEARCH_FILTER_OPERATOR_KEY];
       value    = this.searchFilterData[searcher.SEARCH_FILTER_VALUE_KEY];
-      expect(global.nlobjSearchFilter).toHaveBeenCalledWith(name, null, operator, value);
+      expect(NetsuiteToolkit.searchFilter).toHaveBeenCalledWith(name, null, operator, value);
     });
 
   });
@@ -369,7 +363,7 @@ describe("Searcher", function() {
     });
 
     it("should call getSearchColumnObject with the id sort data", function() {
-      expect(global.nlobjSearchColumn).toHaveBeenCalledWith('internalid', null);
+      expect(NetsuiteToolkit.searchColumn).toHaveBeenCalledWith('internalid', null);
     });
 
     it("should call setSort on the search column", function() {
@@ -392,7 +386,7 @@ describe("Searcher", function() {
     });
 
     it("should call nlobjSearchColumn", function() {
-      expect(global.nlobjSearchColumn).toHaveBeenCalledWith(this.name, this.join);
+      expect(NetsuiteToolkit.searchColumn).toHaveBeenCalledWith(this.name, this.join);
     });
 
   });
@@ -436,16 +430,16 @@ describe("Searcher", function() {
 
       beforeEach(function() {
         global.exception = new Error("An error occured");
-        this.formattedException = searcher.common.formatException(global.exception);
-        spyOn(searcher.common, 'formatException').andReturn(this.formattedException);
+        this.formattedException = {'exception': this.exception};
+        spyOn(NetsuiteToolkit, 'formatReply').andReturn(this.formattedException);
         spyOn(searcher, 'searchIteration').andCallFake(function() {
             throw global.exception;
         });
         searcher.executeSearch();
       });
 
-      it("should call formatException on CommonObject", function() {
-        expect(searcher.common.formatException).toHaveBeenCalledWith(global.exception);
+      it("should call NetsuiteToolkit.formatReply", function() {
+        expect(NetsuiteToolkit.formatReply).toHaveBeenCalledWith(null, null, global.exception);
       });
 
       it("should set the results to the formatted exception", function() {
@@ -559,22 +553,17 @@ describe("Searcher", function() {
       });
 
       it("should call nlapiSearchRecord", function() {
-        expect(global.nlapiSearchRecord).toHaveBeenCalledWith(searcher.recordType, null,
-                                                              searcher.searchFilters,
-                                                              searcher.searchColumns);
+        expect(NetsuiteToolkit.searchRecord).toHaveBeenCalledWith(searcher.recordType, null,
+                                                                  searcher.searchFilters,
+                                                                  searcher.searchColumns);
       });
 
     });
 
     describe('search provides an array', function() {
 
-      beforeEach(function() {
-        global.nlapiSearchRecord = function() {}
-        spyOn(global, 'nlapiSearchRecord').andReturn([{}, {}]);
-      });
-
       it('should return an array of the results', function() {
-        expect(searcher.getSearchResults()).toEqual([{}, {}]);
+        expect(searcher.getSearchResults()).toEqual(search_results);
       });
 
     });

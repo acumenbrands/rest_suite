@@ -12,12 +12,8 @@ describe("SavedSearch", function() {
   var searchColumn = jasmine.createSpyObj('searchColumn', ['setSort']);
 
   beforeEach(function() {
-    global.nlapiSearchRecord = function() {};
-    spyOn(global, 'nlapiSearchRecord').andReturn(new Array(1000));
-    global.nlobjSearchFilter = function() {};
-    spyOn(global, 'nlobjSearchFilter').andReturn(searchFilter);
-    global.nlobjSearchColumn = function() {};
-    spyOn(global, 'nlobjSearchColumn').andReturn(searchColumn);
+    spyOn(NetsuiteToolkit, 'searchColumn').andReturn(searchColumn);
+    spyOn(NetsuiteToolkit, 'searchFilter').andReturn(searchFilter);
     savedSearch = new SavedSearch(recordType, searchId, lowerBound, batchSize);
   });
 
@@ -95,8 +91,8 @@ describe("SavedSearch", function() {
     });
 
     it("should create a new search filter with the given params", function() {
-      expect(global.nlobjSearchFilter).toHaveBeenCalledWith('internalidnumber', null,
-                                                            'greaterthan', lowerBound);
+      expect(NetsuiteToolkit.searchFilter).toHaveBeenCalledWith('internalidnumber', null,
+                                                                'greaterthan', lowerBound);
     });
 
     it("should populate the search filters", function() {
@@ -116,7 +112,7 @@ describe("SavedSearch", function() {
     });
 
     it("should create a new search column with the given params", function() {
-      expect(global.nlobjSearchColumn).toHaveBeenCalledWith('internalid', null);
+      expect(NetsuiteToolkit.searchColumn).toHaveBeenCalledWith('internalid', null);
     });
 
     it("should set the sort mode on the newly created search column", function() {
@@ -190,8 +186,8 @@ describe("SavedSearch", function() {
 
       beforeEach(function() {
         global.exception = new Error("An error occured");
-        this.formattedException = savedSearch.common.formatException(global.exception);
-        spyOn(savedSearch.common, 'formatException').andReturn(this.formattedException);
+        this.formattedException = NetsuiteToolkit.formatException(global.exception);
+        spyOn(NetsuiteToolkit, 'formatException').andReturn(this.formattedException);
         savedSearch.searchIteration = jasmine.createSpy('zomgspy').andCallFake(function() {
           throw global.exception;
         });
@@ -199,7 +195,7 @@ describe("SavedSearch", function() {
       });
 
       it("should call formatException on CommonObject", function() {
-        expect(savedSearch.common.formatException).toHaveBeenCalledWith(global.exception);
+        expect(NetsuiteToolkit.formatException).toHaveBeenCalledWith(global.exception);
       });
 
       it("should set results to the formatted exception", function() {
@@ -241,14 +237,15 @@ describe("SavedSearch", function() {
   describe('#getSearchResults', function() {
 
     beforeEach(function() {
+      spyOn(NetsuiteToolkit, 'searchRecord');
       savedSearch.getSearchResults();
     });
 
     it("should call nlapiSearchRecord", function() {
-      expect(global.nlapiSearchRecord).toHaveBeenCalledWith(savedSearch.recordType,
-                                                            savedSearch.searchId,
-                                                            savedSearch.searchFilters,
-                                                            savedSearch.searchColumns);
+      expect(NetsuiteToolkit.searchRecord).toHaveBeenCalledWith(savedSearch.recordType,
+                                                                savedSearch.searchId,
+                                                                savedSearch.searchFilters,
+                                                                savedSearch.searchColumns);
     });
 
   });
@@ -339,18 +336,18 @@ describe("SavedSearch", function() {
   describe('#reply', function() {
 
     beforeEach(function() {
-      spyOn(savedSearch.common, 'formatReply').andCallThrough();
+      spyOn(NetsuiteToolkit, 'formatReply').andCallThrough();
       this.params  = savedSearch.getParams();
       this.value   = savedSearch.results;
       this.reply   = savedSearch.reply(this.params, this.value);
     });
 
-    it("should call formatReply on CommobObject", function() {
-      expect(savedSearch.common.formatReply).toHaveBeenCalledWith(this.params, this.value);
+    it("should call NetsuiteToolkit.formatReply", function() {
+      expect(NetsuiteToolkit.formatReply).toHaveBeenCalledWith(this.params, this.value);
     });
 
     it("should return the results for formatReply", function() {
-      expect(this.reply).toEqual(savedSearch.common.formatReply(this.params, this.value));
+      expect(this.reply).toEqual(NetsuiteToolkit.formatReply(this.params, this.value));
     });
 
   });

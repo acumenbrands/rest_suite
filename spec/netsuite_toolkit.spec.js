@@ -260,17 +260,48 @@ describe("NetsuiteToolkit", function() {
 
   });
 
-  describe('searchRecords()', function() {
+  describe('searchRecord()', function() {
 
-    it('should call nlapiSearchRecord', function() {});
-    it('should return the object returned by nlapiSearchRecord', function() {});
+    beforeEach(function() {
+      this.record_type    = 'salesorder';
+      this.search_id      = '13';
+      this.search_filters = [{'filter': 'stuf'}, {'anotherfilter': 'otherstuff'}];
+      this.search_columns = [{'column': 'join'}];
+      this.fake_search_results = [{}, {}, {}];
+      spyOn(global, 'nlapiSearchRecord').andReturn(this.fake_search_results);
+      this.result = NetsuiteToolkit.searchRecord(this.record_type, this.search_id,
+                                                 this.search_filters, this.search_columns);
+    });
+
+    it('should call nlapiSearchRecord', function() {
+      expect(global.nlapiSearchRecord).toHaveBeenCalledWith(this.record_type, this.search_id,
+                                                            this.search_filters,
+                                                            this.search_columns);
+    });
+
+    it('should return the object returned by nlapiSearchRecord', function() {
+      expect(this.result).toEqual(this.fake_search_results);
+    });
 
   });
 
   describe('getIdFromRecord()', function() {
 
-    it('should call getId() on the given record', function() {});
-    it('should return the value returned by getId()', function() {});
+    beforeEach(function() {
+      this.id           = '12345';
+      this.record       = {};
+      this.record.getId = function() {}
+      spyOn(this.record, 'getId').andReturn(this.id);
+      this.result = NetsuiteToolkit.getIdFromRecord(this.record);
+    });
+
+    it('should call getId() on the given record', function() {
+      expect(this.record.getId).toHaveBeenCalled();
+    });
+
+    it('should return the value returned by getId()', function() {
+      expect(this.result).toEqual(this.id);
+    });
 
   });
 
