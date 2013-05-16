@@ -35,7 +35,6 @@ describe("Searcher", function() {
     netsuiteSearchColumnObject = jasmine.createSpyObj('column', ['setSort']);
     spyOn(NetsuiteToolkit, 'searchFilter').andReturn(netsuiteSearchFilterObject);
     spyOn(NetsuiteToolkit, 'searchColumn').andReturn(netsuiteSearchColumnObject);
-    spyOn(NetsuiteToolkit, 'searchRecord').andReturn(search_results);
     searcher   = new Searcher(recordType, batchSize, lowerBound, searchFilters, searchColumns);
     sortColumn = searchColumns[0];
   });
@@ -549,10 +548,11 @@ describe("Searcher", function() {
     describe('all cases', function() {
 
       beforeEach(function() {
+        spyOn(NetsuiteToolkit, 'searchRecord').andReturn(search_results);
         searcher.getSearchResults();
       });
 
-      it("should call nlapiSearchRecord", function() {
+      it("should call NetsuiteToolkit.searchRecord", function() {
         expect(NetsuiteToolkit.searchRecord).toHaveBeenCalledWith(searcher.recordType, null,
                                                                   searcher.searchFilters,
                                                                   searcher.searchColumns);
@@ -561,6 +561,11 @@ describe("Searcher", function() {
     });
 
     describe('search provides an array', function() {
+
+      beforeEach(function() {
+        spyOn(NetsuiteToolkit, 'searchRecord').andReturn(search_results);
+        searcher.getSearchResults();
+      });
 
       it('should return an array of the results', function() {
         expect(searcher.getSearchResults()).toEqual(search_results);
@@ -572,7 +577,8 @@ describe("Searcher", function() {
 
       beforeEach(function() {
         global.nlapiSearchRecord = function() {}
-        spyOn(global, 'nlapiSearchRecord').andReturn(null);
+        spyOn(NetsuiteToolkit, 'searchRecord').andReturn(null);
+        searcher.getSearchResults();
       });
 
       it('should return an empty array', function() {
@@ -631,9 +637,6 @@ describe("Searcher", function() {
 
     beforeEach(function() {
       searcher.results = [{}];
-      this.formattedReplyList = [{'reply': 'success'}];
-      spyOn(searcher, 'getParams').andReturn({});
-      spyOn(searcher.common, 'formatReply').andReturn(this.formattedReplyList[0]);
       searcher.appendResults([{}]);
     });
 
@@ -674,12 +677,13 @@ describe("Searcher", function() {
   describe('#reply', function() {
 
     beforeEach(function() {
-      spyOn(searcher.common, 'formatReply');
+      spyOn(NetsuiteToolkit, 'formatReply');
       searcher.reply();
     });
 
-    it("call formatReply on CommobObject", function() {
-      expect(searcher.common.formatReply).toHaveBeenCalledWith(searcher.getParams(), searcher.results);
+    it("call NetsuiteToolkit.formatReply", function() {
+      expect(NetsuiteToolkit.formatReply).toHaveBeenCalledWith(searcher.getParams(),
+                                                               searcher.results);
     });
 
   });
