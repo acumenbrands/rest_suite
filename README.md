@@ -66,7 +66,7 @@ inclusively, so if one criteria out of any of them matches your credentials, it 
 The Script Deployment will list the endpoint URL to which you will send requests with the JSON body
 for the script's parameters.
 
-## Usage
+### Making Requests
 
 The Script Deployment records will list endpoint URLs that you POST your JSON objects to. Simply build the JSON
 object and include it as the request body. The authentication header must include your account credentials
