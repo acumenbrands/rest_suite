@@ -7,6 +7,8 @@ simultaneous connections per set of login credentials.  Note that NetSuite's poi
 system is seemingly arbitrary and we've tried to provide better error handling 
 wherever possible.
 
+**NOTE:** This is being designed as a replacement for [netsuite-rest-client](https://github.com/acumenbrands/netsuite-rest-client).
+
 ## Contributing to rest_suite
 
 rest_suite is built on vanilla JavaScript, using node and jasmine to provide a testing environment.  We
