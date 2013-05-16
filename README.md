@@ -65,29 +65,54 @@ is re-generated for each tagged release.  If you'd like to generate docs on the 
  - Furthermore, each endpoint should respond to a POST request
  - All actions for a given endpoint are taken based on the request body of the POST
 
-### Basic Input Reference
+# Basic Input Reference
 
 This is a basic overview of the JSON object payload for each request. A '+' next to a row
 indicates an array; a '-' indicates a key in a hash.
-
 ## Initialize
 
-# Description
-# Request Structure
+### Description
+
+Initialize returns a blank record of the given type with all mandatory keys pre-populated with null or default values. This does not expose non-mandatory fields in the returned hash, those must be filled in manually client-side.
+
+### Request Structure
     -record_type
 
-## Load/Delete
+## Load
 
-# Description
-# Request Structure
+### Description
+
+Load will request a given record from the Netsuite database by internalid. It will return the
+requested record will all mandatory and populated schema. Non-mandatory and custom fields with
+blank values will not be populated in the returned hash.
+
+### Request Structure
     + single record action
       - id
       - record_type
 
-## Upsert/Transform
+## Delete
 
-# Description
-# Request Structure
+### Description
+
+Delete will destroy records in Netsuite's database. If successful, the id of the removed record
+will be returned. Otherwise, an exception will be raised.
+
+### Request Structure
+    + single record action
+      - id
+      - record_type
+
+## Upsert
+
+### Description
+
+Upsert requests a new records be written to the database or an existing record be altered.
+If an internalid is present id the 'id' field, then it will attempt to update a record
+loaded using the type and id, otherwise throwing an exception if it does not exists. If no
+id is present, it will attempt to create a new record using the values given.
+
+### Request Structure
     + single record action
       - id
       - record_type
@@ -102,10 +127,39 @@ indicates an array; a '-' indicates a key in a hash.
               - match_field (unique field to search against)
               - value
 
+## Transform
+
+### Description
+
+Transform initializes a new transaction from another transaction record in a workflow. In this case
+sublist items can be filtered (altered somewhat or removed if need be) but cannot be added if they
+do not exist on the original transaction. A record is is mandatory for transform.
+
+### Request Structure
+    + single record action
+      - id
+      - source_type
+      - result_type
+      + literals
+        + sublists
+          - name
+          + line_items
+            + create_or_update
+              - match_field
+              - literals
+            + excise
+              - match_field (unique field to search against)
+              - value
+
 ## Saved Search
 
-# Description
-# Request Structure
+### Description
+
+Saved search will request the results of an already created saved search from Netsuite. Results
+*must* be sorted by internalid of the records returned in order to properly paginate the results.
+This is a limitation of the SuiteScript environment that we have not yet found a workaround for.
+
+### Request Structure
     - record_type
     - search_id
     - lower_bound
@@ -113,8 +167,25 @@ indicates an array; a '-' indicates a key in a hash.
 
 ## Search (Ad-Hoc)
 
-# Description
-# Request Structure
+### Description
+
+Search allows you to build a search on the fly. As with saved searches, results generally should
+be filtered by internalid, however with ad-hoc search this is not mandatory. If another criteria
+could reasonably be used to sort, the sort boolean is exposed for the client to use. If multiple
+result columns have this set to true, only the last column in the list will be processed.
+
+Formula filtering is also exposed and is a required alternative to explicit string matching in
+RESTlet operation to avoid hitting the execution limit. It produces a SQL function that results
+in 1 or 0. In the event a formula search is used, the name of the filter must be 'formulanumeric',
+the value must be 'IS', and the value will be 1 or 0.
+
+For the formula:
+  - name:       The field on which the script is filtering
+  - values:     An array of possible values, the comparison is
+  - comparison: A valid SQL comparison or equality operator
+  - join:       'AND' or 'OR' to join all comparisons of 'field' to a single value
+
+### Request Structure
     - record_type
     - batch_size
     - lower_bound
