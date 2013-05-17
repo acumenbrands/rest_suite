@@ -1,6 +1,5 @@
 # rest_suite
 
-
 Server-side Javascript library that wraps parts of the Netsuite SuiteScript API (v2010.1).  This
 interface should be more performant than the SOAP based interface as it allows 50
 simultaneous connections per set of login credentials.  Note that NetSuite's point
@@ -8,6 +7,8 @@ system is seemingly arbitrary and we've tried to provide better error handling
 wherever possible.
 
 **NOTE:** This is being designed as a replacement for [netsuite-rest-client](https://github.com/acumenbrands/netsuite-rest-client).
+
+*Brought to you by the NetSuite Liberation Front*
 
 ## Contributing to rest_suite
 
