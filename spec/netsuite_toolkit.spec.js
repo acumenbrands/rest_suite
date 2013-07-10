@@ -186,14 +186,14 @@ describe("NetsuiteToolkit", function() {
       this.field_name              = 'fakefield';
       this.value                   = 'fakevalue';
       spyOn(this.record, 'setLineItemValue');
-      NetsuiteToolkit.setLineItemValue(this.record, this.sublist_name, this.index, 
-                                       this.field_name, this.value);
+      NetsuiteToolkit.setLineItemValue(this.record, this.sublist_name, this.field_name, 
+                                       this.index, this.value);
 
     });
 
     it('should call setLineItemValue on record', function() {
-      expect(this.record.setLineItemValue).toHaveBeenCalledWith(this.sublist_name, this.index, 
-                                                                this.field_name, this.value);
+      expect(this.record.setLineItemValue).toHaveBeenCalledWith(this.sublist_name, this.field_name,
+                                                                this.index, this.value);
     });
 
   });
@@ -822,8 +822,8 @@ describe("NetsuiteToolkit", function() {
           'field2': 'value2'
         };
         this.calls = [
-          [this.record, this.name, this.index, 'field1', 'value1'],
-          [this.record, this.name, this.index, 'field2', 'value2']
+          [this.record, this.name, 'field1', this.index, 'value1'],
+          [this.record, this.name, 'field2', this.index, 'value2']
         ];
         spyOn(NetsuiteToolkit, 'setLineItemValue');
         this.processor.updateLineItemFields(this.index, this.data);
