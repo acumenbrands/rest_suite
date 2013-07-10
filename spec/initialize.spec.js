@@ -10,7 +10,7 @@ describe('Initializer', function() {
   var blank_record = {
     'record_type': record_type
   };
-  global.nlapiInitializeRecord = function () {};
+  global.nlapiCreateRecord = function () {};
 
   beforeEach(function() {
     initializer = new Initializer(params);
@@ -41,12 +41,12 @@ describe('Initializer', function() {
     describe('ideal operation', function() {
 
       beforeEach(function() {
-        spyOn(NetsuiteToolkit, 'initializeRecord').andReturn(blank_record);
+        spyOn(NetsuiteToolkit, 'createRecord').andReturn(blank_record);
         initializer.initializeRecord();
       });
 
-      it('should call initialize record from the NetsuiteToolkit', function() {
-        expect(NetsuiteToolkit.initializeRecord).toHaveBeenCalledWith(record_type);
+      it('should call createRecord from the NetsuiteToolkit', function() {
+        expect(NetsuiteToolkit.createRecord).toHaveBeenCalledWith(record_type);
       });
 
       it('should update the initializedRecord field with the new record', function() {
@@ -59,7 +59,7 @@ describe('Initializer', function() {
 
       beforeEach(function() {
         this.exception = new Error('ZOMG');
-        spyOn(NetsuiteToolkit, 'initializeRecord').andThrow(this.exception);
+        spyOn(NetsuiteToolkit, 'createRecord').andThrow(this.exception);
         initializer.initializeRecord();
       })
 

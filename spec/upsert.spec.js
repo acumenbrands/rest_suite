@@ -258,12 +258,12 @@ describe('UpsertRequest', function() {
     describe('an internalid is not present', function() {
 
       beforeEach(function() {
-        spyOn(NetsuiteToolkit, 'initializeRecord');
+        spyOn(NetsuiteToolkit, 'createRecord');
         upsert_request.loadOrInitializeRecord();
       });
 
       it('should call NetsuiteToolkit.initializeRecord', function() {
-        expect(NetsuiteToolkit.initializeRecord).toHaveBeenCalledWith(upsert_request.record_type);
+        expect(NetsuiteToolkit.createRecord).toHaveBeenCalledWith(upsert_request.record_type);
       });
 
     });

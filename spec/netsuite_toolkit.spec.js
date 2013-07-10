@@ -3,7 +3,7 @@ require('./spec_helper.js');
 describe("NetsuiteToolkit", function() {
 
   beforeEach(function() {
-    global.nlapiInitializeRecord = function() {}
+    global.nlapiCreateRecord = function() {}
     global.nlapiLoadRecord       = function() {}
     global.nlapiDeleteRecord     = function() {}
     global.nlapiTransformRecord  = function() {}
@@ -13,21 +13,21 @@ describe("NetsuiteToolkit", function() {
     global.nlobjSearchColumn     = function() {}
   });
 
-  describe('initializeRecord()', function() {
+  describe('createRecord()', function() {
 
     beforeEach(function() {
       this.fake_record = {};
       this.record_type = 'fakerecordtype';
-      spyOn(global, 'nlapiInitializeRecord').andReturn(this.fake_record);
-      this.init        = function() { return NetsuiteToolkit.initializeRecord(this.record_type) }
+      spyOn(global, 'nlapiCreateRecord').andReturn(this.fake_record);
+      this.init        = function() { return NetsuiteToolkit.createRecord(this.record_type) }
       this.result      = this.init();
     });
 
-    it('should call nlapiInitializeRecord() with a given record_type', function() {
-      expect(global.nlapiInitializeRecord).toHaveBeenCalledWith(this.record_type);
+    it('should call nlapiCreateRecord() with a given record_type', function() {
+      expect(global.nlapiCreateRecord).toHaveBeenCalledWith(this.record_type);
     });
 
-    it('should return the raw results of the nlapiInitializeRecord() call', function() {
+    it('should return the raw results of the nlapiCreateRecord() call', function() {
       expect(this.result).toEqual(this.fake_record);
     });
 
