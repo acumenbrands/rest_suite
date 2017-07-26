@@ -228,6 +228,7 @@ For the formula:
       - name
       - operator
       - value
+      - join (optional)
       - formula (optional)
         - field
         + values
