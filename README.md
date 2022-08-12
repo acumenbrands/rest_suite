@@ -1,3 +1,5 @@
+# This readme has not been updated to reflect changes made by me, to see new features look at network graph/commit history - hayden
+
 # rest_suite
 
 Server-side Javascript library that wraps parts of the Netsuite SuiteScript API (v2010.1).  This
