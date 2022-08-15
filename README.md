@@ -1,3 +1,9 @@
+## [ New Maintainer ]
+
+This repository is no longer being updated, but the project has received
+updates on a fork. Please visit https://github.com/hayden-t/rest_suite for
+the latest and greatest code.
+
 # rest_suite
 
 Server-side Javascript library that wraps parts of the Netsuite SuiteScript API (v2010.1).  This
